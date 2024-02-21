@@ -1,3 +1,23 @@
-<nav class="flex-between w-full mb-16 pt-3">
-    <p>hello world</p>
+<nav class="flex justify-around w-full m-2">
+  <button class="hover:bg-gray-300 rounded-lg p-2">
+    <a routerLink="/" class="flex row-auto">
+      <img
+        src="/assets/images/LOGO.png"
+        alt="logo"
+        width="50"
+        height="50"
+        class="object-contain"
+      />
+      <p
+        class="items-center flex max-sm:hidden font-satoshi font-semibold text-lg text-black tracking-wide"
+      >
+        Snippet-Code-Pedia
+      </p>
+    </a>
+  </button>
+  <button class="hover:bg-gray-300 rounded-lg p-1">
+    <span>
+      <a routerLink="login" class="text-black">Login</a>
+    </span>
+  </button>
 </nav>

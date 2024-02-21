@@ -1,0 +1,11 @@
+.hover-container .hover-text-hover {
+    display: none;
+  }
+  
+  .hover-container:hover .hover-text {
+    display: none;
+  }
+  
+  .hover-container:hover .hover-text-hover {
+    display: inline;
+  }
