@@ -1,29 +1,23 @@
 <!-- login-modal.component.html -->
-<div
-  class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center"
-  (click)="closeModal()"
->
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30" (click)="closeModal()">
   <!-- login container -->
   <section
     (click)="$event.stopPropagation()"
-    class="modal flex rounded-2xl shadow-2xl max-w-3xl p-5 items-center border border-orange-500"
+    class="modal flex max-w-3xl items-center rounded-2xl border border-orange-500 p-5 shadow-2xl"
   >
     <!-- Login Form Section -->
-    <div
-      *ngIf="!userRegistration"
-      class="left-container md:w-1/2 px-8 md:px-16 text-white"
-    >
-      <h2 class="font-bold text-2xl pb-4">Login</h2>
+    <div *ngIf="!userRegistration" class="left-container px-8 text-white md:w-1/2 md:px-16">
+      <h2 class="pb-4 text-2xl font-bold">Login</h2>
       <form action="" class="flex flex-col gap-4">
         <!-- Email Field -->
         <div class="relative">
           <input
             type="email"
-            class="input-email block py-2.5 px-0 w-full text-sm font-bold bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-orange-500 focus:outline-none focus:ring-0 focus:border-orange-500 peer"
+            class="input-email peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm font-bold focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
             placeholder=" "
           />
           <label
-            class="label-email absolute text-sm font-bold text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:start-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            class="label-email absolute top-3 origin-[0] -translate-y-6 scale-75 transform text-sm font-bold text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75"
             >Email</label
           >
         </div>
@@ -31,18 +25,16 @@
         <div class="relative">
           <input
             type="password"
-            class="input-password block py-2.5 px-0 w-full text-sm font-bold bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-orange-500 focus:outline-none focus:ring-0 focus:border-orange-500 peer"
+            class="input-password peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm font-bold focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
             placeholder=" "
           />
           <label
-            class="label-password absolute text-sm font-bold text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:start-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            class="label-password absolute top-3 origin-[0] -translate-y-6 scale-75 transform text-sm font-bold text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75"
             >Password</label
           >
         </div>
         <!-- Login Button -->
-        <button class="btn-login py-2 hover:scale-105 duration-300">
-          Login
-        </button>
+        <button class="btn-login py-2 duration-300 hover:scale-105">Login</button>
       </form>
       <!-- Divider -->
       <div class="divider mt-6 grid grid-cols-3 items-center">
@@ -51,39 +43,29 @@
         <hr class="border-blue-500" />
       </div>
       <!-- Google Button (Placeholder) -->
-      <button
-        id="google-btn"
-        class="btn-google my-2 flex justify-center items-center w-full"
-      ></button>
+      <button id="google-btn" class="btn-google my-2 flex w-full items-center justify-center"></button>
       <!-- Registration Link -->
-      <div
-        class="link-registration mt-3 text-xs flex justify-around items-center pt-2"
-      >
+      <div class="link-registration mt-3 flex items-center justify-around pt-2 text-xs">
         <p>Don't have an account?</p>
-        <a
-          class="hover:scale-110 duration-300 underline cursor-pointer"
-          (click)="setUserRegistration()"
+        <a class="cursor-pointer underline duration-300 hover:scale-110" (click)="setUserRegistration()"
           >Register here</a
         >
       </div>
     </div>
 
     <!-- Registration Form Section -->
-    <div
-      *ngIf="userRegistration"
-      class="left-container md:w-1/2 px-8 md:px-16 text-white"
-    >
-      <h2 class="font-bold text-2xl pb-4">Register Account</h2>
+    <div *ngIf="userRegistration" class="left-container px-8 text-white md:w-1/2 md:px-16">
+      <h2 class="pb-4 text-2xl font-bold">Register Account</h2>
       <form action="" class="flex flex-col gap-4">
         <!-- Email Field -->
         <div class="relative">
           <input
             type="email"
-            class="input-email block py-2.5 px-0 w-full text-sm font-bold bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-orange-500 focus:outline-none focus:ring-0 focus:border-orange-500 peer"
+            class="input-email peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm font-bold focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
             placeholder=" "
           />
           <label
-            class="label-email absolute text-sm font-bold text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:start-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            class="label-email absolute top-3 origin-[0] -translate-y-6 scale-75 transform text-sm font-bold text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75"
             >Email</label
           >
         </div>
@@ -91,11 +73,11 @@
         <div class="relative">
           <input
             type="password"
-            class="input-password block py-2.5 px-0 w-full text-sm font-bold bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-orange-500 focus:outline-none focus:ring-0 focus:border-orange-500 peer"
+            class="input-password peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm font-bold focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
             placeholder=" "
           />
           <label
-            class="label-password absolute text-sm font-bold text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:start-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            class="label-password absolute top-3 origin-[0] -translate-y-6 scale-75 transform text-sm font-bold text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75"
             >Password</label
           >
         </div>
@@ -103,18 +85,16 @@
         <div class="relative">
           <input
             type="password"
-            class="input-repeat-password block py-2.5 px-0 w-full text-sm font-bold bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-orange-500 focus:outline-none focus:ring-0 focus:border-orange-500 peer"
+            class="input-repeat-password peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm font-bold focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
             placeholder=" "
           />
           <label
-            class="label-repeat-password absolute text-sm font-bold text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:start-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            class="label-repeat-password absolute top-3 origin-[0] -translate-y-6 scale-75 transform text-sm font-bold text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75"
             >Repeat password</label
           >
         </div>
         <!-- Register Button -->
-        <button class="btn-register py-2 hover:scale-105 duration-300">
-          Register
-        </button>
+        <button class="btn-register py-2 duration-300 hover:scale-105">Register</button>
       </form>
       <!-- Divider -->
       <div class="divider mt-6 grid grid-cols-3 items-center">
@@ -123,17 +103,13 @@
         <hr class="border-orange-500" />
       </div>
       <!-- Login Link -->
-      <div class="link-login mt-3 text-xs flex justify-around items-center">
+      <div class="link-login mt-3 flex items-center justify-around text-xs">
         <p>Already have an account?</p>
-        <a
-          class="hover:scale-110 duration-300 underline cursor-pointer"
-          (click)="setUserRegistration()"
-          >Login here</a
-        >
+        <a class="cursor-pointer underline duration-300 hover:scale-110" (click)="setUserRegistration()">Login here</a>
       </div>
     </div>
     <!-- image -->
-    <div class="md:block hidden w-1/2 select-none">
+    <div class="hidden w-1/2 select-none md:block">
       <img class="spin-animation" src="/assets/images/LOGO.png" />
     </div>
   </section>

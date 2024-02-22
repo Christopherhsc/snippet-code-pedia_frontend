@@ -1,42 +1,41 @@
 .hover-container .hover-text-hover {
-    display: none;
-  }
-  
-  .hover-container:hover .hover-text {
-    display: none;
-  }
-  
-  .hover-container:hover .hover-text-hover {
-    display: inline;
-  }
+  display: none;
+}
 
-  .modal-enter {
-    animation: enterAnimation 0.5s forwards;
+.hover-container:hover .hover-text {
+  display: none;
+}
+
+.hover-container:hover .hover-text-hover {
+  display: inline;
+}
+
+.modal-enter {
+  animation: enterAnimation 0.5s forwards;
+}
+
+.modal-exit {
+  animation: exitAnimation 0.5s forwards;
+}
+
+@keyframes enterAnimation {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
   }
-  
-  .modal-exit {
-    animation: exitAnimation 0.5s forwards;
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
-  
-  @keyframes enterAnimation {
-    from {
-      transform: scale(0.5);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
+}
+
+@keyframes exitAnimation {
+  from {
+    transform: scale(1);
+    opacity: 1;
   }
-  
-  @keyframes exitAnimation {
-    from {
-      transform: scale(1);
-      opacity: 1;
-    }
-    to {
-      transform: scale(0.5);
-      opacity: 0;
-    }
+  to {
+    transform: scale(0.5);
+    opacity: 0;
   }
-  
+}
