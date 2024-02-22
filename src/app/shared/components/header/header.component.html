@@ -1,0 +1,49 @@
+<nav class="flex justify-around w-full m-2">
+  <button class="hover:bg-gray-300 rounded-lg p-2">
+    <a routerLink="/" class="flex row-auto">
+      <img
+        src="/assets/images/LOGO.png"
+        alt="logo"
+        width="50"
+        height="50"
+        class="object-contain"
+      />
+      <p
+        class="flex items-center flex-row max-sm:hidden font-satoshi font-semibold text-lg text-black tracking-wide"
+      >
+        Snippet-Code-Pedia
+      </p>
+    </a>
+  </button>
+  <button *ngIf="!authService.isLoggedIn()" class="p-1">
+    <span>
+      <a
+        routerLink="login"
+        routerLinkActive="bg-blue-500 text-white"
+        class="rounded-md border font-bold border-blue-500 py-1.5 px-5 transition-all hover:bg-blue-500 hover:text-white text-center text-md font-inter flex items-center justify-center"
+        >Login</a
+      >
+    </span>
+  </button>
+  <div
+    class="flex justify-center items-center"
+    *ngIf="authService.isLoggedIn()"
+  >
+    <button
+      class="flex rounded-md font-bold hover:bg-blue-500 hover:text-white text-center text-md font-inter px-3"
+      (click)="logout()"
+    >
+      <div class="flex items-center gap-2">
+        <img
+          *ngIf="userProfile?.picture"
+          [src]="userProfile?.picture"
+          alt="Profile"
+          width="50"
+          height="50"
+          class="rounded-full border border-gray-700"
+        />
+        <span class=""> {{ userProfile?.name }} </span>
+      </div>
+    </button>
+  </div>
+</nav>

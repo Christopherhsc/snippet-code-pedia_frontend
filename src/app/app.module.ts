@@ -7,16 +7,14 @@ import { AppComponent } from './app.component';
 //custom modules
 import { SharedModule } from './shared/shared.module';
 
+//custom components
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { LoginComponent } from './auth/login/login.component';
+
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    SharedModule
-  ],
+  declarations: [AppComponent, LoginComponent, LandingPageComponent],
+  imports: [BrowserModule, AppRoutingModule, SharedModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
