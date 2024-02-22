@@ -1,54 +1,39 @@
-declare var google: any
-
-import { Injectable } from '@angular/core'
-import { Router } from '@angular/router'
-import { BehaviorSubject } from 'rxjs'
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private isAuthenticated = false
-  private userProfileSubject = new BehaviorSubject<any>(null)
-  public userProfile$ = this.userProfileSubject.asObservable()
+  private isAuthenticated = false;
 
-  constructor(private router: Router) {
-    this.checkAuthentication()
+  constructor(private router: Router, private userService: UserService) {
+    this.checkAuthentication();
   }
 
   login(userData: any) {
-    this.userProfileSubject.next(userData)
-    sessionStorage.setItem('loggedInUser', JSON.stringify(userData))
-    this.isAuthenticated = true
-  }
-
-  getUserProfile(): any {
-    const user = sessionStorage.getItem('loggedInUser')
-    if (user) {
-      const userData = JSON.parse(user)
-      console.log('Retrieved user from storage:', userData)
-      return userData
-    }
-    return {}
+    sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
+    this.isAuthenticated = true;
+    this.userService.updateUserProfile(userData);
   }
 
   private checkAuthentication() {
-    const user = sessionStorage.getItem('loggedInUser')
+    const user = sessionStorage.getItem('loggedInUser');
     if (user) {
-      const userData = JSON.parse(user)
-      console.log('Retrieved user from storage:', userData)
-      this.userProfileSubject.next(userData)
-      this.isAuthenticated = true
+      const userData = JSON.parse(user);
+      this.isAuthenticated = true;
+      this.userService.updateUserProfile(userData);
     }
   }
 
   logout() {
-    sessionStorage.removeItem('loggedInUser')
-    this.isAuthenticated = false
-    this.userProfileSubject.next(null)
+    sessionStorage.removeItem('loggedInUser');
+    this.isAuthenticated = false;
+    this.userService.clearUserProfile();
   }
 
   isLoggedIn(): boolean {
-    return this.isAuthenticated
+    return this.isAuthenticated;
   }
 }

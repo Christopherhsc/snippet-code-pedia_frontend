@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Router } from '@angular/router'
 import { AuthenticationService } from '../../services/authentication.service'
 import { Subscription } from 'rxjs'
+import { UserService } from '../../services/user.service'
 
 @Component({
   selector: 'app-header',
@@ -14,11 +15,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    public authService: AuthenticationService
+    public authService: AuthenticationService,
+    public UserService: UserService
   ) {}
 
   ngOnInit() {
-    this.authSubscription = this.authService.userProfile$.subscribe((profile) => {
+    this.authSubscription = this.UserService.userProfile$.subscribe((profile) => {
       this.userProfile = profile
     })
   }
