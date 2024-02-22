@@ -1,26 +1,140 @@
 <!-- login-modal.component.html -->
 <div
-  class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center p-4"
+  class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center"
   (click)="closeModal()"
 >
-  <div
-    class="bg-white bg-opacity-10 p-5 rounded-md w-full sm:max-full md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto"
+  <!-- login container -->
+  <section
     (click)="$event.stopPropagation()"
+    class="modal flex rounded-2xl shadow-2xl max-w-3xl p-5 items-center border border-orange-500"
   >
-    <!-- Close Button (only visible on small screens) -->
-    <button
-      class="absolute top-0 right-0 m-2 sm:block hidden"
-      (click)="closeModal()"
+    <!-- Login Form Section -->
+    <div
+      *ngIf="!userRegistration"
+      class="left-container md:w-1/2 px-8 md:px-16 text-white"
     >
-      Close
-    </button>
-    <!-- Your login form goes here -->
-    <div class="flex justify-center items-center flex-col">
-      <h1 class="font-bold text-4xl p-4 text-white">Login</h1>
-      <div class="flex-row flex items-center gap-x-4">
-        <p class="font-bold text-white">Sign in with Google: </p>
-        <button id="google-btn"></button>
+      <h2 class="font-bold text-2xl pb-4">Login</h2>
+      <form action="" class="flex flex-col gap-4">
+        <!-- Email Field -->
+        <div class="relative">
+          <input
+            type="email"
+            class="input-email block py-2.5 px-0 w-full text-sm font-bold bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-orange-500 focus:outline-none focus:ring-0 focus:border-orange-500 peer"
+            placeholder=" "
+          />
+          <label
+            class="label-email absolute text-sm font-bold text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:start-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Email</label
+          >
+        </div>
+        <!-- Password Field -->
+        <div class="relative">
+          <input
+            type="password"
+            class="input-password block py-2.5 px-0 w-full text-sm font-bold bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-orange-500 focus:outline-none focus:ring-0 focus:border-orange-500 peer"
+            placeholder=" "
+          />
+          <label
+            class="label-password absolute text-sm font-bold text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:start-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Password</label
+          >
+        </div>
+        <!-- Login Button -->
+        <button class="btn-login py-2 hover:scale-105 duration-300">
+          Login
+        </button>
+      </form>
+      <!-- Divider -->
+      <div class="divider mt-6 grid grid-cols-3 items-center">
+        <hr class="border-orange-500" />
+        <p class="text-center text-sm">OR</p>
+        <hr class="border-blue-500" />
+      </div>
+      <!-- Google Button (Placeholder) -->
+      <button
+        id="google-btn"
+        class="btn-google my-2 flex justify-center items-center w-full"
+      ></button>
+      <!-- Registration Link -->
+      <div
+        class="link-registration mt-3 text-xs flex justify-around items-center pt-2"
+      >
+        <p>Don't have an account?</p>
+        <a
+          class="hover:scale-110 duration-300 underline cursor-pointer"
+          (click)="setUserRegistration()"
+          >Register here</a
+        >
       </div>
     </div>
-  </div>
+
+    <!-- Registration Form Section -->
+    <div
+      *ngIf="userRegistration"
+      class="left-container md:w-1/2 px-8 md:px-16 text-white"
+    >
+      <h2 class="font-bold text-2xl pb-4">Register Account</h2>
+      <form action="" class="flex flex-col gap-4">
+        <!-- Email Field -->
+        <div class="relative">
+          <input
+            type="email"
+            class="input-email block py-2.5 px-0 w-full text-sm font-bold bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-orange-500 focus:outline-none focus:ring-0 focus:border-orange-500 peer"
+            placeholder=" "
+          />
+          <label
+            class="label-email absolute text-sm font-bold text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:start-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Email</label
+          >
+        </div>
+        <!-- Password Field -->
+        <div class="relative">
+          <input
+            type="password"
+            class="input-password block py-2.5 px-0 w-full text-sm font-bold bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-orange-500 focus:outline-none focus:ring-0 focus:border-orange-500 peer"
+            placeholder=" "
+          />
+          <label
+            class="label-password absolute text-sm font-bold text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:start-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Password</label
+          >
+        </div>
+        <!-- Repeat Password Field -->
+        <div class="relative">
+          <input
+            type="password"
+            class="input-repeat-password block py-2.5 px-0 w-full text-sm font-bold bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-orange-500 focus:outline-none focus:ring-0 focus:border-orange-500 peer"
+            placeholder=" "
+          />
+          <label
+            class="label-repeat-password absolute text-sm font-bold text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:start-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Repeat password</label
+          >
+        </div>
+        <!-- Register Button -->
+        <button class="btn-register py-2 hover:scale-105 duration-300">
+          Register
+        </button>
+      </form>
+      <!-- Divider -->
+      <div class="divider mt-6 grid grid-cols-3 items-center">
+        <hr class="border-blue-500" />
+        <p class="text-center text-sm">OR</p>
+        <hr class="border-orange-500" />
+      </div>
+      <!-- Login Link -->
+      <div class="link-login mt-3 text-xs flex justify-around items-center">
+        <p>Already have an account?</p>
+        <a
+          class="hover:scale-110 duration-300 underline cursor-pointer"
+          (click)="setUserRegistration()"
+          >Login here</a
+        >
+      </div>
+    </div>
+    <!-- image -->
+    <div class="md:block hidden w-1/2 select-none">
+      <img class="spin-animation" src="/assets/images/LOGO.png" />
+    </div>
+  </section>
 </div>

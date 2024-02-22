@@ -1,0 +1,19 @@
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1080deg);
+  }
+}
+
+.spin-animation {
+  animation: spin 2s ease-in-out;
+}
+
+.modal {
+  height: 405px;
+  .left-container {
+    height: 360px;
+  }
+}
