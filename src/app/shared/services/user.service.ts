@@ -8,10 +8,9 @@ export class UserService {
   private userProfileSubject = new BehaviorSubject<any>(null)
   public userProfile$ = this.userProfileSubject.asObservable()
 
-  constructor() {}
-
   updateUserProfile(userData: any) {
     this.userProfileSubject.next(userData)
+    console.log(userData)
   }
 
   clearUserProfile() {
