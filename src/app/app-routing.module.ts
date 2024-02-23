@@ -1,24 +1,18 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { LoginComponent } from './auth/login/login.component'
-import { HomeComponent } from './consumers/components/home/home.component'
-import { LandingPageComponent } from './landing-page/landing-page.component'
+import { HomeComponent } from './home/home.component'
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: LandingPageComponent
+    component: HomeComponent
   },
   {
     path: 'login',
     pathMatch: 'full',
     component: LoginComponent
-  },
-  {
-    path: 'home',
-    pathMatch: 'full',
-    component: HomeComponent
   }
 ]
 

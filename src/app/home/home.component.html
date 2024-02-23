@@ -12,4 +12,7 @@
   <p class="mt-5 max-w-2xl text-center text-lg text-gray-600 sm:text-xl">
     Snippet-Pedia is an open-source combination of HTML &amp; CSS to create new and aesthetic frontend
   </p>
+  <div *ngIf="auth.isLoggedIn()">
+    <app-card></app-card>
+  </div>
 </div>

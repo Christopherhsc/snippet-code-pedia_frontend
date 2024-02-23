@@ -8,11 +8,12 @@ import { AppComponent } from './app.component'
 import { SharedModule } from './shared/shared.module'
 
 //custom components
-import { LandingPageComponent } from './landing-page/landing-page.component'
+import { HomeComponent } from './home/home.component'
+import { CardComponent } from './home/components/card/card.component'
 import { LoginComponent } from './auth/login/login.component'
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, LandingPageComponent],
+  declarations: [AppComponent, CardComponent, LoginComponent, HomeComponent],
   imports: [BrowserModule, AppRoutingModule, SharedModule],
   providers: [],
   bootstrap: [AppComponent]
