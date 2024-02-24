@@ -17,25 +17,24 @@ export class AuthenticationService {
     this.checkAuthentication()
   }
 
-  login(googleUserData: any): void {
+  login(userInfo: any): void {
     const userData = {
-      googleId: googleUserData.sub,
-      email: googleUserData.email,
-      username: googleUserData.name,
-      imageUrl: googleUserData.picture
-    };
-  
-    sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
-    this.isAuthenticated = true;
-    this.userService.updateUserProfile(userData);
+      email: userInfo.email,
+      username: userInfo.name,
+      imageUrl: userInfo.picture
+    }
+
+    sessionStorage.setItem('loggedInUser', JSON.stringify(userData))
+    this.isAuthenticated = true
+    this.userService.updateUserProfile(userData)
     this.saveUserData(userData).subscribe(
       (response) => {
-        console.log('User data saved', response);
+        console.log('User data saved', response)
       },
       (error) => {
-        console.error('Error saving user data', error);
+        console.error('Error saving user data', error)
       }
-    );
+    )
   }
 
   private checkAuthentication() {
