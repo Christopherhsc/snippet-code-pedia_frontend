@@ -62,5 +62,8 @@
 }
 
 .gradient-orange {
-  @apply bg-gradient-to-r from-orange-400 via-stone-600 to-orange-700 bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-orange-400 via-stone-600 to-orange-400 bg-clip-text text-transparent;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

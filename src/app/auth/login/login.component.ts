@@ -33,8 +33,9 @@ export class LoginComponent implements OnInit, AfterViewChecked {
       if (googleBtnElement) {
         google.accounts.id.renderButton(googleBtnElement, {
           theme: 'filled_white',
-          size: 'large',
-          shape: 'rectangle'
+          size: 'small',
+          shape: 'rectangle',
+          width: '235'
         })
         this.googleButtonRendered = true
       }
