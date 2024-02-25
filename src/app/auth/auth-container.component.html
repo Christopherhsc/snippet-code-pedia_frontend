@@ -6,12 +6,18 @@
     <!-- Left container -->
     <div class="w-full md:w-1/2">
       <app-login *ngIf="!userRegistration" (toggleView)="setUserRegistration()"></app-login>
-      <app-register *ngIf="userRegistration" (toggleView)="setUserRegistration()"></app-register>
+      <app-register
+        *ngIf="userRegistration"
+        (toggleView)="setUserRegistration()"
+        (profileImageChange)="onProfileImageChange($event)"
+      ></app-register>
     </div>
 
     <!-- Right Container -->
-    <div class="hidden select-none md:block md:w-1/2">
-      <img class="spin-animation" src="/assets/images/LOGO.png" />
+    <div
+      class="hidden select-none md:block md:w-1/2"
+    >
+      <img class="spin-animation rounded-full " [src]="profileImagePreview" />
     </div>
   </section>
 </div>

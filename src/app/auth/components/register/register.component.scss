@@ -1,3 +1,12 @@
+.mat-stepper {
+  height: 250px;
+}
+
+.image-cropper-container {
+  max-width: 150px;
+  max-height: 200px;
+}
+
 ::ng-deep .mat-stepper-vertical,
 .mat-stepper-horizontal {
   --mat-stepper-container-color: transparent !important;

@@ -1,54 +1,107 @@
-<div class="px-8 text-white h-full">
-  <h2 class="pb-4 text-2xl font-bold">Register Account</h2>
+<div class="h-full px-8 text-white">
+  <h2 class="pb-4 text-2xl font-bold" *ngIf="!isCropping">Register Account</h2>
 
-  <mat-horizontal-stepper>
+  <mat-horizontal-stepper class="mat-stepper flex h-full">
     <!-- Step 1 -->
-    <mat-step label="account">
+    <mat-step label="account" class="flex h-full">
       <form [formGroup]="firstFormGroup" class="flex flex-col gap-4 py-4">
         <input
           type="email"
           class="input-email peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
           placeholder="Email"
+          formControlName="email"
         />
         <!-- Password Field -->
         <input
           type="password"
           class="input-password peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
           placeholder="Password"
+          formControlName="password"
         />
         <!-- Repeat Password Field -->
         <input
           type="password"
           class="input-repeat-password peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
           placeholder="Repeat password"
+          formControlName="repeatPassword"
         />
-        <button matStepperNext>Next</button>
       </form>
+      <div class="flex justify-end">
+        <button matStepperNext class="duration-300 hover:scale-105">Next</button>
+      </div>
     </mat-step>
 
     <!-- Step 2 -->
     <mat-step label="profile">
       <form [formGroup]="secondFormGroup">
-        <input matInput placeholder="Username" formControlName="username" />
-        <!-- Image Upload -->
-        <button mat-button matStepperNext>Next</button>
+        <input
+          type="text"
+          class="peer mt-4 block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
+          placeholder="Username"
+          formControlName="username"
+        />
+        <!-- Image Upload and Cropper -->
+        <div class="my-4 flex flex-row items-center justify-center gap-4">
+          <div class="image-center w-1/2">
+            <img
+              class="rounded-full border border-gray-700"
+              [src]="croppedImagePreview || '/assets/images/image-placeholder.png'"
+            />
+          </div>
+
+          <!-- Hidden File Input -->
+          <input type="file" hidden #inputField (change)="fileChangedEvent($event)" />
+
+          <!-- Image Cropper -->
+          <div *ngIf="isCropping" class="image-cropper-container">
+            <image-cropper
+              #cropper
+              [imageChangedEvent]="imageChangedEvent"
+              [maintainAspectRatio]="true"
+              [aspectRatio]="1 / 1"
+              [roundCropper]="true"
+              format="png"
+              (imageCropped)="imageCropped($event)"
+            ></image-cropper>
+          </div>
+        </div>
+        <!-- Cropping Action Buttons -->
+        <div *ngIf="isCropping" class="flex flex-row justify-end gap-4">
+          <button (click)="discardChanges()">Cancel</button>
+          <button (click)="applyCroppedImage()">Apply</button>
+        </div>
       </form>
+      <!-- Edit Button & Next button-->
+      <div class="flex flex-row justify-between" *ngIf="!isCropping">
+        <button mat-mini-fab (click)="inputField.click()" class="duration-300 hover:scale-105">Edit photo</button>
+        <button matStepperNext class="duration-300 hover:scale-105">Next</button>
+      </div>
     </mat-step>
 
     <!-- Step 3 -->
     <mat-step label="done!">
-      <p>Review your details and submit to register.</p>
+      <p class="text-xs">Review your details and submit to register account</p>
+      <!-- Review profile -->
+      <div class="flex flex-col pt-4 text-sm">
+        <div class="flex flex-row justify-between">
+          <p>Email:</p>
+          <p>{{ firstFormGroup.get('email')?.value }}</p>
+        </div>
+        <div class="flex flex-row justify-around">
+          <p>Username:</p>
+          <p>{{ secondFormGroup.get('username')?.value }}</p>
+        </div>
+        <!-- Display additional fields if necessary -->
+      </div>
       <!-- Register Button -->
-      <button class="btn-register py-2 duration-300 hover:scale-105">Register</button>
+      <button matStepperNext class="pt-12 duration-300 hover:scale-105">Register Account</button>
     </mat-step>
   </mat-horizontal-stepper>
   <!-- Divider -->
-  <app-divider></app-divider>
-  <div class="flex w-full flex-col items-center justify-center">
-    <!-- Login Link -->
-    <div class="link-login mt-3 flex flex-row gap-8 text-xs">
-      <p>Already have an account?</p>
-      <a class="cursor-pointer underline duration-300 hover:scale-110" (click)="toggleView.emit()">Login here</a>
-    </div>
+  <app-divider *ngIf="!isCropping"></app-divider>
+  <!-- Login Link -->
+  <div class="mt-3 flex flex-row gap-8 text-xs" *ngIf="!isCropping">
+    <p>Already have an account?</p>
+    <a class="cursor-pointer underline duration-300 hover:scale-110" (click)="toggleView.emit()">Login here</a>
   </div>
 </div>

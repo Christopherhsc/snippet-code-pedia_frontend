@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { ChangeDetectorRef, Component } from '@angular/core'
 import { Router } from '@angular/router'
 
 @Component({
@@ -7,11 +7,20 @@ import { Router } from '@angular/router'
   styleUrl: './auth-container.component.scss'
 })
 export class AuthContainerComponent {
-  userRegistration: boolean = true
+  profileImagePreview: string = '/assets/images/LOGO.png'
+  userRegistration: boolean = false
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private cdRef: ChangeDetectorRef
+  ) {}
   setUserRegistration() {
     this.userRegistration = !this.userRegistration
+  }
+
+  onProfileImageChange(newImagePreview: string): void {
+    this.profileImagePreview = newImagePreview
+    this.cdRef.detectChanges() // Manually trigger change detection
   }
 
   closeModal() {
