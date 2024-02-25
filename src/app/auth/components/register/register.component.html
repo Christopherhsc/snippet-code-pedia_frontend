@@ -1,0 +1,54 @@
+<div class="px-8 text-white h-full">
+  <h2 class="pb-4 text-2xl font-bold">Register Account</h2>
+
+  <mat-horizontal-stepper>
+    <!-- Step 1 -->
+    <mat-step label="account">
+      <form [formGroup]="firstFormGroup" class="flex flex-col gap-4 py-4">
+        <input
+          type="email"
+          class="input-email peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
+          placeholder="Email"
+        />
+        <!-- Password Field -->
+        <input
+          type="password"
+          class="input-password peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
+          placeholder="Password"
+        />
+        <!-- Repeat Password Field -->
+        <input
+          type="password"
+          class="input-repeat-password peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
+          placeholder="Repeat password"
+        />
+        <button matStepperNext>Next</button>
+      </form>
+    </mat-step>
+
+    <!-- Step 2 -->
+    <mat-step label="profile">
+      <form [formGroup]="secondFormGroup">
+        <input matInput placeholder="Username" formControlName="username" />
+        <!-- Image Upload -->
+        <button mat-button matStepperNext>Next</button>
+      </form>
+    </mat-step>
+
+    <!-- Step 3 -->
+    <mat-step label="done!">
+      <p>Review your details and submit to register.</p>
+      <!-- Register Button -->
+      <button class="btn-register py-2 duration-300 hover:scale-105">Register</button>
+    </mat-step>
+  </mat-horizontal-stepper>
+  <!-- Divider -->
+  <app-divider></app-divider>
+  <div class="flex w-full flex-col items-center justify-center">
+    <!-- Login Link -->
+    <div class="link-login mt-3 flex flex-row gap-8 text-xs">
+      <p>Already have an account?</p>
+      <a class="cursor-pointer underline duration-300 hover:scale-110" (click)="toggleView.emit()">Login here</a>
+    </div>
+  </div>
+</div>

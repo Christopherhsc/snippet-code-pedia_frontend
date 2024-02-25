@@ -1,0 +1,29 @@
+<div class="h-full px-8 text-white">
+  <h2 class="pb-4 text-2xl font-bold">Login</h2>
+  <form action="" class="flex flex-col gap-4">
+    <!-- Email Field -->
+    <input
+      type="email"
+      class="input-email peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
+      placeholder="Email"
+    />
+    <!-- Password Field -->
+    <input
+      type="password"
+      class="input-password peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
+      placeholder="Password"
+    />
+    <!-- Login Button -->
+    <button class="btn-login py-2 duration-300 hover:scale-105">Login</button>
+  </form>
+  <!-- Divider -->
+  <app-divider></app-divider>
+
+  <!-- Google Button -->
+  <button id="google-btn" class="btn-google my-2 flex w-full items-center justify-center"></button>
+  <!-- Registration Link -->
+  <div class="link-registration mt-3 flex items-center justify-around pt-2 text-xs">
+    <p>Don't have an account?</p>
+    <a class="cursor-pointer underline duration-300 hover:scale-110" (click)="toggleView.emit()">Register here</a>
+  </div>
+</div>

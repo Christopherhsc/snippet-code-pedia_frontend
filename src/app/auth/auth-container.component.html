@@ -1,0 +1,17 @@
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" (click)="closeModal()">
+  <section
+    (click)="$event.stopPropagation()"
+    class="modal flex max-w-3xl items-center rounded-2xl border border-orange-500 p-5 shadow-2xl"
+  >
+    <!-- Left container -->
+    <div class="w-full md:w-1/2">
+      <app-login *ngIf="!userRegistration" (toggleView)="setUserRegistration()"></app-login>
+      <app-register *ngIf="userRegistration" (toggleView)="setUserRegistration()"></app-register>
+    </div>
+
+    <!-- Right Container -->
+    <div class="hidden select-none md:block md:w-1/2">
+      <img class="spin-animation" src="/assets/images/LOGO.png" />
+    </div>
+  </section>
+</div>
