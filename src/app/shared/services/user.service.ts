@@ -15,7 +15,6 @@ export class UserService {
 
   updateUserProfile(userData: any) {
     this.userProfileSubject.next(userData)
-    console.log(userData)
   }
 
   clearUserProfile() {

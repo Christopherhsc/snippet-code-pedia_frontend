@@ -1,10 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { DomSanitizer } from '@angular/platform-browser'
-import { Router } from '@angular/router'
 import { ImageCroppedEvent } from 'ngx-image-cropper'
 import { AuthenticationService } from 'src/app/shared/services/authentication.service'
 import { UserService } from 'src/app/shared/services/user.service'
+import { NgxImageCompressService, DataUrl } from 'ngx-image-compress'
 
 @Component({
   selector: 'app-register',
@@ -23,11 +23,13 @@ export class RegisterComponent implements OnInit {
   croppedImage?: ImageCroppedEvent
   selectedFile: File | null = null
   selectedImageFile: File | null = null
+  imgResultAfterResize: string = ''
+
   constructor(
     public user: UserService,
     public authService: AuthenticationService,
-    private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private imageCompress: NgxImageCompressService
   ) {}
 
   get email() {
@@ -72,11 +74,14 @@ export class RegisterComponent implements OnInit {
       reader.onloadend = () => {
         const base64data = reader.result as string
         this.croppedImagePreview = base64data
-        this.profileImageChange.emit(base64data) // Emit the base64 string
+
+        // Emit the original image data URL to the parent component
+        this.profileImageChange.emit(base64data)
+
+        this.uploadAndResize(base64data)
       }
     } else {
       console.error('Cropped image or blob is undefined')
-      // Handle the case where the cropped image is undefined
     }
   }
 
@@ -85,59 +90,44 @@ export class RegisterComponent implements OnInit {
     this.croppedImagePreview = null
   }
 
-  registerUser() {
-    if (this.selectedImageFile) {
-      this.resizeImage(this.selectedImageFile, 60, 60).then((resizedImage) => {
-        // Now you have the resized image
-        if (!this.firstFormGroup.get('email')?.value || !this.secondFormGroup.get('username')?.value) return
-        const userData = {
-          email: this.firstFormGroup.get('email')?.value,
-          name: this.secondFormGroup.get('username')?.value, // Changed from 'username' to 'name'
-          picture: resizedImage // Changed from 'imageUrl' to 'picture'
-        }
-        console.log('THIS IS USERDATA', userData)
-        // Proceed with registration
-        this.authService.createUser(userData)
-      })
-    } else {
-      // Handle registration without an image or show an error
-    }
+  uploadAndResize(image: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.imageCompress
+        .compressFile(image, -1, 100, 100, 100, 100)
+        .then((result: DataUrl) => {
+          this.imgResultAfterResize = result
+          console.warn('Size in bytes is now:', this.imageCompress.byteCount(result))
+          resolve(result)
+        })
+        .catch((err) => {
+          console.error('Error during image compression:', err)
+          reject(err)
+        })
+    })
   }
 
-  resizeImage(file: File, targetWidth: number, targetHeight: number): Promise<string> {
-    return new Promise((resolve, reject) => {
-      if (file) {
-        const reader = new FileReader()
-        reader.onload = (readerEvent) => {
-          if (!readerEvent.target || !readerEvent.target.result) {
-            reject('FileReader did not load the file')
-            return
-          }
+  registerUser() {
+    if (!this.firstFormGroup.get('email')?.value || !this.secondFormGroup.get('username')?.value) {
+      return
+    }
 
-          const image = new Image()
-          image.onload = () => {
-            const canvas = document.createElement('canvas')
-            const ctx = canvas.getContext('2d')
-            if (!ctx) {
-              reject('Could not create canvas context')
-              return
-            }
+    const userData = {
+      email: this.firstFormGroup.get('email')?.value,
+      password: this.firstFormGroup.get('password')?.value,
+      name: this.secondFormGroup.get('username')?.value,
+      picture: this.imgResultAfterResize || 'assets/images/image-placeholder.png'
+    }
 
-            canvas.width = targetWidth // Set canvas width to target width
-            canvas.height = targetHeight // Set canvas height to target height
-
-            // Draw the image on canvas with the desired dimensions
-            ctx.drawImage(image, 0, 0, targetWidth, targetHeight)
-
-            const resizedImage = canvas.toDataURL('image/png')
-            resolve(resizedImage)
-          }
-          image.src = (readerEvent.target as FileReader).result as string
-        }
-        reader.readAsDataURL(file)
-      } else {
-        reject('No file selected')
+    this.authService.createUser(userData).subscribe(
+      (response) => {
+        console.log('User registration successful', response)
+        // Additional logic after successful registration
+        // Navigate to another page or show success message
+      },
+      (error) => {
+        console.error('Error during registration', error)
+        // Handle error here, like showing an error message to the user
       }
-    })
+    )
   }
 }

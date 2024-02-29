@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { UserService } from './user.service'
+import { Observable } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
@@ -15,25 +16,19 @@ export class AuthenticationService {
     this.checkAuthentication()
   }
 
-  createUser(userInfo: any): void {
+  createUser(userInfo: any): Observable<any> {
     const userData = {
       email: userInfo.email,
       username: userInfo.name,
-      imageUrl: userInfo.picture
-    }
+      imageUrl: userInfo.picture,
+      ...(userInfo.password && { password: userInfo.password })
+    };
 
-    sessionStorage.setItem('loggedInUser', JSON.stringify(userData))
-    this.isAuthenticated = true
-    this.router.navigate(['/'])
-    this.userService.updateUserProfile(userData)
-    this.userService.saveUserData(userData).subscribe(
-      (response: any) => {
-        console.log('User data saved', response)
-      },
-      (error: any) => {
-        console.error('Error saving user data', error)
-      }
-    )
+    sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
+    this.isAuthenticated = true;
+    this.router.navigate(['/']);
+    this.userService.updateUserProfile(userData);
+    return this.userService.saveUserData(userData);
   }
 
   register(userData: any): void {
