@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { UserService } from './user.service'
-import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +10,12 @@ export class AuthenticationService {
 
   constructor(
     private userService: UserService,
-    private http: HttpClient
+    private router: Router
   ) {
     this.checkAuthentication()
   }
 
-  login(userInfo: any): void {
+  createUser(userInfo: any): void {
     const userData = {
       email: userInfo.email,
       username: userInfo.name,
@@ -26,13 +24,26 @@ export class AuthenticationService {
 
     sessionStorage.setItem('loggedInUser', JSON.stringify(userData))
     this.isAuthenticated = true
+    this.router.navigate(['/'])
     this.userService.updateUserProfile(userData)
-    this.saveUserData(userData).subscribe(
-      (response) => {
+    this.userService.saveUserData(userData).subscribe(
+      (response: any) => {
         console.log('User data saved', response)
       },
-      (error) => {
+      (error: any) => {
         console.error('Error saving user data', error)
+      }
+    )
+  }
+
+  register(userData: any): void {
+    this.userService.saveUserData(userData).subscribe(
+      (response: string) => {
+        console.log('Registration successful', response)
+        this.createUser(response) // If you want to log in the user upon registration
+      },
+      (error: string) => {
+        console.error('Error during registration', error)
       }
     )
   }
@@ -54,10 +65,5 @@ export class AuthenticationService {
 
   isLoggedIn(): boolean {
     return this.isAuthenticated
-  }
-
-  //BACKEND COMMUNICATION
-  saveUserData(userData: any): Observable<any> {
-    return this.http.post('http://localhost:3000/users/new', userData)
   }
 }

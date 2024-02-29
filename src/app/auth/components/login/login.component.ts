@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  AfterViewChecked,
-  EventEmitter,
-  Output
-} from '@angular/core'
+import { Component, OnInit, AfterViewChecked, EventEmitter, Output } from '@angular/core'
 import { Router } from '@angular/router'
 import { AuthenticationService } from 'src/app/shared/services/authentication.service'
 
@@ -20,7 +14,6 @@ export class LoginComponent implements OnInit, AfterViewChecked {
   googleButtonRendered = false
 
   constructor(
-    private router: Router,
     private authService: AuthenticationService
   ) {}
 
@@ -51,8 +44,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
   handleLogin(response: any) {
     if (response) {
       const payload = this.decodeToken(response.credential)
-      this.authService.login(payload)
-      this.router.navigate(['/'])
+      this.authService.createUser(payload)
     }
   }
 }

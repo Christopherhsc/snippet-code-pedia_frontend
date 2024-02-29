@@ -10,6 +10,7 @@
           class="input-email peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
           placeholder="Email"
           formControlName="email"
+          autocomplete="email"
         />
         <!-- Password Field -->
         <input
@@ -17,6 +18,7 @@
           class="input-password peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
           placeholder="Password"
           formControlName="password"
+          autocomplete="password"
         />
         <!-- Repeat Password Field -->
         <input
@@ -24,6 +26,7 @@
           class="input-repeat-password peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
           placeholder="Repeat password"
           formControlName="repeatPassword"
+          autocomplete="repeatPassword"
         />
       </form>
       <div class="flex justify-end">
@@ -83,18 +86,20 @@
       <p class="text-xs">Review your details and submit to register account</p>
       <!-- Review profile -->
       <div class="flex flex-col pt-4 text-sm">
-        <div class="flex flex-row justify-between">
+        <div class="pb-4">
           <p>Email:</p>
           <p>{{ firstFormGroup.get('email')?.value }}</p>
         </div>
-        <div class="flex flex-row justify-around">
+        <div class="pb-4">
           <p>Username:</p>
           <p>{{ secondFormGroup.get('username')?.value }}</p>
         </div>
         <!-- Display additional fields if necessary -->
       </div>
       <!-- Register Button -->
-      <button matStepperNext class="pt-12 duration-300 hover:scale-105">Register Account</button>
+      <button matStepperNext class="flex w-full justify-center pt-12 underline duration-300 hover:scale-105" (click)="registerUser()">
+        Register Account
+      </button>
     </mat-step>
   </mat-horizontal-stepper>
   <!-- Divider -->
