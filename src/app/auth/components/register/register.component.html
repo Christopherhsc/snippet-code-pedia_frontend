@@ -1,9 +1,19 @@
 <div class="h-full px-8 text-white">
   <h2 class="pb-4 text-2xl font-bold" *ngIf="!isCropping">Register Account</h2>
 
-  <mat-horizontal-stepper class="mat-stepper flex h-full">
+  <mat-horizontal-stepper
+    class="mat-stepper flex h-full"
+    #stepper
+    [linear]="true"
+    (selectionChange)="onStepChange($event)"
+    [selectedIndex]="currentStepIndex"
+  >
     <!-- Step 1 -->
-    <mat-step label="account" class="flex h-full">
+    <mat-step
+      label="account"
+      class="flex h-full"
+      [completed]="firstFormGroup.valid"
+    >
       <form [formGroup]="firstFormGroup" class="flex flex-col gap-4 py-4">
         <input
           type="email"
@@ -11,7 +21,15 @@
           placeholder="Email"
           formControlName="email"
           autocomplete="email"
+          (blur)="emailBlurred = true"
         />
+        <div
+          *ngIf="
+            emailBlurred && firstFormGroup.controls['email'].errors?.['pattern']
+          "
+        >
+          <p class="text-xs text-red-600">Email format is not correct.</p>
+        </div>
         <!-- Password Field -->
         <input
           type="password"
@@ -25,17 +43,40 @@
           type="password"
           class="input-repeat-password peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
           placeholder="Repeat password"
-          formControlName="repeatPassword"
-          autocomplete="repeatPassword"
+          formControlName="confirmPassword"
+          autocomplete="confirmPassword"
         />
+        <div
+          *ngIf="
+            firstFormGroup.hasError('passwordsDontMatch') &&
+            (firstFormGroup.get('password')?.touched ||
+              firstFormGroup.get('confirmPassword')?.touched)
+          "
+        >
+          <p class="text-xs text-red-600">Passwords do not match.</p>
+        </div>
       </form>
-      <div class="flex justify-end">
-        <button matStepperNext class="duration-300 hover:scale-105">Next</button>
+      <div
+        [class.visible]="firstFormGroup.valid"
+        [class.hidden]="!firstFormGroup.valid"
+        class="animated-slide-in flex justify-end"
+      >
+        <button
+          matStepperNext
+          class="font-semibold text-white duration-300 hover:scale-105"
+          *ngIf="firstFormGroup.valid"
+        >
+          Next
+        </button>
       </div>
     </mat-step>
 
     <!-- Step 2 -->
-    <mat-step label="profile">
+    <mat-step
+      label="profile"
+      [completed]="firstFormGroup.valid && secondFormGroup.valid"
+      [editable]="firstFormGroup.valid"
+    >
       <form [formGroup]="secondFormGroup">
         <input
           type="text"
@@ -48,12 +89,19 @@
           <div class="image-center w-1/2">
             <img
               class="rounded-full border border-gray-700"
-              [src]="croppedImagePreview || '/assets/images/image-placeholder.png'"
+              [src]="
+                croppedImagePreview || '/assets/images/image-placeholder.png'
+              "
             />
           </div>
 
           <!-- Hidden File Input -->
-          <input type="file" hidden #inputField (change)="fileChangedEvent($event)" />
+          <input
+            type="file"
+            hidden
+            #inputField
+            (change)="fileChangedEvent($event)"
+          />
 
           <!-- Image Cropper -->
           <div *ngIf="isCropping" class="image-cropper-container">
@@ -76,30 +124,65 @@
       </form>
       <!-- Edit Button & Next button-->
       <div class="flex flex-row justify-between" *ngIf="!isCropping">
-        <button mat-mini-fab (click)="inputField.click()" class="duration-300 hover:scale-105">Edit photo</button>
-        <button matStepperNext class="duration-300 hover:scale-105">Next</button>
+        <button
+          mat-mini-fab
+          (click)="inputField.click()"
+          class="duration-300 hover:scale-105"
+        >
+          Edit photo
+        </button>
+        <div
+          [class.visible]="firstFormGroup.valid && secondFormGroup.valid"
+          [class.hidden]="!firstFormGroup.valid || !secondFormGroup.valid"
+          class="animated-slide-in flex justify-end"
+        >
+          <button
+            matStepperNext
+            class="font-semibold text-white duration-300 hover:scale-105"
+            *ngIf="firstFormGroup.valid"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </mat-step>
 
     <!-- Step 3 -->
-    <mat-step label="done!">
+    <mat-step
+      label="done!"
+      [completed]="firstFormGroup.valid && secondFormGroup.valid"
+    >
       <p class="text-xs">Review your details and submit to register account</p>
       <!-- Review profile -->
       <div class="flex flex-col pt-4 text-sm">
         <div class="pb-4">
           <p>Email:</p>
-          <p>{{ firstFormGroup.get('email')?.value }}</p>
+          <p>
+            {{ firstFormGroup.get('email')?.value }}
+          </p>
         </div>
         <div class="pb-4">
           <p>Username:</p>
-          <p>{{ secondFormGroup.get('username')?.value }}</p>
+          <p>
+            {{ secondFormGroup.get('username')?.value }}
+          </p>
         </div>
         <!-- Display additional fields if necessary -->
       </div>
       <!-- Register Button -->
-      <button matStepperNext class="flex w-full justify-center pt-12 underline duration-300 hover:scale-105" (click)="registerUser()">
-        Register Account
-      </button>
+      <div
+        class="animated-slide-in"
+        [class.visible]="firstFormGroup.valid && secondFormGroup.valid"
+        [class.hidden]="!firstFormGroup.valid || !secondFormGroup.valid"
+      >
+        <button
+          matStepperNext
+          class="flex w-full justify-center underline duration-300 hover:scale-105"
+          (click)="registerUser()"
+        >
+          Register Account
+        </button>
+      </div>
     </mat-step>
   </mat-horizontal-stepper>
   <!-- Divider -->
@@ -107,6 +190,10 @@
   <!-- Login Link -->
   <div class="mt-3 flex flex-row gap-8 text-xs" *ngIf="!isCropping">
     <p>Already have an account?</p>
-    <a class="cursor-pointer underline duration-300 hover:scale-110" (click)="toggleView.emit()">Login here</a>
+    <a
+      class="cursor-pointer underline duration-300 hover:scale-110"
+      (click)="toggleView.emit()"
+      >Login here</a
+    >
   </div>
 </div>

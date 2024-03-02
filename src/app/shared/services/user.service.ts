@@ -28,7 +28,6 @@ export class UserService {
   //HTTP
   //BACKEND COMMUNICATION
   getUserByEmail(email: string): Observable<any> {
-    console.log('email: ', email)
     return this.http.get(`${this.baseUrl}users/${email}`)
   }
 

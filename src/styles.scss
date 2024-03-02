@@ -18,7 +18,11 @@
 }
 
 .main:before {
-  background: radial-gradient(circle, rgba(92, 92, 104, 0.321) 0, #ffffff00 100%);
+  background: radial-gradient(
+    circle,
+    rgba(92, 92, 104, 0.321) 0,
+    #ffffff00 100%
+  );
   position: absolute;
   content: '';
   z-index: 2;
@@ -44,7 +48,11 @@
   z-index: 3;
   width: 100%;
   max-width: 640px;
-  background-image: radial-gradient(at 27% 37%, rgb(0, 106, 255) 0px, transparent 0%),
+  background-image: radial-gradient(
+      at 27% 37%,
+      rgb(0, 106, 255) 0px,
+      transparent 0%
+    ),
     radial-gradient(at 79% 53%, rgb(0, 128, 255) 0px, transparent 100%);
   position: absolute;
   content: '';
@@ -65,5 +73,16 @@
   @apply bg-gradient-to-r from-orange-400 via-stone-600 to-orange-400 bg-clip-text text-transparent;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.gradient-white {
+  @apply bg-gradient-to-r from-white via-stone-400 to-white bg-clip-text text-transparent;
+
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}

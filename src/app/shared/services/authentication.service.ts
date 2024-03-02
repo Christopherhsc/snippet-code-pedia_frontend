@@ -21,26 +21,19 @@ export class AuthenticationService {
       email: userInfo.email,
       username: userInfo.name,
       imageUrl: userInfo.picture,
-      ...(userInfo.password && { password: userInfo.password })
-    };
+      ...(userInfo.password && { password: userInfo.password }),
+      registrationMethod: userInfo.registrationMethod
+    }
 
-    sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
-    this.isAuthenticated = true;
-    this.router.navigate(['/']);
-    this.userService.updateUserProfile(userData);
-    return this.userService.saveUserData(userData);
+    sessionStorage.setItem('loggedInUser', JSON.stringify(userData))
+    this.isAuthenticated = true
+    this.router.navigate(['/'])
+    this.userService.updateUserProfile(userData)
+    return this.userService.saveUserData(userData)
   }
 
-  register(userData: any): void {
-    this.userService.saveUserData(userData).subscribe(
-      (response: string) => {
-        console.log('Registration successful', response)
-        this.createUser(response) // If you want to log in the user upon registration
-      },
-      (error: string) => {
-        console.error('Error during registration', error)
-      }
-    )
+  register(userData: any): Observable<any> {
+    return this.userService.saveUserData(userData)
   }
 
   private checkAuthentication() {

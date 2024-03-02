@@ -13,14 +13,13 @@ export class LoginComponent implements OnInit, AfterViewChecked {
   @Output() toggleView = new EventEmitter<void>()
   googleButtonRendered = false
 
-  constructor(
-    private authService: AuthenticationService
-  ) {}
+  constructor(private authService: AuthenticationService) {}
 
   ngOnInit(): void {
     // Initialize Google accounts
     google.accounts.id.initialize({
-      client_id: '680135166777-br7v67f58p397dcjr0an153i64paabh4.apps.googleusercontent.com',
+      client_id:
+        '680135166777-br7v67f58p397dcjr0an153i64paabh4.apps.googleusercontent.com',
       callback: (resp: any) => this.handleLogin(resp)
     })
   }
@@ -42,9 +41,15 @@ export class LoginComponent implements OnInit, AfterViewChecked {
   }
 
   handleLogin(response: any) {
+    const registrationType = 'GOOGLE';
     if (response) {
-      const payload = this.decodeToken(response.credential)
-      this.authService.createUser(payload)
+      const payload = this.decodeToken(response.credential);
+      this.authService.createUser({
+        ...payload,
+        registrationMethod: registrationType
+      }).subscribe({
+        error: err => console.error('Error creating user:', err) // Debug log
+      });
     }
   }
 }

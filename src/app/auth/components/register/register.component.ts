@@ -1,10 +1,33 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core'
-import { FormGroup, FormControl, Validators } from '@angular/forms'
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors
+} from '@angular/forms'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ImageCroppedEvent } from 'ngx-image-cropper'
 import { AuthenticationService } from 'src/app/shared/services/authentication.service'
 import { UserService } from 'src/app/shared/services/user.service'
 import { NgxImageCompressService, DataUrl } from 'ngx-image-compress'
+import { StepperSelectionEvent } from '@angular/cdk/stepper'
+
+export function passwordsMatchValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const password = control.get('password')?.value
+    const confirmPassword = control.get('confirmPassword')?.value
+
+    if (password && confirmPassword && password !== confirmPassword) {
+      return {
+        passwordsDontMatch: true
+      }
+    }
+
+    return null
+  }
+}
 
 @Component({
   selector: 'app-register',
@@ -24,6 +47,8 @@ export class RegisterComponent implements OnInit {
   selectedFile: File | null = null
   selectedImageFile: File | null = null
   imgResultAfterResize: string = ''
+  currentStepIndex = 0
+  emailBlurred = false
 
   constructor(
     public user: UserService,
@@ -41,15 +66,37 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.firstFormGroup = new FormGroup({
-      email: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
-      repeatPassword: new FormControl('', Validators.required)
-    })
+    this.firstFormGroup = new FormGroup(
+      {
+        email: new FormControl('', [
+          Validators.required,
+          Validators.pattern(/^.+@.+\..+$/)
+        ]),
+        password: new FormControl('', Validators.required),
+        confirmPassword: new FormControl('', Validators.required)
+      },
+      { validators: passwordsMatchValidator() }
+    )
 
     this.secondFormGroup = new FormGroup({
-      username: new FormControl('', Validators.required)
+      username: new FormControl('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(15)
+      ])
     })
+  }
+
+  onStepChange(event: StepperSelectionEvent): void {
+    if (event.selectedIndex > this.currentStepIndex) {
+      if (this.firstFormGroup.invalid && this.currentStepIndex === 0) {
+        this.currentStepIndex = 0 // Reset to the first step
+      } else {
+        this.currentStepIndex = event.selectedIndex
+      }
+    } else {
+      this.currentStepIndex = event.selectedIndex // Allow going back
+    }
   }
 
   fileChangedEvent(event: any): void {
@@ -106,28 +153,45 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  capitalizeFirstLetter(value: string): string {
+    if (value && value.length > 0) {
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+    return value
+  }
+
   registerUser() {
-    if (!this.firstFormGroup.get('email')?.value || !this.secondFormGroup.get('username')?.value) {
+    if (
+      !this.firstFormGroup.get('email')?.value ||
+      !this.secondFormGroup.get('username')?.value
+    ) {
       return
     }
 
+    const registrationType = 'SCP'
     const userData = {
       email: this.firstFormGroup.get('email')?.value,
       password: this.firstFormGroup.get('password')?.value,
-      name: this.secondFormGroup.get('username')?.value,
-      picture: this.imgResultAfterResize || 'assets/images/image-placeholder.png'
+      name: this.capitalizeFirstLetter(this.secondFormGroup.get('username')?.value),
+      picture: this.imgResultAfterResize || 'assets/images/image-placeholder.png',
+      registrationMethod: registrationType
     }
 
-    this.authService.createUser(userData).subscribe(
-      (response) => {
+    this.authService.createUser(userData).subscribe({
+      next: (response) => {
         console.log('User registration successful', response)
-        // Additional logic after successful registration
-        // Navigate to another page or show success message
+        // Navigate to a success page or show a success message
       },
-      (error) => {
-        console.error('Error during registration', error)
-        // Handle error here, like showing an error message to the user
+      error: (error) => {
+        if (error.error.message === 'Email already in use') {
+          // Show a specific message for duplicate email
+          alert('This email is already in use. Please use a different email.')
+        } else {
+          // Handle other errors
+          console.error('Error during registration', error)
+          alert('An error occurred during registration. Please try again later.')
+        }
       }
-    )
+    })
   }
 }

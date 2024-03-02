@@ -7,6 +7,30 @@
   max-height: 200px;
 }
 
+.animated-slide-in.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(-400%);
+}
+
+.animated-slide-in.visible {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(0);
+  animation: 1s ease-out 0s 1 slideInFromLeft;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-400%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 ::ng-deep .mat-stepper-vertical,
 .mat-stepper-horizontal {
   --mat-stepper-container-color: transparent !important;
