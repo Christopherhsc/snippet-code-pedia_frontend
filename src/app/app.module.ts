@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
+import { ToastrModule } from 'ngx-toastr'
 
 //custom modules
 import { SharedModule } from './shared/shared.module'
@@ -16,7 +17,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 @NgModule({
   declarations: [AppComponent, CardComponent, HomeComponent],
-  imports: [BrowserModule, AppRoutingModule, SharedModule, AuthModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    SharedModule,
+    AuthModule,
+    ToastrModule.forRoot()
+  ],
   providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })

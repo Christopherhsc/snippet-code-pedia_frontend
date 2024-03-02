@@ -1,8 +1,10 @@
 <div class="h-full px-8 text-white">
   <h2 class="pb-4 text-2xl font-bold">Login</h2>
-  <form action="" class="form-login flex flex-col gap-4 py-4">
+  <form (ngSubmit)="onFormSubmit()" class="form-login flex flex-col gap-4 py-4">
     <!-- Email Field -->
     <input
+      [(ngModel)]="email"
+      name="email"
       type="email"
       autocomplete="email"
       class="input-email peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
@@ -11,22 +13,33 @@
 
     <!-- Password Field -->
     <input
+      [(ngModel)]="password"
+      name="password"
       type="password"
       autocomplete="current-password"
       class="input-password peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
       placeholder="Password"
     />
     <!-- Login Button -->
-    <button class="btn-login py-2 duration-300 hover:scale-105">Login</button>
+    <button type="submit" class="btn-login py-2 duration-300 hover:scale-105">
+      Login
+    </button>
   </form>
   <!-- Google Button -->
-  <button id="google-btn" class="btn-google flex w-full items-center justify-center"></button>
+  <button
+    id="google-btn"
+    class="btn-google flex w-full items-center justify-center"
+  ></button>
   <!-- Divider -->
   <app-divider></app-divider>
 
   <!-- Registration Link -->
   <div class="mt-3 flex flex-row gap-8 text-xs">
     <p>Don't have an account?</p>
-    <a class="cursor-pointer underline duration-300 hover:scale-110" (click)="toggleView.emit()">Register here</a>
+    <a
+      class="cursor-pointer underline duration-300 hover:scale-110"
+      (click)="toggleView.emit()"
+      >Register here</a
+    >
   </div>
 </div>

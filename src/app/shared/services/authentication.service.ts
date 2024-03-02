@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
-import { Router } from '@angular/router'
 import { UserService } from './user.service'
-import { Observable } from 'rxjs'
+import { Observable, catchError, tap, throwError } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +8,7 @@ import { Observable } from 'rxjs'
 export class AuthenticationService {
   private isAuthenticated = false
 
-  constructor(
-    private userService: UserService,
-    private router: Router
-  ) {
+  constructor(private userService: UserService) {
     this.checkAuthentication()
   }
 
@@ -25,15 +21,38 @@ export class AuthenticationService {
       registrationMethod: userInfo.registrationMethod
     }
 
-    sessionStorage.setItem('loggedInUser', JSON.stringify(userData))
-    this.isAuthenticated = true
-    this.router.navigate(['/'])
-    this.userService.updateUserProfile(userData)
-    return this.userService.saveUserData(userData)
+    return this.userService.saveUserData(userData).pipe(
+      tap((response) => {
+        // Set item in sessionStorage and update authentication status only after successful response
+        sessionStorage.setItem('loggedInUser', JSON.stringify(response))
+        this.isAuthenticated = true
+        this.userService.updateUserProfile(response)
+      }),
+      catchError((error) => {
+        console.error('Error in createUser:', error)
+        return throwError(() => new Error(error))
+      })
+    )
   }
 
   register(userData: any): Observable<any> {
     return this.userService.saveUserData(userData)
+  }
+
+  loginSCP(email: string, password: string): Observable<any> {
+    return this.userService.loginUser(email, password).pipe(
+      tap((response) => {
+        // Handle successful login
+        sessionStorage.setItem('loggedInUser', JSON.stringify(response))
+        this.isAuthenticated = true
+        this.userService.updateUserProfile(response.user)
+        console.log('response', response)
+      }),
+      catchError((error) => {
+        console.error('Error in SCP login:', error)
+        return throwError(() => new Error(error))
+      })
+    )
   }
 
   private checkAuthentication() {

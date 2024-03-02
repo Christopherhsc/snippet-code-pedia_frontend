@@ -27,11 +27,12 @@ export class UserService {
 
   //HTTP
   //BACKEND COMMUNICATION
-  getUserByEmail(email: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}users/${email}`)
-  }
-
   saveUserData(userData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}users/new`, userData)
+  }
+
+  loginUser(email: string, password: string): Observable<any> {
+    // Replace with your API endpoint for SCP user login
+    return this.http.post(`${this.baseUrl}users/login`, { email, password })
   }
 }

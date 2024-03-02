@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, NgZone, OnInit, Output } from '@angular/core'
 import {
   FormGroup,
   FormControl,
@@ -8,11 +8,17 @@ import {
   ValidationErrors
 } from '@angular/forms'
 import { DomSanitizer } from '@angular/platform-browser'
+import { Router } from '@angular/router'
+import { StepperSelectionEvent } from '@angular/cdk/stepper'
+
+// NGX
 import { ImageCroppedEvent } from 'ngx-image-cropper'
+import { NgxImageCompressService, DataUrl } from 'ngx-image-compress'
+
+// SERVICS
 import { AuthenticationService } from 'src/app/shared/services/authentication.service'
 import { UserService } from 'src/app/shared/services/user.service'
-import { NgxImageCompressService, DataUrl } from 'ngx-image-compress'
-import { StepperSelectionEvent } from '@angular/cdk/stepper'
+import { CustomToastrService } from 'src/app/shared/services/custom-toastr.service'
 
 export function passwordsMatchValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -24,7 +30,6 @@ export function passwordsMatchValidator(): ValidatorFn {
         passwordsDontMatch: true
       }
     }
-
     return null
   }
 }
@@ -54,7 +59,10 @@ export class RegisterComponent implements OnInit {
     public user: UserService,
     public authService: AuthenticationService,
     private sanitizer: DomSanitizer,
-    private imageCompress: NgxImageCompressService
+    private imageCompress: NgxImageCompressService,
+    private router: Router,
+    private customToaster: CustomToastrService,
+    private ngZone: NgZone
   ) {}
 
   get email() {
@@ -179,18 +187,23 @@ export class RegisterComponent implements OnInit {
 
     this.authService.createUser(userData).subscribe({
       next: (response) => {
-        console.log('User registration successful', response)
-        // Navigate to a success page or show a success message
+        this.customToaster.success(
+          `Welcome to Snippet-Code-Pedia ${response.username}`,
+          'Registration successful!'
+        )
+        this.ngZone.run(() => {
+          this.router.navigate(['/'])
+        })
       },
       error: (error) => {
-        if (error.error.message === 'Email already in use') {
-          // Show a specific message for duplicate email
-          alert('This email is already in use. Please use a different email.')
-        } else {
-          // Handle other errors
-          console.error('Error during registration', error)
-          alert('An error occurred during registration. Please try again later.')
-        }
+        console.error('Error during registration', error)
+
+        // Correctly access the nested error message
+        const errorMessage = error.message
+
+        // For other errors
+        this.customToaster.error(`${errorMessage}`, 'Something went wrong')
+        this.router.navigate(['login'])
       }
     })
   }
