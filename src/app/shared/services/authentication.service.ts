@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { UserService } from './user.service'
 import { Observable, catchError, tap, throwError } from 'rxjs'
+import { CustomToastrService } from './custom-toastr.service'
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,10 @@ import { Observable, catchError, tap, throwError } from 'rxjs'
 export class AuthenticationService {
   private isAuthenticated = false
 
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private customToaster: CustomToastrService
+  ) {
     this.checkAuthentication()
   }
 
@@ -29,8 +33,19 @@ export class AuthenticationService {
         this.userService.updateUserProfile(response)
       }),
       catchError((error) => {
+        let errorMessage = 'An error occurred'
+
+        // Check if the error response has a message
+        if (error.error && error.error.message) {
+          errorMessage = error.error.message
+        }
+
+        this.customToaster.error(errorMessage, 'Registration Error')
+
         console.error('Error in createUser:', error)
-        return throwError(() => new Error(error))
+
+        // Re-throw the error as an Observable
+        return throwError(() => new Error(errorMessage))
       })
     )
   }

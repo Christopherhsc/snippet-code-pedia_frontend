@@ -197,13 +197,6 @@ export class RegisterComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error during registration', error)
-
-        // Correctly access the nested error message
-        const errorMessage = error.message
-
-        // For other errors
-        this.customToaster.error(`${errorMessage}`, 'Something went wrong')
-        this.router.navigate(['login'])
       }
     })
   }
