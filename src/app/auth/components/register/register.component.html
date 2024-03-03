@@ -1,5 +1,5 @@
 <div class="h-full px-8 text-white">
-  <h2 class="pb-4 text-2xl font-bold" *ngIf="!isCropping">Register Account</h2>
+  <h2 class="pb-4 text-2xl" *ngIf="!isCropping">Register Account</h2>
 
   <mat-horizontal-stepper
     class="mat-stepper flex h-full"
@@ -9,11 +9,7 @@
     [selectedIndex]="currentStepIndex"
   >
     <!-- Step 1 -->
-    <mat-step
-      label="account"
-      class="flex h-full"
-      [completed]="firstFormGroup.valid"
-    >
+    <mat-step label="account" class="flex h-full" [completed]="firstFormGroup.valid">
       <form [formGroup]="firstFormGroup" class="flex flex-col gap-4 py-4">
         <input
           type="email"
@@ -23,11 +19,7 @@
           autocomplete="email"
           (blur)="emailBlurred = true"
         />
-        <div
-          *ngIf="
-            emailBlurred && firstFormGroup.controls['email'].errors?.['pattern']
-          "
-        >
+        <div *ngIf="emailBlurred && firstFormGroup.controls['email'].errors?.['pattern']">
           <p class="text-xs text-red-600">Email format is not correct.</p>
         </div>
         <!-- Password Field -->
@@ -89,19 +81,12 @@
           <div class="image-center w-1/2">
             <img
               class="rounded-full border border-gray-700"
-              [src]="
-                croppedImagePreview || '/assets/images/image-placeholder.png'
-              "
+              [src]="croppedImagePreview || '/assets/images/image-placeholder.png'"
             />
           </div>
 
           <!-- Hidden File Input -->
-          <input
-            type="file"
-            hidden
-            #inputField
-            (change)="fileChangedEvent($event)"
-          />
+          <input type="file" hidden #inputField (change)="fileChangedEvent($event)" />
 
           <!-- Image Cropper -->
           <div *ngIf="isCropping" class="image-cropper-container">
@@ -148,10 +133,7 @@
     </mat-step>
 
     <!-- Step 3 -->
-    <mat-step
-      label="done!"
-      [completed]="firstFormGroup.valid && secondFormGroup.valid"
-    >
+    <mat-step label="done!" [completed]="firstFormGroup.valid && secondFormGroup.valid">
       <p class="text-xs">Review your details and submit to register account</p>
       <!-- Review profile -->
       <div class="flex flex-col pt-4 text-sm">

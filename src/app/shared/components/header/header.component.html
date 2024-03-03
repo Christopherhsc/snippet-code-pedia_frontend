@@ -1,26 +1,85 @@
 <nav class="m-2 flex w-full justify-around border-b-2">
+  <!-- Logo and Title -->
   <button class="mb-2 rounded-lg p-2 hover:bg-gray-300">
     <a routerLink="/" class="row-auto flex">
-      <img src="/assets/images/LOGO.png" alt="logo" width="50" height="50" class="object-contain" />
-      <p class="font-satoshi flex flex-row items-center text-lg font-bold tracking-wide text-stone-600 max-sm:hidden">
+      <img
+        src="/assets/images/LOGO.png"
+        alt="logo"
+        width="50"
+        height="50"
+        class="object-contain"
+      />
+      <p
+        class="font-satoshi flex flex-row items-center text-xl tracking-wide text-stone-500 max-lg:hidden"
+      >
         Snippet-Code-Pedia
       </p>
     </a>
   </button>
+
+  <!-- Login Button -->
   <button *ngIf="!authService.isLoggedIn()" class="p-1">
-    <span>
-      <a
-        routerLink="login"
-        routerLinkActive="bg-gray-700 text-white"
-        class="text-md font-inter flex items-center justify-center rounded-md px-5 py-1.5 text-center font-bold transition-all hover:bg-gray-300"
-        >Login</a
-      >
-    </span>
+    <a
+      routerLink="login"
+      routerLinkActive="bg-gray-700 text-white"
+      class="text-md font-inter flex items-center justify-center rounded-md px-5 py-1.5 text-center transition-all hover:bg-gray-300"
+    >
+      Login
+    </a>
   </button>
+
+  <!-- User Logged In -->
   <div class="mb-2 flex items-center justify-center" *ngIf="authService.isLoggedIn()">
+    <!-- Hidden on small screens, visible on larger screens -->
+    <div class="hidden items-center gap-4 sm:flex">
+      <button
+        class="font-inter flex rounded-md p-2 text-center hover:bg-gray-300 hover:text-black"
+      >
+        Create Snippet
+      </button>
+      <button
+        class="font-inter flex rounded-md p-2 text-center hover:bg-gray-300 hover:text-red-600"
+        (click)="logout()"
+        #profileButton
+      >
+        Log out
+      </button>
+      <!-- Profile Button for larger screens -->
+      <a
+        routerLink="/profile"
+        class="text-md font-inter flex rounded-md p-2 text-center hover:bg-gray-300 hover:text-black"
+      >
+        <!-- User Profile Info -->
+        <div
+          class="flex items-center gap-2"
+          (mouseenter)="onMouseEnter()"
+          (mouseleave)="onMouseLeave()"
+        >
+          <img
+            *ngIf="userProfile?.imageUrl"
+            [src]="userProfile?.imageUrl"
+            alt="Profile"
+            width="40"
+            height="40"
+            class="rounded-full border border-gray-700"
+          />
+          <div class="flex w-full flex-col text-left">
+            <span class="text-stone-500"> {{ userProfile?.username }} </span>
+            <span *ngIf="!isHovering" class="text-xs font-semibold text-gray-400">{{
+              userProfile?.email
+            }}</span>
+            <span *ngIf="isHovering" class="text-xs font-semibold text-gray-400"
+              >Click to go to your profile</span
+            >
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- User Profile Button for small screens -->
     <button
-      class="text-md font-inter flex rounded-md p-2 text-center hover:bg-gray-300 hover:text-black"
-      (click)="logout()"
+      class="text-md font-inter flex rounded-md p-2 text-center hover:bg-gray-300 hover:text-black sm:hidden"
+      (click)="toggleNavList()"
     >
       <div class="flex items-center gap-2">
         <img
@@ -29,11 +88,10 @@
           alt="Profile"
           width="40"
           height="40"
-          referrerpolicy="no-referrer"
-          class="rounded-full border border-gray-700"
+          class="xs:flex hidden rounded-full border border-gray-700"
         />
         <div class="flex flex-col text-left">
-          <span class="font-bold text-stone-500"> {{ userProfile?.username }} </span>
+          <span class="text-stone-500"> {{ userProfile?.username }} </span>
           <span class="text-xs font-semibold text-gray-400">
             {{ userProfile?.email }}
           </span>
