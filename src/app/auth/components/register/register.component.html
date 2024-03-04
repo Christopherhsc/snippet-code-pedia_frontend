@@ -13,7 +13,7 @@
       <form [formGroup]="firstFormGroup" class="flex flex-col gap-4 py-4">
         <input
           type="email"
-          class="input-email peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
+          class="input-email peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm tracking-widest focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
           placeholder="Email"
           formControlName="email"
           autocomplete="email"
@@ -55,7 +55,7 @@
       >
         <button
           matStepperNext
-          class="font-semibold text-white duration-300 hover:scale-105"
+          class="font-semibold tracking-widest text-white duration-300 hover:scale-105"
           *ngIf="firstFormGroup.valid"
         >
           Next
@@ -72,7 +72,7 @@
       <form [formGroup]="secondFormGroup">
         <input
           type="text"
-          class="peer mt-4 block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
+          class="peer mt-4 block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 text-sm tracking-widest focus:border-orange-500 focus:outline-none focus:ring-0 dark:focus:border-orange-500"
           placeholder="Username"
           formControlName="username"
         />
@@ -123,7 +123,7 @@
         >
           <button
             matStepperNext
-            class="font-semibold text-white duration-300 hover:scale-105"
+            class="font-semibold tracking-widest text-white duration-300 hover:scale-105"
             *ngIf="firstFormGroup.valid"
           >
             Next
@@ -159,7 +159,7 @@
       >
         <button
           matStepperNext
-          class="flex w-full justify-center underline duration-300 hover:scale-105"
+          class="flex w-full justify-center tracking-widest underline duration-300 hover:scale-105"
           (click)="registerUser()"
         >
           Register Account

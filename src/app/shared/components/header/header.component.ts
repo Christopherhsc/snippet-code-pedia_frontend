@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Router } from '@angular/router'
 import { AuthenticationService } from '../../services/authentication.service'
-import { Subscription } from 'rxjs'
+import { Subscription } from 'rxjs/internal/Subscription'
 import { UserService } from '../../services/user.service'
 import { NavigationService } from '../../services/navigation.service'
 
@@ -11,8 +11,10 @@ import { NavigationService } from '../../services/navigation.service'
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  userProfile: any
+  private navVisibilitySubscription: Subscription = new Subscription()
   private authSubscription?: Subscription
+
+  userProfile: any
   navListVisible = false
   isHovering: boolean = false
 
@@ -27,12 +29,39 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authSubscription = this.UserService.userProfile$.subscribe((profile) => {
       this.userProfile = profile
     })
+    this.navVisibilitySubscription = this.navService.navListVisible$.subscribe(
+      (visible) => {
+        this.navListVisible = visible
+      }
+    )
   }
 
   ngOnDestroy() {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe()
     }
+    this.navVisibilitySubscription.unsubscribe()
+  }
+
+  goToHome() {
+    this.router.navigate(['/'])
+    this.navService.setNavListVisible(false)
+  }
+
+  goToLogin() {
+    this.router.navigate(['login'])
+    this.navService.setNavListVisible(false)
+  }
+
+  goToCreateSnippet() {
+    this.router.navigate(['/snippet'])
+    this.navService.setNavListVisible(false)
+  }
+
+  logout() {
+    this.authService.logout()
+    this.router.navigate(['/'])
+    this.navService.setNavListVisible(false)
   }
 
   onMouseEnter() {
@@ -45,10 +74,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   toggleNavList() {
     this.navService.toggleNavListVisible()
-  }
-
-  logout() {
-    this.authService.logout()
-    this.router.navigate(['/'])
   }
 }

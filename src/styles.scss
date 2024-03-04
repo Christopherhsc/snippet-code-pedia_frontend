@@ -58,7 +58,6 @@
   font-weight: 600;
 }
 
-
 @media screen and (max-width: 640px) {
   .main {
     padding: 0;
@@ -69,8 +68,8 @@
   @apply bg-gradient-to-r from-orange-400 via-stone-600 to-orange-400 bg-clip-text text-transparent;
 }
 
-.gradient-white {
-  @apply bg-gradient-to-r from-white via-stone-400 to-white bg-clip-text text-transparent;
+.li-button {
+  @apply flex cursor-pointer rounded-md py-2 px-4 text-center hover:bg-gray-300 ;
 }
 
 html,

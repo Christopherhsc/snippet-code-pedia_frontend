@@ -1,4 +1,4 @@
-<div [@fadeInOut] class="flex w-full flex-col items-center" *ngIf="showHomeComponent">
+<div class="flex w-full flex-col items-center">
   <h1
     class="gradient-orange mt-5 text-center text-5xl font-extrabold leading-[1.15] sm:text-6xl"
   >
@@ -8,9 +8,7 @@
     Snippet-Pedia is an open-source combination of HTML CSS and Tailwind to create new and
     aesthetic frontend
   </p>
-  <div *ngIf="auth.isLoggedIn()">
+  <div>
     <app-card></app-card>
   </div>
 </div>
-
-<app-navMobile *ngIf="showNavCompent && auth.isLoggedIn()"></app-navMobile>

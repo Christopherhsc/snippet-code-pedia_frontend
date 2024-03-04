@@ -8,11 +8,13 @@ import { Subscription } from 'rxjs/internal/Subscription'
   selector: 'app-navMobile',
   template: `
     <!-- Nav List for small screens -->
-    <div  class="z-10 text-2xl text-black sm:hidden">
+    <div class="z-10 text-2xl text-black sm:hidden">
       <ul class="p-4">
         <li class="py-2"><button (click)="home()">Home</button></li>
         <li class="py-2"><a routerLink="/profile">Profile</a></li>
-        <li class="py-2"><button>Create Snippet</button></li>
+        <li class="py-2">
+          <button (click)="goToCreateSnippet()">Create Snippet</button>
+        </li>
         <li class="py-6 text-red-600"><button (click)="logout()">Log Out</button></li>
       </ul>
     </div>
@@ -38,11 +40,13 @@ export class NavMobileComponent implements OnDestroy {
     this.navVisibilitySubscription.unsubscribe()
   }
 
-
-
   home() {
     this.router.navigate(['/'])
     this.navService.setNavListVisible(false)
+  }
+
+  goToCreateSnippet() {
+    this.router.navigate(['/snippet'])
   }
 
   logout() {

@@ -3,5 +3,10 @@
 </div>
 <main class="app overflow-hidden">
   <app-header />
-  <router-outlet />
+  <div [@fadeInOut] *ngIf="showHomeComponent">
+    <router-outlet />
+  </div>
+  <div>
+    <app-navMobile *ngIf="showNavCompent && auth.isLoggedIn()"></app-navMobile>
+  </div>
 </main>
