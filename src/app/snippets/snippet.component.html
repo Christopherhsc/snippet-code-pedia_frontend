@@ -2,5 +2,11 @@
   <h1>
     <p class="p-4">{{ userProfile.username }}'s Dashboard</p>
   </h1>
-  <app-snippets-overview></app-snippets-overview>
+  <div>
+    <div class="hidden w-full sm:flex sm:justify-center lg:justify-end pb-4">
+      <button (click)="goToCreateSnippet()" class="li-button text-green-400">Create a new Snippet +</button>
+    </div>
+
+    <app-snippets-overview></app-snippets-overview>
+  </div>
 </div>

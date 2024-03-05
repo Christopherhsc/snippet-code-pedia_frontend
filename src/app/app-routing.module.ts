@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'snippet',
-    component: SnippetComponent
+    loadChildren: () => import('./snippets/snippets.module').then((m) => m.SnippetsModule)
   }
 ]
 

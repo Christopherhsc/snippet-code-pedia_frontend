@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   goToProfile() {}
 
-  goToCreateSnippet() {
+  goToSnippet() {
     this.router.navigate(['/snippet'])
     this.navService.setNavListVisible(false)
   }

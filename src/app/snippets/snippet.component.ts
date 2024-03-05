@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { AuthenticationService } from 'src/app/shared/services/authentication.service'
 import { UserService } from 'src/app/shared/services/user.service'
@@ -14,8 +15,13 @@ export class SnippetComponent implements OnInit {
 
   constructor(
     public authService: AuthenticationService,
-    public UserService: UserService
+    public UserService: UserService,
+    private router: Router
   ) {}
+
+  goToCreateSnippet(){
+    this.router.navigate(['snippet/create'])
+  }
 
   ngOnInit() {
     this.authSubscription = this.UserService.userProfile$.subscribe((profile) => {

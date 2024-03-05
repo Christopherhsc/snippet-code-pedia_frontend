@@ -13,11 +13,8 @@ import { AuthModule } from './auth/auth.module'
 //custom components
 import { HomeComponent } from './home/home.component'
 import { CardComponent } from './home/components/card/card.component'
-import { SnippetComponent } from './snippets/snippet.component'
-import { SnippetsOverviewComponent } from './snippets/components/snippets-overview/snippets-overview.component'
 
-//ang mat
-import { MatIconModule } from '@angular/material/icon'
+
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 
@@ -26,8 +23,6 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     AppComponent,
     CardComponent,
     HomeComponent,
-    SnippetComponent,
-    SnippetsOverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +31,6 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     SharedModule,
     AuthModule,
 
-    MatIconModule,
 
     ToastrModule.forRoot()
   ],
