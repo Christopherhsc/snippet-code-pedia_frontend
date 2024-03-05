@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { HomeComponent } from './home/home.component'
-import { SnippetComponent } from './snippets/components/snippet/snippet.component'
+import { SnippetComponent } from './snippets/snippet.component'
 
 const routes: Routes = [
   {

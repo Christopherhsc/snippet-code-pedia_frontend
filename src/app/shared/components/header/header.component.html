@@ -1,7 +1,7 @@
 <nav class="m-2 flex w-full justify-around border-b-2">
   <!-- Logo and Title -->
   <button class="mb-2 rounded-lg p-2 hover:bg-gray-300">
-    <a routerLink="/" class="row-auto flex">
+    <a (click)="goToHome()" class="row-auto flex">
       <img
         src="/assets/images/LOGO.png"
         alt="logo"
@@ -10,7 +10,7 @@
         class="object-contain"
       />
       <p
-        class="font-satoshi flex flex-row items-center text-xl tracking-wide text-stone-500 max-lg:hidden"
+        class="flex flex-row items-center text-xl tracking-wide text-stone-500 max-lg:hidden"
       >
         Snippet-Code-Pedia
       </p>
@@ -22,7 +22,7 @@
     <a
       routerLink="login"
       routerLinkActive="bg-gray-700 text-white"
-      class="text-md font-inter flex items-center justify-center rounded-md px-5 py-1.5 text-center transition-all hover:bg-gray-300"
+      class="li-button hover:bg-gray-300"
     >
       Login
     </a>
@@ -31,25 +31,13 @@
   <!-- User Logged In -->
   <div class="mb-2 flex items-center justify-center" *ngIf="authService.isLoggedIn()">
     <!-- Hidden on small screens, visible on larger screens -->
-    <div class="hidden items-center gap-4 sm:flex">
-      <button
-        class="font-inter flex rounded-md p-2 text-center hover:bg-gray-300 hover:text-black"
-        (click)="goToCreateSnippet()"
-      >
-        Snippet
-      </button>
-      <button
-        class="font-inter flex rounded-md p-2 text-center hover:bg-gray-300 hover:text-red-600"
-        (click)="logout()"
-        #profileButton
-      >
+    <ul class="hidden items-center gap-4 sm:flex">
+      <li class="li-button hover:text-black" (click)="goToCreateSnippet()">Snippet</li>
+      <li class="li-button hover:text-red-600" (click)="logout()" #profileButton>
         Log out
-      </button>
+      </li>
       <!-- Profile Button for larger screens -->
-      <a
-        routerLink="/profile"
-        class="text-md font-inter flex rounded-md p-2 text-center hover:bg-gray-300 hover:text-black"
-      >
+      <button (click)="goToProfile()" class="li-button hover:text-black">
         <!-- User Profile Info -->
         <div
           class="flex items-center gap-2"
@@ -66,22 +54,19 @@
           />
           <div class="flex w-full flex-col text-left">
             <span class="text-stone-500"> {{ userProfile?.username }} </span>
-            <span *ngIf="!isHovering" class="text-xs font-semibold text-gray-400">{{
+            <span *ngIf="!isHovering" class="text-xs text-gray-400">{{
               userProfile?.email
             }}</span>
-            <span *ngIf="isHovering" class="text-xs font-semibold text-gray-400"
+            <span *ngIf="isHovering" class="text-xs text-gray-400"
               >Click to go to your profile</span
             >
           </div>
         </div>
-      </a>
-    </div>
+      </button>
+    </ul>
 
     <!-- User Profile Button for small screens -->
-    <button
-      class="text-md font-inter flex rounded-md p-2 text-center hover:bg-gray-300 hover:text-black sm:hidden"
-      (click)="toggleNavList()"
-    >
+    <button class="li-button hover:text-black sm:hidden" (click)="toggleNavList()">
       <div class="flex items-center gap-2">
         <img
           *ngIf="userProfile?.imageUrl"
@@ -89,11 +74,11 @@
           alt="Profile"
           width="40"
           height="40"
-          class="xs:flex hidden rounded-full border border-gray-700"
+          class="hidden rounded-full border border-gray-700 xs:flex"
         />
         <div class="flex flex-col text-left">
           <span class="text-stone-500"> {{ userProfile?.username }} </span>
-          <span class="text-xs font-semibold text-gray-400">
+          <span class="text-xs text-gray-400">
             {{ userProfile?.email }}
           </span>
         </div>

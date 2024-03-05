@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs/internal/Subscription'
         <li class="py-2"><button (click)="home()">Home</button></li>
         <li class="py-2"><a routerLink="/profile">Profile</a></li>
         <li class="py-2">
-          <button (click)="goToCreateSnippet()">Create Snippet</button>
+          <button (click)="goToSnippet()">Create Snippet</button>
         </li>
         <li class="py-6 text-red-600"><button (click)="logout()">Log Out</button></li>
       </ul>
@@ -45,8 +45,9 @@ export class NavMobileComponent implements OnDestroy {
     this.navService.setNavListVisible(false)
   }
 
-  goToCreateSnippet() {
+  goToSnippet() {
     this.router.navigate(['/snippet'])
+    this.navService.setNavListVisible(false)
   }
 
   logout() {
