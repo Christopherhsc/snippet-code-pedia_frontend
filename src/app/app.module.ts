@@ -14,23 +14,17 @@ import { AuthModule } from './auth/auth.module'
 import { HomeComponent } from './home/home.component'
 import { CardComponent } from './home/components/card/card.component'
 
-
-
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CardComponent,
-    HomeComponent,
-  ],
+  declarations: [AppComponent, CardComponent, HomeComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+
     AppRoutingModule,
     SharedModule,
     AuthModule,
-
 
     ToastrModule.forRoot()
   ],

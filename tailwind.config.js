@@ -5,6 +5,10 @@ module.exports = {
     extend: {
       screens: {
         xs: '350px'
+      },
+      backdropFilter: {
+        none: 'none',
+        blur: 'blur(20px)'
       }
     }
   },

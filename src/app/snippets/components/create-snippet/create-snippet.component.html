@@ -1,1 +1,95 @@
-<p>create-snippet works!</p>
+<form
+  [formGroup]="snippetForm"
+  (ngSubmit)="onSubmit()"
+  class="mx-auto max-w-screen-lg bg-gradient-to-bl from-slate-500 to-stone-900 p-8 lg:my-4 lg:rounded-md"
+>
+  <div class="mb-4">
+    <label class="mb-2 block text-sm font-bold text-white" for="title"
+      >Title of snippet</label
+    >
+    <input
+      class="focus:shadow-outline w-full appearance-none rounded border bg-opacity-100 px-2 py-1 leading-tight text-black shadow focus:outline-none"
+      id="title"
+      type="text"
+      formControlName="title"
+      placeholder="Form with glassmorphism"
+    />
+  </div>
+
+  <div class="mb-4">
+    <label class="mb-2 block text-sm font-bold text-white" for="title"
+      >Description of snippet</label
+    >
+    <input
+      class="focus:shadow-outline w-full appearance-none rounded border bg-opacity-100 px-2 py-1 leading-tight text-black shadow focus:outline-none"
+      id="title"
+      type="text"
+      formControlName="title"
+      placeholder="Crafting a minimalist form with a glassmorphism aesthetic."
+    />
+  </div>
+
+  <div class="mb-4">
+    <label class="mb-2 block text-sm font-bold text-white" for="snippetText">
+      Add your HTML / Tailwind here
+    </label>
+    <textarea
+      class="focus:shadow-outline h-32 w-full appearance-none rounded border bg-opacity-100 p-2 leading-tight text-black shadow focus:outline-none"
+      id="snippetText"
+      formControlName="snippetText"
+      placeholder='<form 
+class="form-cotainer mx-auto max-w-screen-lg bg-gradient-to-bl from-slate-500 to-stone-900 
+p-8 lg:my-4 lg:rounded-md">
+Hello ${You}
+</form>'
+    ></textarea>
+  </div>
+
+  <button
+    type="button"
+    class="focus:shadow-outline li-button my-8 bg-gradient-to-bl from-slate-500 to-stone-900 p-4 text-sky-300 transition-all hover:text-white focus:outline-none"
+    (click)="toggleCssTextarea()"
+  >
+    CSS
+  </button>
+
+  <div *ngIf="showCssTextarea" class="mb-4">
+    <label class="mb-2 block text-sm font-bold text-white" for="snippetStyle">
+      Add your CSS styling here
+    </label>
+    <textarea
+      class="focus:shadow-outline h-32 w-full appearance-none rounded border bg-opacity-100 p-2 leading-tight text-black shadow focus:outline-none"
+      id="snippetStyle"
+      formControlName="snippetStyle"
+      placeholder='.form-container{
+height: min-content;
+width: 350px;
+    
+    &:hover{
+        border: 1px solid #fff;
+    }
+}
+      '
+    ></textarea>
+  </div>
+
+  <div class="mb-4">
+    <label class="mb-2 block text-sm font-bold text-white" for="tags"
+      >Add your tags here</label
+    >
+    <input
+      class="focus:shadow-outline w-full appearance-none rounded border bg-opacity-100 px-2 py-1 leading-tight text-black shadow focus:outline-none"
+      id="tags"
+      type="text"
+      placeholder="#header, #footer, #idea, etc."
+      formControlName="tags"
+    />
+  </div>
+
+  <button
+    type="submit"
+    class="focus:shadow-outline li-button bg-gradient-to-bl from-slate-500 to-stone-900 p-4 text-sky-300 transition-all hover:text-white focus:outline-none"
+  >
+    Submit
+  </button>
+</form>
