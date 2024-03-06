@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { FormBuilder, FormGroup } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-create-snippet',
@@ -9,20 +9,20 @@ import { FormBuilder, FormGroup } from '@angular/forms'
 })
 export class CreateSnippetComponent {
   snippetForm: FormGroup
-  showCssTextarea: boolean = false;
+  showCssTextarea: boolean = false
 
   constructor(private formBuilder: FormBuilder) {
     this.snippetForm = this.formBuilder.group({
-      title: [''],
-      description: [''],
-      snippetTemplate: [''],
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      snippetTemplate: ['', Validators.required],
       snippetStyle: [''],
       tags: ['']
     })
   }
 
   toggleCssTextarea() {
-    this.showCssTextarea = !this.showCssTextarea;
+    this.showCssTextarea = !this.showCssTextarea
   }
 
   onSubmit() {

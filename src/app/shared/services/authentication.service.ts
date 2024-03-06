@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { UserService } from './user.service'
 import { Observable, catchError, tap, throwError } from 'rxjs'
 import { CustomToastrService } from './custom-toastr.service'
+import { DataService } from './data.service'
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class AuthenticationService {
 
   constructor(
     private userService: UserService,
-    private customToaster: CustomToastrService
+    private customToaster: CustomToastrService,
+    private dataService: DataService
   ) {
     this.checkAuthentication()
   }
@@ -25,7 +27,7 @@ export class AuthenticationService {
       registrationMethod: userInfo.registrationMethod
     }
 
-    return this.userService.saveUserData(userData).pipe(
+    return this.dataService.saveUserData(userData).pipe(
       tap((response) => {
         // Set item in sessionStorage and update authentication status only after successful response
         sessionStorage.setItem('loggedInUser', JSON.stringify(response))
@@ -51,16 +53,25 @@ export class AuthenticationService {
   }
 
   register(userData: any): Observable<any> {
-    return this.userService.saveUserData(userData)
+    return this.dataService.saveUserData(userData)
   }
 
   loginSCP(email: string, password: string): Observable<any> {
-    return this.userService.loginUser(email, password).pipe(
+    return this.dataService.loginUser(email, password).pipe(
       tap((response) => {
-        // Handle successful login
-        sessionStorage.setItem('loggedInUser', JSON.stringify(response))
+        const responseCopy = { ...response }
+
+        // Remove the password from the copy
+        delete responseCopy.user.password
+
+        // Store the modified copy in the session storage
+        sessionStorage.setItem('loggedInUser', JSON.stringify(responseCopy))
+
         this.isAuthenticated = true
-        this.userService.updateUserProfile(response.user)
+
+        // Update user profile without password
+        this.userService.updateUserProfile(responseCopy.user)
+
         console.log('response', response)
       }),
       catchError((error) => {
@@ -75,7 +86,10 @@ export class AuthenticationService {
     if (user) {
       this.isAuthenticated = true
       const userData = JSON.parse(user)
-      this.userService.updateUserProfile(userData)
+
+      delete userData.user.password
+
+      this.userService.updateUserProfile(userData.user)
     }
   }
 

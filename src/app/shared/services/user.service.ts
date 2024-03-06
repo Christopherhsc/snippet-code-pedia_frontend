@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { BehaviorSubject, Observable } from 'rxjs'
 
@@ -6,12 +5,11 @@ import { BehaviorSubject, Observable } from 'rxjs'
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:3000/'
 
   private userProfileSubject = new BehaviorSubject<any>(null)
   public userProfile$ = this.userProfileSubject.asObservable()
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   updateUserProfile(userData: any) {
     this.userProfileSubject.next(userData)
@@ -25,14 +23,5 @@ export class UserService {
     return this.userProfileSubject.getValue()
   }
 
-  //HTTP
-  //BACKEND COMMUNICATION
-  saveUserData(userData: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}users/new`, userData)
-  }
 
-  loginUser(email: string, password: string): Observable<any> {
-    // Replace with your API endpoint for SCP user login
-    return this.http.post(`${this.baseUrl}users/login`, { email, password })
-  }
 }
