@@ -1,29 +1,37 @@
-<div class="card-container m-4 mx-auto justify-center gap-4">
-  <div
-    *ngFor="let snippet of snippets"
-    class="card rounded-md bg-slate-900 px-2 text-white sm:min-w-64 md:min-w-96"
-  >
-    <div class="text-xl">
-      <p>{{ snippet.title | CapitalizeFirstLetterPipe }}</p>
-    </div>
+<div class="flex flex-col md:flex-row" *ngIf="snippets">
+  <!-- Div 1 -->
+  <div class="div-1 ">
+    <ng-container *ngFor="let snippet of snippets; let i = index">
+      <ng-container *ngIf="i % 3 === 0 ">
+        <app-card-details
+          [snippet]="snippet"
+          [userProfile]="userProfile"
+        ></app-card-details>
+      </ng-container>
+    </ng-container>
+  </div>
 
-    <div class="mb-2 text-xs">
-      <p>{{ snippet.description | CapitalizeFirstLetterPipe }}</p>
-    </div>
+  <!-- Div 2 -->
+  <div class="div-2 " *ngIf="snippets">
+    <ng-container *ngFor="let snippet of snippets; let i = index">
+      <ng-container *ngIf="i % 3 === 1 ">
+        <app-card-details
+          [snippet]="snippet"
+          [userProfile]="userProfile"
+        ></app-card-details>
+      </ng-container>
+    </ng-container>
+  </div>
 
-    <div
-      class="pre overflow-x-auto rounded-md bg-gradient-to-b from-slate-900 via-slate-900 to-white p-2 pr-12"
-    >
-      <p [innerHTML]="formatSnippet(snippet.snippetTemplate)"></p>
-    </div>
-
-    <div class="mt-auto flex flex-row justify-between py-2 text-xs">
-      <p class="max-w-64 overflow-hidden overflow-ellipsis whitespace-nowrap pt-0.5">
-        {{ snippet.tags }}
-      </p>
-      <button *ngIf="this.userProfile" class="text-sm transition-all hover:scale-110">
-        Show code ->
-      </button>
-    </div>
+  <!-- Div 3 -->
+  <div class="div-3  " *ngIf="snippets">
+    <ng-container *ngFor="let snippet of snippets; let i = index">
+      <ng-container *ngIf="i % 3 === 2 ">
+        <app-card-details
+          [snippet]="snippet"
+          [userProfile]="userProfile"
+        ></app-card-details>
+      </ng-container>
+    </ng-container>
   </div>
 </div>

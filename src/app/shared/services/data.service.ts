@@ -14,6 +14,10 @@ export class DataService {
     return this.http.get<any[]>(`${this.baseUrl}snippets`);
   }
 
+  getNineSnippets(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}snippets/random`);
+  }
+
   saveUserData(userData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}users/new`, userData)
   }

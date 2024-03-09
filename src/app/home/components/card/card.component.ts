@@ -14,7 +14,6 @@ export class CardComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private domSanitizer: DomSanitizer,
     public UserService: UserService
   ) {}
 
@@ -26,7 +25,7 @@ export class CardComponent implements OnInit {
   }
 
   loadSnippets() {
-    this.dataService.getAllSnippets().subscribe(
+    this.dataService.getNineSnippets().subscribe(
       (data) => {
         this.snippets = data
       },
@@ -34,27 +33,5 @@ export class CardComponent implements OnInit {
         console.error('Error fetching snippets', error)
       }
     )
-  }
-
-  capitalizeFirstLetter(value: string): string {
-    if (value && value.length > 0) {
-      return value.charAt(0).toUpperCase() + value.slice(1)
-    }
-    return value
-  }
-
-  formatSnippet(snippetTemplate: string): SafeHtml {
-    // No need to replace \n with <br> because <pre> respects new lines.
-    const formatted = `<pre><code>${this.escapeHtml(snippetTemplate)}</code></pre>`
-    return this.domSanitizer.bypassSecurityTrustHtml(formatted)
-  }
-
-  private escapeHtml(htmlString: string): string {
-    return htmlString
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;')
   }
 }

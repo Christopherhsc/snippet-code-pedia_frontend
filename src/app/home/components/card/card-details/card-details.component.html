@@ -1,0 +1,28 @@
+<div class="card m-4 rounded-md bg-slate-900 px-2 text-white sm:min-w-64 md:min-w-96">
+  <div class="text-xl">
+    <p>{{ snippet.title | CapitalizeFirstLetterPipe }}</p>
+  </div>
+
+  <div class="mb-2 text-xs">
+    <p>{{ snippet.description | CapitalizeFirstLetterPipe }}</p>
+  </div>
+
+  <div
+    class="pre overflow-x-auto rounded-md bg-gradient-to-b from-slate-900 via-slate-900 to-white p-2 pr-12 text-xs"
+  >
+    <p [innerHTML]="formatSnippet(snippet.snippetTemplate)"></p>
+  </div>
+
+  <div class="mt-auto flex flex-row justify-between py-2 text-xs">
+    <p class="max-w-64 overflow-hidden overflow-ellipsis whitespace-nowrap pt-0.5">
+      {{ snippet.tags }}
+    </p>
+    <button *ngIf="userProfile" class="text-sm transition-all hover:scale-110">
+      Show code ->
+    </button>
+  </div>
+  <div class="flex flex-col py-1">
+    <p class="text-xs">Created by: {{ snippet.username }}</p>
+    <p class="text-xs">Email: {{ snippet.email }}</p>
+  </div>
+</div>
