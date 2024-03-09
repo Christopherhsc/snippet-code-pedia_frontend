@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
         this.ngZone.run(() => this.router.navigate(['/']))
       },
       error: (error) => {
-        this.customToaster.error('Invalid credentials')
+        this.customToaster.error('Invalid username / password')
       }
     })
   }

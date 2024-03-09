@@ -59,20 +59,11 @@ export class AuthenticationService {
   loginSCP(email: string, password: string): Observable<any> {
     return this.dataService.loginUser(email, password).pipe(
       tap((response) => {
-        const responseCopy = { ...response }
-
-        // Remove the password from the copy
-        delete responseCopy.user.password
-
-        // Store the modified copy in the session storage
-        sessionStorage.setItem('loggedInUser', JSON.stringify(responseCopy))
+        sessionStorage.setItem('loggedInUser', JSON.stringify(response))
 
         this.isAuthenticated = true
 
-        // Update user profile without password
-        this.userService.updateUserProfile(responseCopy.user)
-
-        console.log('response', response)
+        this.userService.updateUserProfile(response.user)
       }),
       catchError((error) => {
         console.error('Error in SCP login:', error)
@@ -84,12 +75,15 @@ export class AuthenticationService {
   private checkAuthentication() {
     const user = sessionStorage.getItem('loggedInUser')
     if (user) {
-      this.isAuthenticated = true
-      const userData = JSON.parse(user)
-
-      delete userData.user.password
-
-      this.userService.updateUserProfile(userData.user)
+      try {
+        const userData = JSON.parse(user)
+        delete userData?.password
+        this.userService.updateUserProfile(userData)
+        this.isAuthenticated = true
+      } catch (e) {
+        console.error('Failed to parse user data:', e)
+        this.isAuthenticated = false
+      }
     }
   }
 

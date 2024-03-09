@@ -1,10 +1,12 @@
 <form
   [formGroup]="snippetForm"
   (ngSubmit)="onSubmit()"
-  class="mx-auto max-w-screen-lg bg-gradient-to-bl from-slate-500 to-stone-900 p-8 lg:my-4 lg:rounded-md"
+  class="mx-auto max-w-screen-lg bg-gradient-to-tr from-slate-900 via-slate-400 to-slate-900 p-8 lg:my-4 lg:rounded-md"
 >
   <div class="mb-4">
-    <label class="mb-2 block text-sm font-bold text-white" for="title"
+    <label
+      class="mb-2 block bg-gradient-to-r from-slate-900 via-transparent to-transparent p-1 text-sm font-bold text-white"
+      for="title"
       >Title of snippet</label
     >
     <input
@@ -17,26 +19,31 @@
   </div>
 
   <div class="mb-4">
-    <label class="mb-2 block text-sm font-bold text-white" for="title"
+    <label
+      class="mb-2 block bg-gradient-to-r from-slate-900 via-transparent to-transparent p-1 text-sm font-bold text-white"
+      for="description"
       >Description of snippet</label
     >
     <input
       class="focus:shadow-outline w-full appearance-none rounded border bg-opacity-100 px-2 py-1 leading-tight text-black shadow focus:outline-none"
-      id="title"
+      id="description"
       type="text"
-      formControlName="title"
+      formControlName="description"
       placeholder="Crafting a minimalist form with a glassmorphism aesthetic."
     />
   </div>
 
   <div class="mb-4">
-    <label class="mb-2 block text-sm font-bold text-white" for="snippetText">
+    <label
+      class="mb-2 block bg-gradient-to-r from-slate-900 via-transparent to-transparent p-1 text-sm font-bold text-white"
+      for="snippetTemplate"
+    >
       Add your HTML / Tailwind here
     </label>
     <textarea
       class="focus:shadow-outline h-32 w-full appearance-none rounded border bg-opacity-100 p-2 leading-tight text-black shadow focus:outline-none"
-      id="snippetText"
-      formControlName="snippetText"
+      id="snippetTemplate"
+      formControlName="snippetTemplate"
       placeholder='<form 
 class="form-cotainer mx-auto max-w-screen-lg bg-gradient-to-bl from-slate-500 to-stone-900 
 p-8 lg:my-4 lg:rounded-md">
@@ -54,14 +61,17 @@ Hello ${You}
   </button>
 
   <div *ngIf="showCssTextarea" class="mb-4">
-    <label class="mb-2 block text-sm font-bold text-white" for="snippetStyle">
+    <label
+      class="mb-2 block bg-gradient-to-r from-slate-900 via-transparent to-transparent p-1 text-sm font-bold text-white"
+      for="snippetStyle"
+    >
       Add your CSS styling here
     </label>
     <textarea
       class="focus:shadow-outline h-32 w-full appearance-none rounded border bg-opacity-100 p-2 leading-tight text-black shadow focus:outline-none"
       id="snippetStyle"
       formControlName="snippetStyle"
-      placeholder='.form-container{
+      placeholder=".form-container{
 height: min-content;
 width: 350px;
     
@@ -69,12 +79,14 @@ width: 350px;
         border: 1px solid #fff;
     }
 }
-      '
+      "
     ></textarea>
   </div>
 
   <div class="mb-4">
-    <label class="mb-2 block text-sm font-bold text-white" for="tags"
+    <label
+      class="mb-2 block bg-gradient-to-r from-slate-900 via-transparent to-transparent p-1 text-sm font-bold text-white"
+      for="tags"
       >Add your tags here</label
     >
     <input

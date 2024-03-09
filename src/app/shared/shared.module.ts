@@ -6,9 +6,11 @@ import { HttpClientModule } from '@angular/common/http'
 import { HeaderComponent } from './components/header/header.component'
 import { NavMobileComponent } from './components/header/nav-mobile.component'
 
+import { capitalizeFirst } from './pipes/capitalize-first.pipe'
+
 @NgModule({
-  declarations: [HeaderComponent, NavMobileComponent],
+  declarations: [HeaderComponent, NavMobileComponent, capitalizeFirst],
   imports: [CommonModule, RouterModule, HttpClientModule],
-  exports: [HeaderComponent, NavMobileComponent]
+  exports: [HeaderComponent, NavMobileComponent, capitalizeFirst]
 })
 export class SharedModule {}

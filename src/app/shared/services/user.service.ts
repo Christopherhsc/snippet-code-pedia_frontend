@@ -20,7 +20,7 @@ export class UserService {
   }
 
   getUserProfile() {
-    return this.userProfileSubject.getValue()
+    return this.userProfile$;
   }
 
 
