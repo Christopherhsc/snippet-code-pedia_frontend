@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   goToSnippet() {
-    this.router.navigate(['/snippet'])
+    this.router.navigate(['create'])
   }
 
   logout() {
@@ -70,5 +70,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onMouseLeave() {
     this.isHovering = false
+  }
+
+  toggleNavList() {
+    this.navService.toggleNavListVisible()
   }
 }

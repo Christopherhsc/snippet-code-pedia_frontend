@@ -32,15 +32,15 @@
   <div class="mb-2 flex items-center justify-center" *ngIf="authService.isLoggedIn()">
     <!-- Hidden on small screens, visible on larger screens -->
     <ul class="hidden items-center gap-4 sm:flex">
-      <li class="li-button hover:text-black" (click)="goToSnippet()">Snippet</li>
+      <li class="li-button hover:text-black" (click)="goToSnippet()">Create Snippet</li>
       <li class="li-button hover:text-red-600" (click)="logout()" #profileButton>
-        Log out
+        Logout
       </li>
       <!-- Profile Button for larger screens -->
       <button (click)="goToProfile()" class="li-button hover:text-black">
         <!-- User Profile Info -->
         <div
-          class="flex items-center gap-2 min-w-52"
+          class="flex min-w-52 items-center gap-2"
           (mouseenter)="onMouseEnter()"
           (mouseleave)="onMouseLeave()"
         >
@@ -66,7 +66,7 @@
     </ul>
 
     <!-- User Profile Button for small screens -->
-    <button class="li-button hover:text-black sm:hidden">
+    <button (click)="toggleNavList()" class="li-button hover:text-black sm:hidden">
       <div class="flex items-center gap-2">
         <img
           *ngIf="userProfile?.imageUrl"

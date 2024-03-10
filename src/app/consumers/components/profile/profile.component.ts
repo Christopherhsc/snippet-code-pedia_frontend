@@ -20,7 +20,7 @@ export class ProfileComponent {
   ) {}
 
   goToCreateSnippet() {
-    this.router.navigate(['snippet/create'])
+    this.router.navigate(['create'])
   }
 
   ngOnInit() {

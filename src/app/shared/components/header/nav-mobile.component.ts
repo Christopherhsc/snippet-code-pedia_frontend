@@ -10,15 +10,12 @@ import { Subscription } from 'rxjs/internal/Subscription'
     <!-- Nav List for small screens -->
     <div class="z-10 text-2xl text-black sm:hidden">
       <ul class="p-4">
-        <li class="py-2"><button (click)="home()">Home</button></li>
-        <li class="py-2"><a routerLink="/profile">Profile</a></li>
+        <li class="py-2"><button (click)="goToHome()">Home</button></li>
+        <li class="py-2"><button (click)="goToProfile()">Profile</button></li>
         <li class="py-2">
-          <button (click)="goToSnippet()">Snippet Dashboard</button>
+          <button (click)="goToSnippet()">Create Snippet</button>
         </li>
-        <li class="px-6 py-1">
-          <button (click)="goToCreateSnippet()">Create Snippet</button>
-        </li>
-        <li class="py-6 text-red-600"><button (click)="logout()">Log Out</button></li>
+        <li class="py-6 text-red-600"><button (click)="logout()">Logout</button></li>
       </ul>
     </div>
   `
@@ -43,13 +40,18 @@ export class NavMobileComponent implements OnDestroy {
     this.navVisibilitySubscription.unsubscribe()
   }
 
-  home() {
+  goToHome() {
     this.router.navigate(['/'])
     this.navService.setNavListVisible(false)
   }
 
+  goToProfile() {
+    this.router.navigate(['profile'])
+    this.navService.setNavListVisible(false)
+  }
+
   goToSnippet() {
-    this.router.navigate(['snippet'])
+    this.router.navigate(['create'])
     this.navService.setNavListVisible(false)
   }
 

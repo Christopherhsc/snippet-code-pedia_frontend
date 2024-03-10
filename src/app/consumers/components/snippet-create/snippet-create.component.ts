@@ -41,7 +41,7 @@ export class SnippetCreateComponent {
       this.snippetService.postSnippet(this.snippetForm.value).subscribe(
         (response: any) => {
           console.log('Snippet submitted', response)
-          this.router.navigate(['/snippet'])
+          this.router.navigate(['profile'])
         },
         (error: any) => {
           console.error('Error submitting snippet', error)
