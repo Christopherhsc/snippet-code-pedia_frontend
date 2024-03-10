@@ -2,14 +2,14 @@ import { Component } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { SnippetService } from 'src/app/shared/services/snippet.service'
-import { UserService } from 'src/app/shared/services/user.service' // Assuming UserService is available
+import { UserService } from 'src/app/shared/services/user.service'
 
 @Component({
-  selector: 'app-create-snippet',
-  templateUrl: './create-snippet.component.html',
-  styleUrl: './create-snippet.component.scss'
+  selector: 'app-snippet-create',
+  templateUrl: './snippet-create.component.html',
+  styleUrl: './snippet-create.component.scss'
 })
-export class CreateSnippetComponent {
+export class SnippetCreateComponent {
   snippetForm!: FormGroup
   showCssTextarea: boolean = false
 

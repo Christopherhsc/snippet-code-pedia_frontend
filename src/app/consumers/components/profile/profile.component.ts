@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { AuthenticationService } from 'src/app/shared/services/authentication.service'
 import { UserService } from 'src/app/shared/services/user.service'
 
 @Component({
-  selector: 'app-snippet',
-  templateUrl: './snippet.component.html',
-  styleUrl: './snippet.component.scss'
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrl: './profile.component.scss'
 })
-export class SnippetComponent implements OnInit {
+export class ProfileComponent {
   userProfile: any
   private authSubscription?: Subscription
 
@@ -19,7 +19,7 @@ export class SnippetComponent implements OnInit {
     private router: Router
   ) {}
 
-  goToCreateSnippet(){
+  goToCreateSnippet() {
     this.router.navigate(['snippet/create'])
   }
 
