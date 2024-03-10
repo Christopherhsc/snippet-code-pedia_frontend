@@ -4,11 +4,11 @@ import { DataService } from 'src/app/shared/services/data.service'
 import { UserService } from 'src/app/shared/services/user.service'
 
 @Component({
-  selector: 'app-card',
-  templateUrl: './card.component.html',
-  styleUrl: './card.component.scss'
+  selector: 'app-snippet-card',
+  templateUrl: './snippet-card.component.html',
+  styleUrl: './snippet-card.component.scss'
 })
-export class CardComponent implements OnInit {
+export class SnippetCardComponent implements OnInit {
   snippets: any[] = []
   userProfile: any
 

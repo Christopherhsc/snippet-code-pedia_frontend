@@ -12,13 +12,12 @@ import { AuthModule } from './auth/auth.module'
 
 //custom components
 import { HomeComponent } from './home/home.component'
-import { CardComponent } from './home/components/card/card.component'
-import { CardDetailsComponent } from './home/components/card/card-details/card-details.component'
+
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 
 @NgModule({
-  declarations: [AppComponent, CardComponent, CardDetailsComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

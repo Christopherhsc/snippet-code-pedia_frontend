@@ -4,13 +4,27 @@ import { RouterModule } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http'
 
 import { HeaderComponent } from './components/header/header.component'
+import { SnippetCardComponent } from './components/snippet-card/snippet-card.component'
+import { CardDetailsComponent } from './components/snippet-card/card-details/card-details.component'
 import { NavMobileComponent } from './components/header/nav-mobile.component'
 
 import { capitalizeFirst } from './pipes/capitalize-first.pipe'
 
 @NgModule({
-  declarations: [HeaderComponent, NavMobileComponent, capitalizeFirst],
+  declarations: [
+    HeaderComponent,
+    SnippetCardComponent,
+    CardDetailsComponent,
+    NavMobileComponent,
+    capitalizeFirst
+  ],
   imports: [CommonModule, RouterModule, HttpClientModule],
-  exports: [HeaderComponent, NavMobileComponent, capitalizeFirst]
+  exports: [
+    HeaderComponent,
+    SnippetCardComponent,
+    CardDetailsComponent,
+    NavMobileComponent,
+    capitalizeFirst
+  ]
 })
 export class SharedModule {}
