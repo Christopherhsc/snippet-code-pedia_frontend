@@ -27,7 +27,8 @@ export class SnippetCreateComponent {
         snippetStyle: [''],
         tags: [''],
         username: [userProfile?.username, Validators.required],
-        email: [userProfile?.email, Validators.required]
+        email: [userProfile?.email, Validators.required],
+        userId: [userProfile?._id, Validators.required]
       })
     })
   }

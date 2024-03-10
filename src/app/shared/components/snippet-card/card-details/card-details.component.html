@@ -1,4 +1,4 @@
-<div class="card m-4 rounded-md bg-slate-900 px-2 text-white sm:min-w-64 md:min-w-96">
+<div class="card m-2 rounded-md bg-slate-900 px-2 text-white sm:min-w-64 md:min-w-96">
   <div class="text-xl">
     <p>{{ snippet.title | CapitalizeFirstLetterPipe }}</p>
   </div>
@@ -13,16 +13,27 @@
     <p [innerHTML]="formatSnippet(snippet.snippetTemplate)"></p>
   </div>
 
-  <div class="mt-auto flex flex-row justify-between py-2 text-xs">
-    <p class="max-w-64 overflow-hidden overflow-ellipsis whitespace-nowrap pt-0.5">
-      {{ snippet.tags }}
-    </p>
-    <button *ngIf="userProfile" class="text-sm transition-all hover:scale-110">
-      Show code ->
-    </button>
+  <div class="mt-auto flex flex-row   text-xs">
+    <div *ngIf="userProfile" class="flex flex-row justify-between py-2">
+      <p class="max-w-64 overflow-hidden overflow-ellipsis whitespace-nowrap pt-0.5">
+        {{ snippet.tags }}
+      </p>
+      <button class="text-sm transition-all hover:scale-110">Show code -></button>
+    </div>
   </div>
-  <div class="flex flex-col border-t-2 py-1 text-slate-400" *ngIf="userProfile">
-    <p class="text-xs">{{ snippet.username }}</p>
-    <p class="text-xs">{{ snippet.email }}</p>
+
+  <div class="flex flex-row justify-between border-t-2" *ngIf="userProfile">
+    <div class="flex flex-col py-1 text-slate-400">
+      <p class="text-xs">{{ snippet.username }}</p>
+      <p class="text-xs">{{ snippet.email }}</p>
+    </div>
+    <div class="flex flex-col justify-center">
+      <p class="flex justify-center text-xs">
+        132<mat-icon class="text-xs">thumb_up</mat-icon>
+      </p>
+      <p class="flex justify-center text-xs">
+        64<mat-icon class="text-xs">thumb_down</mat-icon>
+      </p>
+    </div>
   </div>
 </div>

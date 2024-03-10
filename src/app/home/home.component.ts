@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { DataService } from '../shared/services/data.service'
 
 @Component({
   selector: 'app-home',
@@ -8,10 +9,24 @@ import { Component, OnInit } from '@angular/core'
 })
 export class HomeComponent {
 
+  randomSnippet: any[] = []
 
+  constructor(
+    private dataService: DataService,
+  ) {}
 
+  ngOnInit() {
+    this.loadRandomSnippets()
+  }
 
-
-
-
+  loadRandomSnippets() {
+    this.dataService.getNineSnippets().subscribe(
+      (data) => {
+        this.randomSnippet = data;
+      },
+      (error) => {
+        console.error('Error fetching random snippets', error);
+      }
+    );
+  }
 }

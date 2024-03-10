@@ -8,6 +8,8 @@ import { ProfileComponent } from './components/profile/profile.component'
 import { SnippetCreateComponent } from './components/snippet-create/snippet-create.component'
 import { SnippetStatisticsComponent } from './components/snippet-statistics/snippet-statistics.component'
 
+import { SharedModule } from '../shared/shared.module'
+
 //ang mat
 import { MatIconModule } from '@angular/material/icon'
 
@@ -18,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon'
     ConsumersRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    SharedModule,
     MatIconModule
   ],
   exports: [ProfileComponent, SnippetCreateComponent, SnippetStatisticsComponent]

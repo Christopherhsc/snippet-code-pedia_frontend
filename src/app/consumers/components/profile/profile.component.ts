@@ -1,7 +1,8 @@
-import { Component } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { Subscription } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
 import { AuthenticationService } from 'src/app/shared/services/authentication.service'
+import { SnippetService } from 'src/app/shared/services/snippet.service'
 import { UserService } from 'src/app/shared/services/user.service'
 
 @Component({
@@ -9,23 +10,37 @@ import { UserService } from 'src/app/shared/services/user.service'
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit, OnDestroy {
   userProfile: any
+
   private authSubscription?: Subscription
 
+  userSnippets: any[] = []
+
   constructor(
-    public authService: AuthenticationService,
-    public UserService: UserService,
+    public userService: UserService,
+    public snippetService: SnippetService,
     private router: Router
   ) {}
 
-  goToCreateSnippet() {
-    this.router.navigate(['create'])
+  ngOnInit() {
+    this.authSubscription = this.userService.userProfile$.subscribe((userProfile) => {
+      this.userProfile = userProfile
+      if (userProfile) {
+        this.snippetService.getUserSnippets(userProfile._id).subscribe((snippets) => {
+          this.userSnippets = snippets
+        })
+      }
+    })
   }
 
-  ngOnInit() {
-    this.authSubscription = this.UserService.userProfile$.subscribe((profile) => {
-      this.userProfile = profile
-    })
+  ngOnDestroy() {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe()
+    }
+  }
+
+  goToCreateSnippet() {
+    this.router.navigate(['create'])
   }
 }

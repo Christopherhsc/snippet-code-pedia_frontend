@@ -11,11 +11,15 @@ export class DataService {
   constructor(private http: HttpClient) {}
 
   getAllSnippets(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}snippets`);
+    return this.http.get<any[]>(`${this.baseUrl}snippets`)
+  }
+
+  getUserSnippets(userId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}snippets/${userId}`);
   }
 
   getNineSnippets(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}snippets/random`);
+    return this.http.get<any[]>(`${this.baseUrl}snippets/random`)
   }
 
   saveUserData(userData: any): Observable<any> {
@@ -27,14 +31,13 @@ export class DataService {
   }
 
   postSnippet(snippetData: any): Observable<any> {
-    const userId = this.getUserIdFromSession();
-    const snippetWithUserId = { ...snippetData, userId };
-    return this.http.post(`${this.baseUrl}snippets`, snippetWithUserId);
+    const userId = this.getUserIdFromSession()
+    const snippetWithUserId = { ...snippetData, userId }
+    return this.http.post(`${this.baseUrl}snippets`, snippetWithUserId)
   }
 
   private getUserIdFromSession() {
-    const loggedInUser = sessionStorage.getItem('loggedInUser');
-    return loggedInUser ? JSON.parse(loggedInUser)._id : null;
+    const loggedInUser = sessionStorage.getItem('loggedInUser')
+    return loggedInUser ? JSON.parse(loggedInUser)._id : null
   }
 }
-

@@ -1,9 +1,7 @@
-// auth.guard.ts
-
 import { Injectable } from '@angular/core'
 import { CanActivate, Router, UrlTree } from '@angular/router'
-import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 import { UserService } from '../services/user.service'
 
 @Injectable({
@@ -16,11 +14,13 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(): Observable<boolean | UrlTree> {
-    return this.userService.userProfile$.pipe(
-      map((user) => {
-        if (user) {
+    return this.userService.getUserProfile().pipe(
+      map((userProfile) => {
+        if (userProfile) {
+          // If there's a user profile, the user is authenticated
           return true
         } else {
+          // If there's no user profile, redirect to the login page
           return this.router.createUrlTree(['/login'])
         }
       })

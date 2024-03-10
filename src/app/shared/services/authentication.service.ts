@@ -64,10 +64,9 @@ export class AuthenticationService {
         this.userService.updateUserProfile(response);
       }),
       catchError((error) => {
-        console.error('Error in SCP login:', error)
-        return throwError(() => new Error(error))
+        return throwError(() => new Error(error));
       })
-    )
+    );
   }
 
   private checkAuthentication() {

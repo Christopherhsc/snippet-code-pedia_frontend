@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-snippet-statistics',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './snippet-statistics.component.scss'
 })
 export class SnippetStatisticsComponent {
-
+  @Input() snippets: any[] = [];
 }

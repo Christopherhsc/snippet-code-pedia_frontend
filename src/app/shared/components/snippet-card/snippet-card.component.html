@@ -1,8 +1,11 @@
-<div class="flex flex-col md:flex-row" *ngIf="snippets">
+<div
+  class="flex flex-wrap justify-center md:flex-row max-xl::flex-nowrap gap-1"
+  *ngIf="snippets"
+>
   <!-- Div 1 -->
-  <div class="div-1 ">
+  <div class="div-1">
     <ng-container *ngFor="let snippet of snippets; let i = index">
-      <ng-container *ngIf="i % 3 === 0 ">
+      <ng-container *ngIf="i % 4 === 0">
         <app-card-details
           [snippet]="snippet"
           [userProfile]="userProfile"
@@ -12,9 +15,9 @@
   </div>
 
   <!-- Div 2 -->
-  <div class="div-2 " *ngIf="snippets">
+  <div class="div-2" *ngIf="snippets">
     <ng-container *ngFor="let snippet of snippets; let i = index">
-      <ng-container *ngIf="i % 3 === 1 ">
+      <ng-container *ngIf="i % 4 === 1">
         <app-card-details
           [snippet]="snippet"
           [userProfile]="userProfile"
@@ -24,9 +27,21 @@
   </div>
 
   <!-- Div 3 -->
-  <div class="div-3  " *ngIf="snippets">
+  <div class="div-3" *ngIf="snippets">
     <ng-container *ngFor="let snippet of snippets; let i = index">
-      <ng-container *ngIf="i % 3 === 2 ">
+      <ng-container *ngIf="i % 4 === 2">
+        <app-card-details
+          [snippet]="snippet"
+          [userProfile]="userProfile"
+        ></app-card-details>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <!-- Div 4 -->
+  <div class="div-4" *ngIf="snippets">
+    <ng-container *ngFor="let snippet of snippets; let i = index">
+      <ng-container *ngIf="i % 4 === 3">
         <app-card-details
           [snippet]="snippet"
           [userProfile]="userProfile"

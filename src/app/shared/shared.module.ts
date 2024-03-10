@@ -10,6 +10,9 @@ import { NavMobileComponent } from './components/header/nav-mobile.component'
 
 import { capitalizeFirst } from './pipes/capitalize-first.pipe'
 
+//ang mat
+import { MatIconModule } from '@angular/material/icon'
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -18,7 +21,7 @@ import { capitalizeFirst } from './pipes/capitalize-first.pipe'
     NavMobileComponent,
     capitalizeFirst
   ],
-  imports: [CommonModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, RouterModule, HttpClientModule, MatIconModule],
   exports: [
     HeaderComponent,
     SnippetCardComponent,
