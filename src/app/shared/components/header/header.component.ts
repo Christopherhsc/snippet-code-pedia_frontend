@@ -45,25 +45,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   goToHome() {
     this.router.navigate(['/'])
-    this.navService.setNavListVisible(false)
   }
 
   goToLogin() {
     this.router.navigate(['login'])
-    this.navService.setNavListVisible(false)
   }
 
-  goToProfile() {}
+  goToProfile() {
+    this.router.navigate(['profile'])
+  }
 
   goToSnippet() {
     this.router.navigate(['/snippet'])
-    this.navService.setNavListVisible(false)
   }
 
   logout() {
     this.authService.logout()
     this.router.navigate(['/'])
-    this.navService.setNavListVisible(false)
   }
 
   onMouseEnter() {
@@ -72,9 +70,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onMouseLeave() {
     this.isHovering = false
-  }
-
-  toggleNavList() {
-    this.navService.toggleNavListVisible()
   }
 }
