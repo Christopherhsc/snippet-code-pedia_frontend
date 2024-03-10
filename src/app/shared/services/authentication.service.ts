@@ -59,11 +59,9 @@ export class AuthenticationService {
   loginSCP(email: string, password: string): Observable<any> {
     return this.dataService.loginUser(email, password).pipe(
       tap((response) => {
-        sessionStorage.setItem('loggedInUser', JSON.stringify(response))
-
-        this.isAuthenticated = true
-
-        this.userService.updateUserProfile(response.user)
+        sessionStorage.setItem('loggedInUser', JSON.stringify(response));
+        this.isAuthenticated = true;
+        this.userService.updateUserProfile(response);
       }),
       catchError((error) => {
         console.error('Error in SCP login:', error)

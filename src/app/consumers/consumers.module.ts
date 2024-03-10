@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon'
     ReactiveFormsModule,
     FormsModule,
     MatIconModule
-  ]
+  ],
+  exports: [ProfileComponent, SnippetCreateComponent, SnippetStatisticsComponent]
 })
 export class ConsumersModule {}

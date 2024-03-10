@@ -7,6 +7,12 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     component: AuthContainerComponent
+  },
+  {
+    path: '',
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('../consumers/consumers.module').then((m) => m.ConsumersModule)
   }
 ]
 

@@ -21,7 +21,7 @@
       Show code ->
     </button>
   </div>
-  <div class="flex flex-col py-1 border-t-2 text-slate-400">
+  <div class="flex flex-col border-t-2 py-1 text-slate-400" *ngIf="userProfile">
     <p class="text-xs">{{ snippet.username }}</p>
     <p class="text-xs">{{ snippet.email }}</p>
   </div>

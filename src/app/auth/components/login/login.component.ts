@@ -26,14 +26,16 @@ export class LoginComponent implements OnInit, AfterViewChecked {
   ) {}
 
   onFormSubmit() {
-    // Call authentication service to login with email and password
     this.authService.loginSCP(this.email, this.password).subscribe({
       next: (response) => {
-        this.customToaster.success('Login successful')
-        this.ngZone.run(() => this.router.navigate(['/']))
+        this.customToaster.success(
+          `Greetings ${response.username}!`,
+          'Authentication successful'
+        )
+        this.ngZone.run(() => this.router.navigate(['/']));
       },
       error: (error) => {
-        this.customToaster.error('Invalid username / password')
+        this.customToaster.error('Invalid username / password');
       }
     })
   }
@@ -43,7 +45,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
     google.accounts.id.initialize({
       client_id:
         '680135166777-br7v67f58p397dcjr0an153i64paabh4.apps.googleusercontent.com',
-      callback: (resp: any) => this.handleLogin(resp)
+      callback: (resp: any) => this.handleGoogleLogin(resp)
     })
   }
 
@@ -63,7 +65,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
     return JSON.parse(atob(token.split('.')[1]))
   }
 
-  handleLogin(response: any) {
+  handleGoogleLogin(response: any) {
     const registrationType = 'GOOGLE'
     if (response) {
       const payload = this.decodeToken(response.credential)

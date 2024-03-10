@@ -9,10 +9,10 @@ import { ToastrModule } from 'ngx-toastr'
 //custom modules
 import { SharedModule } from './shared/shared.module'
 import { AuthModule } from './auth/auth.module'
+import { ConsumersModule } from './consumers/consumers.module'
 
 //custom components
 import { HomeComponent } from './home/home.component'
-
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 
@@ -25,6 +25,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     AppRoutingModule,
     SharedModule,
     AuthModule,
+    ConsumersModule,
 
     ToastrModule.forRoot()
   ],
