@@ -1,6 +1,5 @@
 .card {
-  flex: 1;
-  max-width: 382px;
+  max-width: 300px;
 
   ::-webkit-scrollbar {
     @apply h-2.5 w-2.5
@@ -26,7 +25,7 @@
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow-x: auto;
-  max-width: 382px;
-  max-height: 170px;
+  max-height: 120px;
+
   border: 2px solid #fff;
 }

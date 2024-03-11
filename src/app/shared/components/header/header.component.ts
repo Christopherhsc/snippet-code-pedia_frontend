@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 import { Router } from '@angular/router'
 import { AuthenticationService } from '../../services/authentication.service'
 import { Subscription } from 'rxjs/internal/Subscription'
 import { UserService } from '../../services/user.service'
 import { NavigationService } from '../../services/navigation.service'
+import { SnippetService } from '../../services/snippet.service'
 
 @Component({
   selector: 'app-header',
@@ -13,6 +14,7 @@ import { NavigationService } from '../../services/navigation.service'
 export class HeaderComponent implements OnInit, OnDestroy {
   private navVisibilitySubscription: Subscription = new Subscription()
   private authSubscription?: Subscription
+  userSnippets: any[] = [];
 
   userProfile: any
   navListVisible = false
@@ -22,7 +24,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     public authService: AuthenticationService,
     public UserService: UserService,
-    private navService: NavigationService
+    private navService: NavigationService,
+    private snippetService: SnippetService
   ) {}
 
   ngOnInit() {
@@ -34,6 +37,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.navListVisible = visible
       }
     )
+    if (this.userProfile) {
+      this.snippetService.getUserSnippets(this.userProfile._id).subscribe((snippets) => {
+        this.userSnippets = snippets
+        console.log(this.userSnippets)
+      })
+    }
   }
 
   ngOnDestroy() {

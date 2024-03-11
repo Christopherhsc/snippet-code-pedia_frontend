@@ -32,7 +32,13 @@
   <div class="mb-2 flex items-center justify-center" *ngIf="authService.isLoggedIn()">
     <!-- Hidden on small screens, visible on larger screens -->
     <ul class="hidden items-center gap-4 sm:flex">
-      <li class="li-button hover:text-black" (click)="goToSnippet()">Create Snippet</li>
+      <li
+        *ngIf="userSnippets.length <= 4"
+        class="li-button hover:text-black"
+        (click)="goToSnippet()"
+      >
+        Create Snippet
+      </li>
       <li class="li-button hover:text-red-600" (click)="logout()" #profileButton>
         Logout
       </li>

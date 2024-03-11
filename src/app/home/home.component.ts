@@ -20,7 +20,7 @@ export class HomeComponent {
   }
 
   loadRandomSnippets() {
-    this.dataService.getNineSnippets().subscribe(
+    this.dataService.getRandomSnippets().subscribe(
       (data) => {
         this.randomSnippet = data;
       },

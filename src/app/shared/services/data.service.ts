@@ -18,7 +18,7 @@ export class DataService {
     return this.http.get<any[]>(`${this.baseUrl}snippets/${userId}`);
   }
 
-  getNineSnippets(): Observable<any[]> {
+  getRandomSnippets(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}snippets/random`)
   }
 
