@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SecurityContext } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { UserService } from 'src/app/shared/services/user.service'
 
 @Component({
@@ -8,6 +8,9 @@ import { UserService } from 'src/app/shared/services/user.service'
 })
 export class SnippetCardComponent implements OnInit {
   @Input() snippets: any[] = []
+  @Input() showDeleteSnippet: boolean = false;
+  @Output() deleteSnippet = new EventEmitter<string>();
+
   userProfile: any
 
   constructor(public UserService: UserService) {}
@@ -16,5 +19,9 @@ export class SnippetCardComponent implements OnInit {
     this.UserService.getUserProfile().subscribe((profile) => {
       this.userProfile = profile
     })
+  }
+
+  onDeleteSnippet(snippetId: string) {
+    this.deleteSnippet.emit(snippetId);
   }
 }

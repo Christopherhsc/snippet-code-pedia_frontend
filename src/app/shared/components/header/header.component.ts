@@ -40,7 +40,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.userProfile) {
       this.snippetService.getUserSnippets(this.userProfile._id).subscribe((snippets) => {
         this.userSnippets = snippets
-        console.log(this.userSnippets)
       })
     }
   }

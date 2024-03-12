@@ -1,4 +1,4 @@
-<div class="h-screen flex flex-col items-center justify-between">
+<div class="flex h-screen flex-col items-center justify-between">
   <div>
     <h1 class="flex w-full justify-center md:justify-start">
       <p class="p-4 font-extrabold text-sky-300 sm:text-3xl">
@@ -6,7 +6,8 @@
       </p>
     </h1>
     <div class="hidden w-full pb-4 sm:flex sm:justify-center lg:justify-end">
-      <button *ngIf="userSnippets.length < 5"
+      <button
+        *ngIf="userSnippets.length < 5"
         (click)="goToCreateSnippet()"
         class="li-button bg-gradient-to-bl from-slate-500 to-stone-900 p-4 text-sky-300 transition-all hover:text-white"
       >
@@ -15,6 +16,10 @@
     </div>
 
     <app-snippet-statistics [snippets]="userSnippets"></app-snippet-statistics>
-    <app-snippet-card [snippets]="userSnippets"></app-snippet-card>
+    <app-snippet-card
+      [snippets]="userSnippets"
+      [showDeleteSnippet]="true"
+      (deleteSnippet)="deleteSnippet($event)">
+    ></app-snippet-card>
   </div>
 </div>

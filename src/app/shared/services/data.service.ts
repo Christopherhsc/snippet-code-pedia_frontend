@@ -10,12 +10,17 @@ export class DataService {
 
   constructor(private http: HttpClient) {}
 
+  private getUserIdFromSession() {
+    const loggedInUser = sessionStorage.getItem('loggedInUser')
+    return loggedInUser ? JSON.parse(loggedInUser)._id : null
+  }
+
   getAllSnippets(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}snippets`)
   }
 
   getUserSnippets(userId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}snippets/${userId}`);
+    return this.http.get<any[]>(`${this.baseUrl}snippets/${userId}`)
   }
 
   getRandomSnippets(): Observable<any[]> {
@@ -36,8 +41,9 @@ export class DataService {
     return this.http.post(`${this.baseUrl}snippets`, snippetWithUserId)
   }
 
-  private getUserIdFromSession() {
-    const loggedInUser = sessionStorage.getItem('loggedInUser')
-    return loggedInUser ? JSON.parse(loggedInUser)._id : null
+  deleteSnippet(snippetId: string): Observable<any> {
+    const userId = this.getUserIdFromSession();
+    const headers = new HttpHeaders({ 'user-id': userId });
+    return this.http.delete(`${this.baseUrl}snippets/${snippetId}`, { headers });
   }
 }

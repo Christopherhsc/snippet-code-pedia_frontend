@@ -1,4 +1,6 @@
-<div class="card m-1 my-2 rounded-md bg-slate-900 px-2 text-white md:m-4 2xl:m-4 min-w-48">
+<div
+  class="card m-1 my-2 min-w-48 rounded-md bg-slate-900 px-2 text-white md:m-4 2xl:m-4"
+>
   <div class="text-xl">
     <p>{{ snippet.title | CapitalizeFirstLetterPipe }}</p>
   </div>
@@ -13,12 +15,12 @@
     <p [innerHTML]="formatSnippet(snippet.snippetTemplate)"></p>
   </div>
 
-    <div *ngIf="userProfile" class="flex flex-row justify-between py-2">
-      <p class="max-w-64 overflow-hidden overflow-ellipsis whitespace-nowrap pt-0.5">
-        {{ snippet.tags }}
-      </p>
-      <button class="text-sm transition-all hover:scale-110">Show code -></button>
-    </div>
+  <div *ngIf="userProfile" class="flex flex-row justify-between py-2">
+    <p class="max-w-64 overflow-hidden overflow-ellipsis whitespace-nowrap pt-0.5">
+      {{ snippet.tags }}
+    </p>
+    <button class="text-sm transition-all hover:scale-110">Show code -></button>
+  </div>
 
   <div class="flex flex-row justify-between border-t-2" *ngIf="userProfile">
     <div class="flex flex-col py-1 text-slate-400">
@@ -34,7 +36,17 @@
       </p>
     </div>
   </div>
-  <div *ngIf="!userProfile" class="py-2 text-xs underline hover:scale-110 text-center">
+  <div *ngIf="!userProfile" class="py-2 text-center text-xs underline hover:scale-110">
     <button href="login">Login to view code</button>
+  </div>
+  <div class="flex justify-end">
+    <button
+      *ngIf="showDeleteSnippet"
+      (click)="onDeleteSnippet()"
+      class="flex flex-row transition-all hover:scale-110 hover:text-red-600"
+    >
+      <p>Delete Snippet</p>
+      <mat-icon class="">delete</mat-icon>
+    </button>
   </div>
 </div>

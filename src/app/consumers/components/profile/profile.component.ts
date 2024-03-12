@@ -34,6 +34,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
     })
   }
 
+  deleteSnippet(snippetId: string) {
+    this.snippetService.deleteSnippet(snippetId).subscribe({
+      next: (response) => {
+        // Remove the snippet from the local array
+        this.userSnippets = this.userSnippets.filter(
+          (snippet) => snippet._id !== snippetId
+        )
+      },
+      error: (error) => {
+        // Handle the error, could be an alert or a toast notification
+      }
+    })
+  }
+
   ngOnDestroy() {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe()

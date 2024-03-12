@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 
 @Component({
@@ -9,6 +9,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 export class CardDetailsComponent {
   @Input() snippet: any
   @Input() userProfile: any
+  @Input() showDeleteSnippet: boolean = false
+  @Output() deleteSnippet = new EventEmitter<string>()
 
   constructor(private domSanitizer: DomSanitizer) {}
 
@@ -24,5 +26,9 @@ export class CardDetailsComponent {
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;')
+  }
+
+  onDeleteSnippet() {
+    this.deleteSnippet.emit(String(this.snippet._id))
   }
 }

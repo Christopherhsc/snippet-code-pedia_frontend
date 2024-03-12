@@ -1,11 +1,13 @@
-<div class="flex flex-col sm:flex-row justify-center 2xl:gap-10" *ngIf="snippets">
+<div class="flex flex-col justify-center sm:flex-row 2xl:gap-10" *ngIf="snippets">
   <!-- Div 1 -->
-  <div class="div-1 flex flex-col m-auto">
+  <div class="div-1 m-auto flex flex-col">
     <ng-container *ngFor="let snippet of snippets; let i = index">
       <ng-container *ngIf="i % 4 === 0">
         <app-card-details
           [snippet]="snippet"
+          [showDeleteSnippet]="showDeleteSnippet"
           [userProfile]="userProfile"
+          (deleteSnippet)="onDeleteSnippet($event)"
         ></app-card-details>
       </ng-container>
     </ng-container>
@@ -17,31 +19,37 @@
       <ng-container *ngIf="i % 4 === 1">
         <app-card-details
           [snippet]="snippet"
+          [showDeleteSnippet]="showDeleteSnippet"
           [userProfile]="userProfile"
+          (deleteSnippet)="onDeleteSnippet($event)"
         ></app-card-details>
       </ng-container>
     </ng-container>
   </div>
 
   <!-- Div 3 -->
-  <div class="div-3 hidden lg:block m-auto" *ngIf="snippets">
+  <div class="div-3 m-auto hidden lg:block" *ngIf="snippets">
     <ng-container *ngFor="let snippet of snippets; let i = index">
       <ng-container *ngIf="i % 4 === 2">
         <app-card-details
           [snippet]="snippet"
+          [showDeleteSnippet]="showDeleteSnippet"
           [userProfile]="userProfile"
+          (deleteSnippet)="onDeleteSnippet($event)"
         ></app-card-details>
       </ng-container>
     </ng-container>
   </div>
 
   <!-- Div 4 -->
-  <div class="div-4 hidden xl:block m-auto" *ngIf="snippets">
+  <div class="div-4 m-auto hidden xl:block" *ngIf="snippets">
     <ng-container *ngFor="let snippet of snippets; let i = index">
       <ng-container *ngIf="i % 4 === 3">
         <app-card-details
           [snippet]="snippet"
+          [showDeleteSnippet]="showDeleteSnippet"
           [userProfile]="userProfile"
+          (deleteSnippet)="onDeleteSnippet($event)"
         ></app-card-details>
       </ng-container>
     </ng-container>
