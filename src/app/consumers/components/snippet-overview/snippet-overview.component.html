@@ -36,7 +36,9 @@
   </div>
 
   <div *ngIf="showHTML; else showCSS" [innerHTML]="snippet?.formattedTemplate"></div>
-  <ng-template #showCSS>{{ snippet?.snippetStyle }}</ng-template>
+  <ng-template #showCSS>
+    <div [innerHTML]="snippet?.formattedStyle"></div>
+  </ng-template>
 
   <div class="my-6 flex flex-row justify-between">
     <p class="text-md overflow-hidden overflow-ellipsis whitespace-nowrap pt-0.5">
