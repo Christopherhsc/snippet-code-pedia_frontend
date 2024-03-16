@@ -9,17 +9,25 @@
     <p>{{ snippet.description | CapitalizeFirstLetterPipe }}</p>
   </div>
 
-  <div
-    class="pre flex w-full overflow-x-auto rounded-md bg-gradient-to-b from-slate-900 via-slate-900 to-white p-2 pr-12 text-xs"
-  >
-    <p [innerHTML]="formatSnippet(snippet.snippetTemplate)"></p>
+  <div *ngIf="snippet.picture" class="image-container relative">
+    <img [src]="snippet.picture" alt="Snippet Image" class="snippet-image" />
+    <button class="report-button scale-110 hover:text-black text-red-600" *ngIf="userProfile">
+      <mat-icon>priority_high</mat-icon>
+    </button>
   </div>
 
   <div *ngIf="userProfile" class="flex flex-row justify-between py-2">
-    <p class="max-w-64 overflow-hidden overflow-ellipsis whitespace-nowrap pt-0.5">
+    <p
+      class="max-w-44 overflow-hidden overflow-ellipsis whitespace-nowrap pt-0.5 text-xs"
+    >
       {{ snippet.tags }}
     </p>
-    <button class="text-sm transition-all hover:scale-110">Show code -></button>
+    <button
+      class="text-sm transition-all hover:scale-110"
+      (click)="viewSnippetDetails(snippet._id)"
+    >
+      Show code ->
+    </button>
   </div>
 
   <div class="flex flex-row justify-between border-t-2" *ngIf="userProfile">
@@ -43,7 +51,7 @@
     <button
       *ngIf="showDeleteSnippet"
       (click)="onDeleteSnippet()"
-      class="flex flex-row transition-all hover:scale-110 hover:text-red-600"
+      class="flex flex-row py-2 transition-all hover:scale-110 hover:text-red-600"
     >
       <p>Delete Snippet</p>
       <mat-icon class="">delete</mat-icon>

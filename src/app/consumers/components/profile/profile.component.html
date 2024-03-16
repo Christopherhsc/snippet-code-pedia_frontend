@@ -1,4 +1,4 @@
-<div class="flex h-screen flex-col items-center justify-between">
+<div class="flex flex-col items-center justify-between">
   <div>
     <h1 class="flex w-full justify-center md:justify-start">
       <p class="p-4 font-extrabold text-sky-300 sm:text-3xl">
@@ -19,7 +19,9 @@
     <app-snippet-card
       [snippets]="userSnippets"
       [showDeleteSnippet]="true"
-      (deleteSnippet)="deleteSnippet($event)">
-    ></app-snippet-card>
+      (deleteSnippet)="deleteSnippet($event)"
+    >
+      ></app-snippet-card
+    >
   </div>
 </div>

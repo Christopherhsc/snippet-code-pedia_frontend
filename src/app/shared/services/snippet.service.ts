@@ -14,6 +14,7 @@ export class SnippetService {
   }
 
   postSnippet(snippetData: any) {
+    console.log(snippetData)
     return this.dataService.postSnippet(snippetData);
   }
 

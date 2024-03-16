@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core'
 import { CanActivate, Router, UrlTree } from '@angular/router'
-import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { Observable, of } from 'rxjs'
+import { catchError, map } from 'rxjs/operators'
 import { UserService } from '../services/user.service'
+import { AuthenticationService } from '../services/authentication.service'
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +11,24 @@ import { UserService } from '../services/user.service'
 export class AuthGuard implements CanActivate {
   constructor(
     private userService: UserService,
+    private authService: AuthenticationService,
     private router: Router
   ) {}
 
   canActivate(): Observable<boolean | UrlTree> {
     return this.userService.getUserProfile().pipe(
       map((userProfile) => {
-        if (userProfile) {
-          // If there's a user profile, the user is authenticated
+        if (userProfile && this.authService.isLoggedIn()) {
+          // User is authenticated
           return true
         } else {
-          // If there's no user profile, redirect to the login page
+          // Redirect to login if either check fails
           return this.router.createUrlTree(['/login'])
         }
+      }),
+      catchError(() => {
+        // Handle any errors, e.g., if the userProfile request fails
+        return of(this.router.createUrlTree(['/login']))
       })
     )
   }

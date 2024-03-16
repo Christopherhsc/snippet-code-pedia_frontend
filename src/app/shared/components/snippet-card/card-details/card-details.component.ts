@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-card-details',
@@ -12,11 +13,18 @@ export class CardDetailsComponent {
   @Input() showDeleteSnippet: boolean = false
   @Output() deleteSnippet = new EventEmitter<string>()
 
-  constructor(private domSanitizer: DomSanitizer) {}
+  constructor(
+    private domSanitizer: DomSanitizer,
+    private router: Router
+  ) {}
 
   formatSnippet(snippetTemplate: string): SafeHtml {
     const formatted = `<pre><code>${this.escapeHtml(snippetTemplate)}</code></pre>`
     return this.domSanitizer.bypassSecurityTrustHtml(formatted)
+  }
+
+  viewSnippetDetails(_id: string) {
+    this.router.navigate(["/",this.snippet._id])
   }
 
   private escapeHtml(htmlString: string): string {

@@ -77,10 +77,11 @@
         <img
           *ngIf="userProfile?.imageUrl"
           [src]="userProfile?.imageUrl"
+          referrerpolicy="no-referrer"
           alt="Profile"
           width="40"
           height="40"
-          class="hidden rounded-full border border-gray-700 xs:flex"
+          class="hidden rounded-full border border-gray-700 xs:block"
         />
         <div class="flex flex-col text-left">
           <span class="text-stone-500"> {{ userProfile?.username }} </span>

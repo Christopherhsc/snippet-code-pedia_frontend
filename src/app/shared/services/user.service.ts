@@ -20,6 +20,7 @@ export class UserService {
   }
 
   getUserProfile() {
+    console.log(this.userProfile$)
     return this.userProfile$;
   }
 
