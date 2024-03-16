@@ -1,24 +1,7 @@
 .card {
   max-width: 300px;
 
-  ::-webkit-scrollbar {
-    @apply h-2.5 w-2.5;
-  }
 
-  /* Track */
-  ::-webkit-scrollbar-track {
-    @apply bg-opacity-100;
-  }
-
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    @apply rounded-lg bg-slate-700;
-  }
-
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-slate-400;
-  }
 
   .image-container {
     max-width: 300px;

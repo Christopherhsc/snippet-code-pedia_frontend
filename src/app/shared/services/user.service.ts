@@ -5,7 +5,6 @@ import { BehaviorSubject, Observable } from 'rxjs'
   providedIn: 'root'
 })
 export class UserService {
-
   private userProfileSubject = new BehaviorSubject<any>(null)
   public userProfile$ = this.userProfileSubject.asObservable()
 
@@ -20,9 +19,6 @@ export class UserService {
   }
 
   getUserProfile() {
-    console.log(this.userProfile$)
-    return this.userProfile$;
+    return this.userProfile$
   }
-
-
 }

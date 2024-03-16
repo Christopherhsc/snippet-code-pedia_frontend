@@ -10,7 +10,7 @@
     <p class="my-4">{{ snippet?.description | CapitalizeFirstLetterPipe }}</p>
   </div>
 
-  <div *ngIf="snippet?.picture" class="relative my-6">
+  <div *ngIf="snippet?.picture" class="my-6">
     <img [src]="snippet.picture" alt="Snippet Image" class="m-auto" />
   </div>
 
@@ -18,8 +18,8 @@
     <div class="w-1/2 bg-gray-300">
       <button
         class="w-full hover:bg-gray-400"
+        [ngClass]="showHTML ? 'bg-stone-500 text-white' : ''"
         (click)="showHTMLContent()"
-        [ngClass]="{ 'active-button': showHTML }"
       >
         HTML
       </button>
@@ -27,18 +27,20 @@
     <div class="w-1/2 bg-gray-300">
       <button
         class="w-full hover:bg-gray-400"
+        [ngClass]="!showHTML ? 'bg-stone-500 text-white' : ''"
         (click)="showCSSContent()"
-        [ngClass]="{ 'active-button': !showHTML }"
       >
         CSS
       </button>
     </div>
   </div>
 
-  <div *ngIf="showHTML; else showCSS" [innerHTML]="snippet?.formattedTemplate"></div>
-  <ng-template #showCSS>
-    <div [innerHTML]="snippet?.formattedStyle"></div>
-  </ng-template>
+  <div class="mt-4 max-h-96 overflow-y-auto rounded-md border p-4">
+    <div *ngIf="showHTML; else showCSS" [innerHTML]="snippet?.formattedTemplate"></div>
+    <ng-template #showCSS>
+      <div [innerHTML]="snippet?.formattedStyle"></div>
+    </ng-template>
+  </div>
 
   <div class="my-6 flex flex-row justify-between">
     <p class="text-md overflow-hidden overflow-ellipsis whitespace-nowrap pt-0.5">
