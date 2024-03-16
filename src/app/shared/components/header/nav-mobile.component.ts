@@ -9,7 +9,6 @@ import { UserService } from '../../services/user.service'
 @Component({
   selector: 'app-navMobile',
   template: `
-  
     <!-- Nav List for small screens -->
     <div class="z-10 text-2xl text-black sm:hidden">
       <ul class="p-4">
@@ -49,7 +48,6 @@ export class NavMobileComponent implements OnDestroy {
     })
     this.snippetService.getUserSnippets(this.userProfile._id).subscribe((snippets) => {
       this.userSnippets = snippets
-      console.log(this.userSnippets)
     })
   }
 

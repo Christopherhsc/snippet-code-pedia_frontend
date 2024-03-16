@@ -19,27 +19,28 @@
   </div>
   <div class="my-4 h-auto w-full">
     <button
+      type="button"
       (click)="inputField.click()"
-      class="flex max-w-44 items-center justify-center text-balance border border-white bg-gradient-to-tr from-slate-900 via-slate-400 to-slate-900 p-2 text-sky-400 hover:scale-110 hover:text-white"
+      class="flex max-w-44 items-center justify-center text-balance border border-white bg-gradient-to-tr from-slate-900 via-slate-400 to-slate-900 p-2 text-sky-400 hover:text-white"
     >
-      Add layout image for your snippet
+      Add image for your snippet
     </button>
     <div class="my-4 flex flex-col items-center justify-center gap-4 md:flex-row">
       <!-- Hidden File Input -->
       <input type="file" hidden #inputField (change)="fileChangedEvent($event)" />
 
       <!-- Image Cropper -->
-      <div class=" flex w-1/2 flex-col" *ngIf="isCropping">
+      <div class="flex w-1/2 flex-col" *ngIf="isCropping">
         <image-cropper
-        #cropper
-        [imageChangedEvent]="imageChangedEvent"
-        [maintainAspectRatio]="false"
-        [cropperMaxHeight]="600"
-        [aspectRatio]="1.5"
-        [roundCropper]="false"
-        format="png"
-        (imageCropped)="imageCropped($event)"
-      ></image-cropper>
+          #cropper
+          [imageChangedEvent]="imageChangedEvent"
+          [maintainAspectRatio]="false"
+          [cropperMaxHeight]="600"
+          [aspectRatio]="1.5"
+          [roundCropper]="false"
+          format="png"
+          (imageCropped)="imageCropped($event)"
+        ></image-cropper>
         <div class="flex flex-row justify-end gap-4 text-lg">
           <button class="text-white hover:scale-110" (click)="discardChanges()">
             Cancel
