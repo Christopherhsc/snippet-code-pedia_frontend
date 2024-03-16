@@ -9,7 +9,7 @@ import { NgxImageCompressService } from 'ngx-image-compress'
 import { ProfileComponent } from './components/profile/profile.component'
 import { SnippetCreateComponent } from './components/snippet-create/snippet-create.component'
 import { SnippetStatisticsComponent } from './components/snippet-statistics/snippet-statistics.component'
-import { SnippetDetailsComponent } from './components/snippet-details/snippet-details.component'
+import { SnippetOverviewComponent } from './components/snippet-overview/snippet-overview.component'
 
 import { SharedModule } from '../shared/shared.module'
 
@@ -21,7 +21,7 @@ import { MatIconModule } from '@angular/material/icon'
     ProfileComponent,
     SnippetCreateComponent,
     SnippetStatisticsComponent,
-    SnippetDetailsComponent
+    SnippetOverviewComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +37,7 @@ import { MatIconModule } from '@angular/material/icon'
     ProfileComponent,
     SnippetCreateComponent,
     SnippetStatisticsComponent,
-    SnippetDetailsComponent
+    SnippetOverviewComponent
   ]
 })
 export class ConsumersModule {}

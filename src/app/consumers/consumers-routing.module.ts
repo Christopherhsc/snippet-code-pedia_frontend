@@ -4,7 +4,7 @@ import { HomeComponent } from '../home/home.component'
 import { ProfileComponent } from './components/profile/profile.component'
 import { SnippetCreateComponent } from './components/snippet-create/snippet-create.component'
 import { AuthGuard } from '../shared/guards/auth.guard'
-import { SnippetDetailsComponent } from './components/snippet-details/snippet-details.component'
+import { SnippetOverviewComponent } from './components/snippet-overview/snippet-overview.component'
 
 const routes: Routes = [
   {
@@ -27,7 +27,7 @@ const routes: Routes = [
   {
     path: ':_id',
     pathMatch: 'full',
-    component: SnippetDetailsComponent,
+    component: SnippetOverviewComponent,
     canActivate: [AuthGuard]
   }
 ]

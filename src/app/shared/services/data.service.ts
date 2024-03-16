@@ -19,6 +19,10 @@ export class DataService {
     return this.http.get<any[]>(`${this.baseUrl}snippets`)
   }
 
+  getSnippetById(snippetId: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}snippets/detail/${snippetId}`);
+  }
+
   getUserSnippets(userId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}snippets/${userId}`)
   }
