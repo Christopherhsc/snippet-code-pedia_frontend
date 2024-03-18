@@ -11,7 +11,10 @@
 
   <div *ngIf="snippet.picture" class="image-container relative">
     <img [src]="snippet.picture" alt="Snippet Image" class="snippet-image" />
-    <button class="report-button scale-110 hover:text-black text-red-600" *ngIf="userProfile">
+    <button
+      class="report-button scale-110 text-red-600 hover:text-black"
+      *ngIf="userProfile"
+    >
       <mat-icon>priority_high</mat-icon>
     </button>
   </div>
@@ -45,7 +48,7 @@
     </div>
   </div>
   <div *ngIf="!userProfile" class="py-2 text-center text-xs underline hover:scale-110">
-    <button href="login">Login to view code</button>
+    <a href="/login">Login to view code</a>
   </div>
   <div class="flex justify-end">
     <button
