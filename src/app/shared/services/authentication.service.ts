@@ -59,14 +59,14 @@ export class AuthenticationService {
   loginSCP(email: string, password: string): Observable<any> {
     return this.dataService.loginUser(email, password).pipe(
       tap((response) => {
-        sessionStorage.setItem('loggedInUser', JSON.stringify(response));
-        this.isAuthenticated = true;
-        this.userService.updateUserProfile(response);
+        sessionStorage.setItem('loggedInUser', JSON.stringify(response))
+        this.isAuthenticated = true
+        this.userService.updateUserProfile(response)
       }),
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => new Error(error))
       })
-    );
+    )
   }
 
   private checkAuthentication() {

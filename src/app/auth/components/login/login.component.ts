@@ -32,10 +32,10 @@ export class LoginComponent implements OnInit, AfterViewChecked {
           `Greetings ${response.username}!`,
           'Authentication successful'
         )
-        this.ngZone.run(() => this.router.navigate(['/']));
+        this.ngZone.run(() => this.router.navigate(['/']))
       },
       error: (error) => {
-        this.customToaster.error('Invalid username / password');
+        this.customToaster.error('Invalid username / password')
       }
     })
   }

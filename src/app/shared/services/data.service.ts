@@ -20,7 +20,7 @@ export class DataService {
   }
 
   getSnippetById(snippetId: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}snippets/detail/${snippetId}`);
+    return this.http.get<any>(`${this.baseUrl}snippets/detail/${snippetId}`)
   }
 
   getUserSnippets(userId: string): Observable<any[]> {
@@ -46,8 +46,8 @@ export class DataService {
   }
 
   deleteSnippet(snippetId: string): Observable<any> {
-    const userId = this.getUserIdFromSession();
-    const headers = new HttpHeaders({ 'user-id': userId });
-    return this.http.delete(`${this.baseUrl}snippets/${snippetId}`, { headers });
+    const userId = this.getUserIdFromSession()
+    const headers = new HttpHeaders({ 'user-id': userId })
+    return this.http.delete(`${this.baseUrl}snippets/${snippetId}`, { headers })
   }
 }
