@@ -1,3 +1,25 @@
 .focus-style {
-  @apply bg-gradient-to-r from-slate-600 to-red-500;
+  @apply bg-gradient-to-r from-slate-600 to-slate-900;
+}
+
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+
+.dropdown-container{
+  margin-top: -3px;
+}
+
+.text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 90%;
+}
+
+.text-detail{
+  font-size: 8px;
 }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core'
+import { ChangeDetectorRef, Component } from '@angular/core'
+import { Router } from '@angular/router'
 import { Subject } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
 import { AuthenticationService } from 'src/app/shared/services/authentication.service'
@@ -10,21 +11,26 @@ import { SearchService } from 'src/app/shared/services/search.service'
   styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent {
-  searchTerm: string = ''
+  searchTerm = ''
+  searchResults: any = { snippets: [], users: [] }
   searchTerms = new Subject<string>()
   buttonFocused: boolean = false
+  snippet: any
 
   constructor(
     public auth: AuthenticationService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private router: Router
   ) {
     this.searchTerms.pipe(debounceTime(500)).subscribe((term) => {
       if (term.length >= 3 && this.auth.isLoggedIn()) {
         this.searchService.search(term).subscribe({
           next: (results) => {
+            console.log('search letters:', this.searchTerm)
             console.log('Search results:', results)
-            // Handle the search results
+            this.searchResults = results
           },
+
           error: (error) => {
             console.error('Search error:', error)
           }
@@ -34,7 +40,10 @@ export class SearchBarComponent {
   }
 
   onSearchInput(): void {
-    this.searchTerms.next(this.searchTerm)
+    const processedSearchTerm = this.searchTerm.replace(/[#]+/g, '')
+    if (processedSearchTerm.length > 2) {
+      this.searchTerms.next(processedSearchTerm)
+    }
   }
 
   onInputFocus(): void {
@@ -45,10 +54,7 @@ export class SearchBarComponent {
     this.buttonFocused = false
   }
 
-  performSearch(term: string): void {
-    if (term.length >= 3 && this.auth.isLoggedIn()) {
-      console.log('Searching for:', term)
-      // Implement your search logic here
-    }
+  routeToSnippetOverview(snippetId: string): void {
+    this.router.navigate(['', snippetId])
   }
 }

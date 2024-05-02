@@ -1,5 +1,7 @@
 <div class="mb-12 mt-4 w-screen" *ngIf="auth.isLoggedIn()">
-  <div class="mx-auto flex w-full overflow-hidden rounded-md sm:w-3/4 md:w-2/4 xl:w-1/4">
+  <div
+    class="relative mx-auto flex w-full overflow-hidden rounded-md sm:w-3/4 md:w-2/4 xl:w-1/4"
+  >
     <input
       type="email"
       placeholder="Search username, email or snippets"
@@ -13,9 +15,42 @@
       type="button"
       [ngClass]="{ 'focus-style': buttonFocused }"
       class="flex items-center justify-center bg-gradient-to-r from-slate-700 to-slate-900 px-5"
-      (click)="performSearch(searchTerm)"
     >
       <mat-icon class="hover:bolder text-slate-300 hover:text-white">search</mat-icon>
     </button>
+  </div>
+  <div
+    class="dropdown-container mx-auto rounded-b-md bg-white bg-gradient-to-r from-slate-900 to-slate-700 shadow-lg sm:w-3/4 md:w-2/4 xl:w-1/4"
+    *ngIf="
+      searchTerm.length > 2 &&
+      (searchResults.users.length > 0 || searchResults.snippets.length > 0)
+    "
+  >
+    <p class="px-4 pt-2 font-bold text-white">Profiles:</p>
+    <ul>
+      <li
+        *ngFor="let user of searchResults.users"
+        class="flex flex-row justify-between items-center px-4 pb-2 text-slate-400 hover:cursor-pointer hover:text-white"
+      >
+        <div class="text-overflow text-xs">{{ user.username }} ({{ user.email }})</div>
+        <div>-></div>
+      </li>
+    </ul>
+    <p class="px-4 pt-2 font-bold text-white">Snippets:</p>
+    <ul>
+      <li
+        *ngFor="let snippet of searchResults.snippets"
+        class="flex flex-row justify-between items-center px-4 pb-2 text-slate-400 hover:cursor-pointer hover:text-white"
+        (click)="routeToSnippetOverview(snippet._id)"
+      >
+        <div class="flex w-3/4 flex-col">
+          <div class="text-overflow text-xs">{{ snippet.title }} - {{ snippet.description }}</div>
+          <div class="text-detail text-overflow">
+            {{ snippet.username }} ({{ snippet.email }})
+          </div>
+        </div>
+        <div class="flex">-></div>
+      </li>
+    </ul>
   </div>
 </div>
