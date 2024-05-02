@@ -50,4 +50,8 @@ export class DataService {
     const headers = new HttpHeaders({ 'user-id': userId })
     return this.http.delete(`${this.baseUrl}snippets/${snippetId}`, { headers })
   }
+
+  search(term: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}search?term=${term}`);
+  }
 }

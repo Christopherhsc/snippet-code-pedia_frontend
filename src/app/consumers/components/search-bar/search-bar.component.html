@@ -1,0 +1,21 @@
+<div class="mb-12 mt-4 w-screen" *ngIf="auth.isLoggedIn()">
+  <div class="mx-auto flex w-full overflow-hidden rounded-md sm:w-3/4 md:w-2/4 xl:w-1/4">
+    <input
+      type="email"
+      placeholder="Search username, email or snippets"
+      [(ngModel)]="searchTerm"
+      (input)="onSearchInput()"
+      (focus)="onInputFocus()"
+      (blur)="onInputBlur()"
+      class="w-full bg-gradient-to-r from-slate-900 to-slate-700 px-4 py-3 text-sm text-white placeholder-slate-100 outline-none focus:to-slate-600 focus:placeholder-slate-400"
+    />
+    <button
+      type="button"
+      [ngClass]="{ 'focus-style': buttonFocused }"
+      class="flex items-center justify-center bg-gradient-to-r from-slate-700 to-slate-900 px-5"
+      (click)="performSearch(searchTerm)"
+    >
+      <mat-icon class="hover:bolder text-slate-300 hover:text-white">search</mat-icon>
+    </button>
+  </div>
+</div>
