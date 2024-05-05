@@ -18,6 +18,15 @@ export class AuthenticationService {
     this.checkAuthentication()
   }
 
+  getCurrentUserId(): string | null {
+    const user = sessionStorage.getItem('loggedInUser');
+    if (user) {
+      const userData = JSON.parse(user);
+      return userData._id; 
+    }
+    return null;
+  }
+
   createUser(userInfo: any): Observable<any> {
     const userData = {
       email: userInfo.email,

@@ -54,4 +54,8 @@ export class DataService {
   search(term: string): Observable<any> {
     return this.http.get(`${this.baseUrl}search?term=${term}`);
   }
+
+  getUserById(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}users/${userId}`);
+  }
 }

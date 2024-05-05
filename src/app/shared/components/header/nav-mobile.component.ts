@@ -61,8 +61,13 @@ export class NavMobileComponent implements OnDestroy {
   }
 
   goToProfile() {
-    this.router.navigate(['profile'])
-    this.navService.setNavListVisible(false)
+    const userId = this.authService.getCurrentUserId()
+    if (userId) {
+      this.router.navigate(['/profile', userId])
+      this.navService.setNavListVisible(false)
+    } else {
+      console.error('User ID is not available')
+    }
   }
 
   goToSnippet() {

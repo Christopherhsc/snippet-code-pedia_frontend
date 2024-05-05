@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { UserService } from 'src/app/shared/services/user.service'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
+import { AuthenticationService } from '../../services/authentication.service'
 
 @Component({
   selector: 'app-snippet-card',
   templateUrl: './snippet-card.component.html',
-  styleUrl: './snippet-card.component.scss'
+  styleUrls: ['./snippet-card.component.scss']
 })
 export class SnippetCardComponent implements OnInit {
   @Input() snippets: any[] = []
@@ -16,14 +17,22 @@ export class SnippetCardComponent implements OnInit {
   userProfile: any
 
   constructor(
-    public UserService: UserService,
+    private userService: UserService,
+    private authService: AuthenticationService,
     private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit() {
-    this.UserService.getUserProfile().subscribe((profile) => {
-      this.userProfile = profile
-    })
+    const userId = this.authService.getCurrentUserId();
+    if (userId) {
+      this.userService.getUserProfile(userId).subscribe((profile) => {
+        this.userProfile = profile;
+      });
+    } else {
+      // Handle unauthenticated / no user ID found case appropriately
+      console.log('No user ID found');
+    }
+
     this.breakpointObserver
       .observe([
         Breakpoints.Small,
@@ -33,15 +42,15 @@ export class SnippetCardComponent implements OnInit {
       ])
       .subscribe((result) => {
         if (result.breakpoints[Breakpoints.XLarge]) {
-          this.visibleDivs = 4
+          this.visibleDivs = 4;
         } else if (result.breakpoints[Breakpoints.Large]) {
-          this.visibleDivs = 3
+          this.visibleDivs = 3;
         } else if (result.breakpoints[Breakpoints.Medium]) {
-          this.visibleDivs = 2
+          this.visibleDivs = 2;
         } else if (result.breakpoints[Breakpoints.Small]) {
-          this.visibleDivs = 1
+          this.visibleDivs = 1;
         }
-      })
+      });
   }
 
   isCardVisible(divIndex: number, cardIndex: number): boolean {

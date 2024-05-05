@@ -54,6 +54,10 @@ export class SearchBarComponent {
     this.buttonFocused = false
   }
 
+  routeToUserProfile(userId: string): void {
+    this.router.navigate(['/profile', userId]);
+  }
+
   routeToSnippetOverview(snippetId: string): void {
     this.router.navigate(['', snippetId])
   }

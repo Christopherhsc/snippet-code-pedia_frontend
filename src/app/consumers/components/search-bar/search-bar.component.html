@@ -30,21 +30,24 @@
     <ul>
       <li
         *ngFor="let user of searchResults.users"
-        class="flex flex-row justify-between items-center px-4 pb-2 text-slate-400 hover:cursor-pointer hover:text-white"
+        class="flex flex-row items-center justify-between px-4 pb-2 text-slate-400 hover:cursor-pointer hover:text-white"
+        (click)="routeToUserProfile(user._id)"
       >
-        <div class="text-overflow text-xs">{{ user.username }} ({{ user.email }})</div>
-        <div>-></div>
+      <div class="text-overflow text-xs">{{ user?.username }} ({{ user?.email }})</div>
+        <div class="flex">-></div>
       </li>
     </ul>
     <p class="px-4 pt-2 font-bold text-white">Snippets:</p>
     <ul>
       <li
         *ngFor="let snippet of searchResults.snippets"
-        class="flex flex-row justify-between items-center px-4 pb-2 text-slate-400 hover:cursor-pointer hover:text-white"
+        class="flex flex-row items-center justify-between px-4 pb-2 text-slate-400 hover:cursor-pointer hover:text-white"
         (click)="routeToSnippetOverview(snippet._id)"
       >
         <div class="flex w-3/4 flex-col">
-          <div class="text-overflow text-xs">{{ snippet.title }} - {{ snippet.description }}</div>
+          <div class="text-overflow text-xs">
+            {{ snippet.title }} - {{ snippet.description }}
+          </div>
           <div class="text-detail text-overflow">
             {{ snippet.username }} ({{ snippet.email }})
           </div>

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { DomSanitizer } from '@angular/platform-browser'
 import { Router } from '@angular/router'
-import { DataUrl, NgxImageCompressService } from 'ngx-image-compress'
+import { NgxImageCompressService } from 'ngx-image-compress'
 import { ImageCroppedEvent } from 'ngx-image-cropper'
+import { AuthenticationService } from 'src/app/shared/services/authentication.service'
 import { SnippetService } from 'src/app/shared/services/snippet.service'
 import { UserService } from 'src/app/shared/services/user.service'
 
@@ -27,6 +28,7 @@ export class SnippetCreateComponent implements OnInit {
     private snippetService: SnippetService,
     private router: Router,
     private userService: UserService,
+    private authService: AuthenticationService,
     private sanitizer: DomSanitizer,
     private imageCompress: NgxImageCompressService
   ) {
@@ -34,16 +36,22 @@ export class SnippetCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUserProfile().subscribe((userProfile) => {
-      // Update form values
-      if (userProfile) {
-        this.snippetForm.patchValue({
-          username: userProfile.username,
-          email: userProfile.email,
-          userId: userProfile._id
-        })
-      }
-    })
+    const userId = this.authService.getCurrentUserId();  // Get the current user ID from AuthenticationService
+    if (userId) {
+      this.userService.getUserProfile(userId).subscribe((userProfile) => {
+        if (userProfile) {
+          this.snippetForm.patchValue({
+            username: userProfile.username,
+            email: userProfile.email,
+            userId: userProfile._id
+          });
+        }
+      });
+    } else {
+      // Handle cases where there is no logged-in user
+      console.error('No logged-in user found');
+      this.router.navigate(['/login']);  // Redirect to login or appropriate action
+    }
   }
 
   private initForm(): void {
@@ -57,7 +65,7 @@ export class SnippetCreateComponent implements OnInit {
       username: ['', Validators.required],
       email: ['', Validators.required],
       userId: ['', Validators.required]
-    })
+    });
   }
 
   fileChangedEvent(event: any): void {

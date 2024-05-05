@@ -19,9 +19,11 @@ export class SnippetOverviewComponent {
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
+    this.route.params.subscribe(params => {
       const snippetId = params['_id'];
-      this.fetchSnippet(snippetId);
+      if (snippetId !== 'profile') {  // Ensure the ID is not 'profile'
+        this.fetchSnippet(snippetId);
+      }
     });
   }
 
