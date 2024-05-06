@@ -61,7 +61,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   goToProfile() {
     // Navigate using the userProfile ID from the AuthenticationService or UserService
-    const userId = this.authService.getCurrentUserId() // Adjust based on where you store the logged-in user info
+    const userId = this.authService.getCurrentUserId() 
     if (userId) {
       this.router.navigate(['/profile', userId]);
     } else {

@@ -13,17 +13,11 @@ export class CardDetailsComponent {
   @Input() showDeleteSnippet: boolean = false
   @Output() deleteSnippet = new EventEmitter<string>()
 
-  constructor(
-    private router: Router
-  ) {}
-
-
+  constructor(private router: Router) {}
 
   routeToSnippetOverview(_id: string) {
-    this.router.navigate(["/",this.snippet._id])
+    this.router.navigate(['/', this.snippet._id])
   }
-
-
 
   onDeleteSnippet() {
     this.deleteSnippet.emit(String(this.snippet._id))

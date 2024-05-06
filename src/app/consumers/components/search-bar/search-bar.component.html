@@ -8,7 +8,6 @@
       [(ngModel)]="searchTerm"
       (input)="onSearchInput()"
       (focus)="onInputFocus()"
-      (blur)="onInputBlur()"
       class="w-full bg-gradient-to-r from-slate-900 to-slate-700 px-4 py-3 text-sm text-white placeholder-slate-100 outline-none focus:to-slate-600 focus:placeholder-slate-400"
     />
     <button
@@ -20,25 +19,29 @@
     </button>
   </div>
   <div
-    class="dropdown-container mx-auto rounded-b-md bg-white bg-gradient-to-r from-slate-900 to-slate-700 shadow-lg sm:w-3/4 md:w-2/4 xl:w-1/4"
+    class="dropdown-container mx-auto rounded-b-md bg-gradient-to-r from-slate-900 to-slate-400 shadow-lg sm:w-3/4 md:w-2/4 xl:w-1/4"
     *ngIf="
       searchTerm.length > 2 &&
-      (searchResults.users.length > 0 || searchResults.snippets.length > 0)
+      (searchResults.users.length > 0 || searchResults.snippets.length > 0 || (searchResults.users.length === 0 && searchResults.snippets.length === 0))
     "
   >
-    <p class="px-4 pt-2 font-bold text-white">Profiles:</p>
-    <ul>
+    <p class="px-4 pt-2 font-bold text-white" *ngIf="searchResults.users.length > 0">
+      Profiles:
+    </p>
+    <ul *ngIf="searchResults.users.length > 0">
       <li
         *ngFor="let user of searchResults.users"
         class="flex flex-row items-center justify-between px-4 pb-2 text-slate-400 hover:cursor-pointer hover:text-white"
         (click)="routeToUserProfile(user._id)"
       >
-      <div class="text-overflow text-xs">{{ user?.username }} ({{ user?.email }})</div>
+        <div class="text-overflow text-xs">{{ user?.username }} ({{ user?.email }})</div>
         <div class="flex">-></div>
       </li>
     </ul>
-    <p class="px-4 pt-2 font-bold text-white">Snippets:</p>
-    <ul>
+    <p class="px-4 pt-2 font-bold text-white" *ngIf="searchResults.snippets.length > 0">
+      Snippets:
+    </p>
+    <ul *ngIf="searchResults.snippets.length > 0">
       <li
         *ngFor="let snippet of searchResults.snippets"
         class="flex flex-row items-center justify-between px-4 pb-2 text-slate-400 hover:cursor-pointer hover:text-white"
@@ -55,5 +58,8 @@
         <div class="flex">-></div>
       </li>
     </ul>
+    <div *ngIf="searchResults.users.length === 0 && searchResults.snippets.length === 0">
+      <p class="px-4 py-2 font-bold text-white">No Results Found</p>
+    </div>
   </div>
 </div>
