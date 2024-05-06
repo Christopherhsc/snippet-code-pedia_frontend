@@ -188,7 +188,7 @@ export class RegisterComponent implements OnInit {
     this.authService.createUser(userData).subscribe({
       next: (response) => {
         this.customToaster.success(
-          `Welcome to Snippet-Code-Pedia ${response.username}`,
+          `Welcome to SourceStyleHub ${response.username}`,
           'Registration successful!'
         )
         this.ngZone.run(() => {
