@@ -3,8 +3,8 @@
     class="relative mx-auto flex w-full overflow-hidden rounded-md sm:w-3/4 md:w-2/4 xl:w-1/4"
   >
     <input
-      type="email"
-      placeholder="Search username, email or snippets"
+      type="text"
+      placeholder="Search profiles or snippets"
       [(ngModel)]="searchTerm"
       (input)="onSearchInput()"
       (focus)="onInputFocus()"
@@ -34,7 +34,7 @@
         class="flex flex-row items-center justify-between px-4 pb-2 text-slate-400 hover:cursor-pointer hover:text-white"
         (click)="routeToUserProfile(user._id)"
       >
-        <div class="text-overflow text-xs">{{ user?.username }} ({{ user?.email }})</div>
+        <div class="text-overflow text-xs">{{ user?.username }} </div>
         <div class="flex">-></div>
       </li>
     </ul>
@@ -52,7 +52,7 @@
             {{ snippet.title }} - {{ snippet.description }}
           </div>
           <div class="text-detail text-overflow">
-            {{ snippet.username }} ({{ snippet.email }})
+            {{ snippet.username }} 
           </div>
         </div>
         <div class="flex">-></div>

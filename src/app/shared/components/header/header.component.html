@@ -60,12 +60,6 @@
           />
           <div class="flex w-full flex-col text-left">
             <span class="text-stone-500"> {{ userProfile?.username }} </span>
-            <span *ngIf="!isHovering" class="text-xs text-gray-400">{{
-              userProfile?.email
-            }}</span>
-            <span *ngIf="isHovering" class="text-xs text-gray-400"
-              >Click to go to your profile</span
-            >
           </div>
         </div>
       </button>
@@ -85,9 +79,6 @@
         />
         <div class="flex flex-col text-left">
           <span class="text-stone-500"> {{ userProfile?.username }} </span>
-          <span class="text-xs text-gray-400">
-            {{ userProfile?.email }}
-          </span>
         </div>
       </div>
     </button>
