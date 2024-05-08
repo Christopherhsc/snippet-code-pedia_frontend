@@ -1,27 +1,34 @@
 <div class="flex flex-col items-center justify-between">
-  <div>
-    <h1 class="flex w-full justify-center md:justify-start">
-      <p class="p-4 font-extrabold text-sky-300 sm:text-3xl">
-        {{ userProfile?.username }}'s Profile
-      </p>
-    </h1>
-    <div class="hidden w-full pb-4 sm:flex sm:justify-center lg:justify-end">
-      <button
-        *ngIf="userSnippets.length < 5"
-        (click)="goToCreateSnippet()"
-        class="li-button bg-gradient-to-bl from-slate-500 to-stone-900 p-4 text-sky-300 transition-all hover:text-white"
-      >
-        Create a new Snippet +
-      </button>
-    </div>
-
-    <app-snippet-statistics [snippets]="userSnippets"></app-snippet-statistics>
-    <app-snippet-card
-      [snippets]="userSnippets"
-      [showDeleteSnippet]="true"
-      (deleteSnippet)="deleteSnippet($event)"
-    >
-      ></app-snippet-card
-    >
+  <div class="flex flex-row">
+    <img
+      *ngIf="userProfile?.imageUrl"
+      [src]="userProfile?.imageUrl"
+      alt="Profile"
+      height="50"
+      width="50"
+      class="rounded-full border border-gray-700"
+    />
+    <p class="flex items-center px-2 text-lg text-sky-300">
+      {{ userProfile?.username }}
+    </p>
   </div>
+
+  <div class="flex w-full justify-center py-4">
+    <button
+      *ngIf="userSnippets.length < 5"
+      (click)="goToCreateSnippet()"
+      class="li-button bg-gradient-to-bl from-slate-500 to-stone-900 p-4 text-sky-300 transition-all hover:text-white"
+    >
+      Create a new Snippet +
+    </button>
+  </div>
+
+  <app-snippet-statistics [snippets]="userSnippets"></app-snippet-statistics>
+  <app-snippet-card
+    [snippets]="userSnippets"
+    [showDeleteSnippet]="true"
+    (deleteSnippet)="deleteSnippet($event)"
+  >
+    ></app-snippet-card
+  >
 </div>
