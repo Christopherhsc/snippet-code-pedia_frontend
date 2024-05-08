@@ -15,12 +15,12 @@
 
   <div class="flex w-full justify-center py-4">
     <button
-      *ngIf="userSnippets.length < 5"
-      (click)="goToCreateSnippet()"
-      class="li-button bg-gradient-to-bl from-slate-500 to-stone-900 p-4 text-sky-300 transition-all hover:text-white"
-    >
-      Create a new Snippet +
-    </button>
+    *ngIf="userSnippets.length < 5"
+    [routerLink]="[{ outlets: { modal: ['create'] } }]"
+    class="li-button bg-gradient-to-bl from-slate-500 to-stone-900 p-4 text-sky-300 transition-all hover:text-white"
+  >
+    Create a new Snippet +
+  </button>
   </div>
 
   <app-snippet-statistics [snippets]="userSnippets"></app-snippet-statistics>
@@ -31,4 +31,5 @@
   >
     ></app-snippet-card
   >
+  <router-outlet name="modal"></router-outlet>
 </div>

@@ -15,13 +15,14 @@ const routes: Routes = [
   {
     path: 'profile/:userId',
     component: ProfileComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'create',
-    pathMatch: 'full',
-    component: SnippetCreateComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'create',
+        component: SnippetCreateComponent,
+        outlet: 'modal'
+      }
+    ]
   },
   {
     path: ':_id',

@@ -1,12 +1,15 @@
+<!-- app.component.html -->
 <div class="main">
   <div class="gradient"></div>
 </div>
 <main class="app overflow-hidden">
-  <app-header />
+  <app-header></app-header>
   <div [@fadeInOut] *ngIf="showHomeComponent">
-    <router-outlet />
+    <router-outlet></router-outlet>
   </div>
   <div>
     <app-navMobile *ngIf="showNavCompent && auth.isLoggedIn()"></app-navMobile>
   </div>
 </main>
+
+<router-outlet name="modal"></router-outlet>

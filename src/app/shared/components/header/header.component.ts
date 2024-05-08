@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   goToSnippet() {
-    this.router.navigate(['create'])
+    this.router.navigate([{ outlets: { modal: ['create'] } }]);
   }
 
   logout() {
