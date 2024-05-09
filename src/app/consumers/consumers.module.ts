@@ -11,6 +11,7 @@ import { SnippetCreateComponent } from './components/snippet-create/snippet-crea
 import { SnippetStatisticsComponent } from './components/snippet-statistics/snippet-statistics.component'
 import { SnippetOverviewComponent } from './components/snippet-overview/snippet-overview.component'
 import { SearchBarComponent } from './components/search-bar/search-bar.component'
+import { SnippetFilterComponent } from './components/snippet-filter/snippet-filter.component'
 
 import { SharedModule } from '../shared/shared.module'
 
@@ -23,7 +24,8 @@ import { MatIconModule } from '@angular/material/icon'
     SnippetCreateComponent,
     SnippetStatisticsComponent,
     SnippetOverviewComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    SnippetFilterComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { MatIconModule } from '@angular/material/icon'
     SnippetCreateComponent,
     SnippetStatisticsComponent,
     SnippetOverviewComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    SnippetFilterComponent
   ]
 })
 export class ConsumersModule {}

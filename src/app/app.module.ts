@@ -14,6 +14,9 @@ import { ConsumersModule } from './consumers/consumers.module'
 //custom components
 import { HomeComponent } from './home/home.component'
 
+//ang mat
+import { MatIconModule } from '@angular/material/icon'
+
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 
 @NgModule({
@@ -26,6 +29,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     SharedModule,
     AuthModule,
     ConsumersModule,
+
+    //ang mat
+    MatIconModule,
 
     ToastrModule.forRoot()
   ],

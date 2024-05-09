@@ -1,13 +1,22 @@
-<div class="flex w-full flex-col items-center">
+<div class="relative flex w-full flex-col items-center">
   <h1
-    class="gradient-orange mt-5 text-center text-5xl font-extrabold leading-[1.15] sm:text-6xl"
+    class="gradient-orange mt-10 text-center text-5xl font-extrabold leading-[1.15] sm:text-6xl"
   >
     Discover & Explore Powerful snippets
   </h1>
+
   <p class="mt-5 max-w-2xl text-center text-lg text-stone-600 sm:text-xl">
-    Source Style Hub is an open-source combination of HTML CSS and Tailwind to create new and
-    aesthetic frontend
+    Source Style Hub is an open-source combination of HTML CSS and Tailwind to create new
+    and aesthetic frontend
   </p>
-  <app-search-bar></app-search-bar>
+
+  <div
+    *ngIf="userProfile"
+    class="flex w-screen flex-col justify-center sm:w-3/4 md:w-2/4 xl:w-1/4"
+  >
+    <app-search-bar></app-search-bar>
+
+  </div>
   <app-snippet-card [snippets]="randomSnippet"></app-snippet-card>
 </div>
+<router-outlet name="modal"></router-outlet>

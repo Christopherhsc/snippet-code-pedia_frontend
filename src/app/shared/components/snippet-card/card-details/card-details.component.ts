@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 export class CardDetailsComponent implements OnInit, OnDestroy {
   @Input() snippet: any;
   @Input() showDeleteSnippet: boolean = false;
-  @Input() userProfile: any = null; // Ensure this is marked as an Input
+  @Input() userProfile: any = null;
   @Output() deleteSnippet = new EventEmitter<string>();
 
   private userProfileSubscription!: Subscription;

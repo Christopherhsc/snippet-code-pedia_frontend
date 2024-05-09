@@ -8,16 +8,25 @@ import { SnippetOverviewComponent } from './consumers/components/snippet-overvie
 import { AuthenticatedGuard } from './shared/guards/authenticated.guard';
 import { UnauthenticatedGuard } from './shared/guards/unauthenticated-guard.guard';
 import { AuthContainerComponent } from './auth/auth-container.component';
+import { SnippetFilterComponent } from './consumers/components/snippet-filter/snippet-filter.component';
 
+// app-routing.module.ts
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+    children: [
+      {
+        path: 'filter',
+        component: SnippetFilterComponent,
+        outlet: 'modal',
+      },
+    ],
   },
   {
     path: 'login',
     component: AuthContainerComponent,
-    canActivate: [UnauthenticatedGuard]
+    canActivate: [UnauthenticatedGuard],
   },
   {
     path: 'profile/:userId',
@@ -27,30 +36,31 @@ const routes: Routes = [
       {
         path: 'create',
         component: SnippetCreateComponent,
-        outlet: 'modal'
-      }
-    ]
+        outlet: 'modal',
+      },
+    ],
   },
   {
     path: 'create',
     outlet: 'modal',
     component: SnippetCreateComponent,
-    canActivate: [AuthenticatedGuard]
+    canActivate: [AuthenticatedGuard],
   },
   {
     path: 'snippet/:_id',
     component: SnippetOverviewComponent,
-    canActivate: [AuthenticatedGuard]
+    canActivate: [AuthenticatedGuard],
   },
   {
     path: '**',
     redirectTo: '',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
+
