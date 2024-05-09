@@ -71,7 +71,7 @@ export class NavMobileComponent implements OnDestroy {
   }
 
   goToSnippet() {
-    this.router.navigate(['create'])
+    this.router.navigate([{ outlets: { modal: ['create'] } }])
     this.navService.setNavListVisible(false)
   }
 

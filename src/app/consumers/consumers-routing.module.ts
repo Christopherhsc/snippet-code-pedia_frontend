@@ -1,34 +1,13 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { HomeComponent } from '../home/home.component'
-import { ProfileComponent } from './components/profile/profile.component'
-import { SnippetCreateComponent } from './components/snippet-create/snippet-create.component'
-import { AuthGuard } from '../shared/guards/auth.guard'
 import { SnippetOverviewComponent } from './components/snippet-overview/snippet-overview.component'
+import { AuthenticatedGuard } from '../shared/guards/authenticated.guard'
 
 const routes: Routes = [
   {
-    path: '',
-    pathMatch: 'full',
-    component: HomeComponent
-  },
-  {
-    path: 'profile/:userId',
-    component: ProfileComponent,
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: 'create',
-        component: SnippetCreateComponent,
-        outlet: 'modal'
-      }
-    ]
-  },
-  {
-    path: ':_id',
-    pathMatch: 'full',
+    path: 'snippet/:_id',
     component: SnippetOverviewComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthenticatedGuard]
   }
 ]
 

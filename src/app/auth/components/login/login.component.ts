@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
   ) {}
 
   onFormSubmit() {
+    this.email = this.email.toLowerCase() // Lowercase the email
     this.authService.loginSCP(this.email, this.password).subscribe({
       next: (response) => {
         this.customToaster.success(

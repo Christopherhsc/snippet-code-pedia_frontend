@@ -1,25 +1,41 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
-import { Router } from '@angular/router'
+// components/card-details/card-details.component.ts
+import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/shared/services/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-card-details',
   templateUrl: './card-details.component.html',
-  styleUrl: './card-details.component.scss'
+  styleUrls: ['./card-details.component.scss'],
 })
-export class CardDetailsComponent {
-  @Input() snippet: any
-  @Input() userProfile: any
-  @Input() showDeleteSnippet: boolean = false
-  @Output() deleteSnippet = new EventEmitter<string>()
+export class CardDetailsComponent implements OnInit, OnDestroy {
+  @Input() snippet: any;
+  @Input() showDeleteSnippet: boolean = false;
+  @Input() userProfile: any = null; // Ensure this is marked as an Input
+  @Output() deleteSnippet = new EventEmitter<string>();
 
-  constructor(private router: Router) {}
+  private userProfileSubscription!: Subscription;
+
+  constructor(private router: Router, private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.userProfileSubscription = this.userService.userProfile$.subscribe((profile) => {
+      this.userProfile = profile;
+    });
+  }
 
   routeToSnippetOverview(_id: string) {
-    this.router.navigate(['/', this.snippet._id])
+    this.router.navigate(['snippet/', this.snippet._id]);
   }
 
   onDeleteSnippet() {
-    this.deleteSnippet.emit(String(this.snippet._id))
+    this.deleteSnippet.emit(String(this.snippet._id));
+  }
+
+  ngOnDestroy(): void {
+    if (this.userProfileSubscription) {
+      this.userProfileSubscription.unsubscribe();
+    }
   }
 }
