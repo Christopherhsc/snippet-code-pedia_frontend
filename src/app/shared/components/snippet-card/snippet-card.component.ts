@@ -28,9 +28,6 @@ export class SnippetCardComponent implements OnInit {
       this.userService.getUserProfile(userId).subscribe((profile) => {
         this.userProfile = profile;
       });
-    } else {
-      // Handle unauthenticated / no user ID found case appropriately
-      console.log('No user ID found');
     }
 
     this.breakpointObserver
