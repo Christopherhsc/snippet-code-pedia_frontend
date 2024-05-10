@@ -13,7 +13,7 @@ export class SnippetCardComponent implements OnInit {
   @Input() showDeleteSnippet: boolean = false
   @Output() deleteSnippet = new EventEmitter<string>()
 
-  visibleDivs = 4
+  visibleDivs = 2
   userProfile: any
 
   constructor(
@@ -39,9 +39,9 @@ export class SnippetCardComponent implements OnInit {
       ])
       .subscribe((result) => {
         if (result.breakpoints[Breakpoints.XLarge]) {
-          this.visibleDivs = 4;
+          this.visibleDivs = 2;
         } else if (result.breakpoints[Breakpoints.Large]) {
-          this.visibleDivs = 3;
+          this.visibleDivs = 2;
         } else if (result.breakpoints[Breakpoints.Medium]) {
           this.visibleDivs = 2;
         } else if (result.breakpoints[Breakpoints.Small]) {

@@ -5,20 +5,20 @@
     [(ngModel)]="searchTerm"
     (input)="onSearchInput()"
     (focus)="onInputFocus()"
-    class="w-full bg-gradient-to-r from-slate-900 to-slate-700 px-2 py-3 text-sm text-white placeholder-slate-100 outline-none focus:to-slate-600 focus:placeholder-slate-400"
+    class="w-full bg-gradient-to-r from-slate-900 to-slate-700 px-2 py-3 text-sm text-white placeholder-slate-100 outline-none"
   />
   <button
     (click)="goToFilterModal()"
     type="button"
     [ngClass]="{ 'focus-style': buttonFocused }"
-    class="flex items-center justify-center bg-gradient-to-r from-slate-700 to-slate-900 px-2 text-slate-300 hover:text-white"
+    class="flex items-center justify-center bg-gradient-to-r from-slate-600 to-slate-900 px-2 text-slate-300 hover:text-white"
   >
     OR
     <mat-icon>filter_alt</mat-icon>
   </button>
 </div>
 <div
-  class="dropdown-container mx-auto rounded-b-md bg-gradient-to-r from-slate-900 to-slate-400 shadow-lg  w-full"
+  class="dropdown-container mx-auto w-full rounded-b-md bg-gradient-to-r from-slate-900 to-slate-400 shadow-lg"
   *ngIf="
     searchTerm.length > 2 &&
     (searchResults.users.length > 0 ||
