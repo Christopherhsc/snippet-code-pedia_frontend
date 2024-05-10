@@ -1,13 +1,15 @@
 import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SnippetService } from 'src/app/shared/services/snippet.service';
+import { noop } from 'rxjs';
+import { StatisticService } from 'src/app/shared/services/statistic.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { SnippetService } from 'src/app/shared/services/snippet.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']  // Note: Corrected from styleUrl to styleUrls
+  styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   userProfile: any;
@@ -19,18 +21,35 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     public userService: UserService,
     public snippetService: SnippetService,
+    private statisticService: StatisticService,
     private router: Router,
     private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {
-      const userId = params['userId'];  // Assuming 'userId' is the route parameter key
+      const userId = params['userId'];
       if (userId) {
-        this.fetchUserProfileAndSnippets(userId);
+        this.trackAndLoadUserProfile(userId);
       } else {
         console.error('No userId provided in the route parameters');
-        this.router.navigate(['/']);  // Redirect to home or another appropriate route
+        this.router.navigate(['/']);
+      }
+    });
+  }
+
+  /**
+   * Track profile visit and load profile details
+   * @param userId - User ID to track and load
+   */
+  trackAndLoadUserProfile(userId: string) {
+    this.statisticService.trackProfileVisit(userId).subscribe({
+      next: () => {
+        this.fetchUserProfileAndSnippets(userId);
+      },
+      error: error => {
+        console.error('Failed to track profile visit:', error);
+        this.fetchUserProfileAndSnippets(userId); // Load profile details even if tracking fails
       }
     });
   }
@@ -39,7 +58,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userService.getUserProfile(userId).subscribe({
       next: userProfile => {
         this.userProfile = userProfile;
-        this.fetchUserSnippets(userId);  // Fetch snippets after user profile is confirmed
+        this.fetchUserSnippets(userId);
       },
       error: error => {
         console.error('Failed to fetch user profile:', error);
@@ -52,12 +71,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.snippetService.getUserSnippets(userId).subscribe({
       next: snippets => {
         this.userSnippets = snippets;
-        this.changeDetector.detectChanges();  // Ensure the UI updates with new data
+        this.changeDetector.detectChanges();
       },
       error: error => {
         console.error('Failed to fetch snippets for user:', error);
       }
     });
+  }
+
+  getTotalVisitors(): number {
+    if (this.userProfile?.visitors) {
+      return this.userProfile.visitors.length;
+    }
+    return 0;
   }
 
   deleteSnippet(snippetId: string) {
@@ -66,13 +92,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.userSnippets = this.userSnippets.filter(snippet => snippet._id !== snippetId);
         this.changeDetector.detectChanges();
       },
-      error: (error) => console.error('Error deleting snippet', error)
+      error: error => console.error('Error deleting snippet', error)
     });
   }
 
   ngOnDestroy() {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
+    }
+    if (this.routeSub) {
+      this.routeSub.unsubscribe();
     }
   }
 

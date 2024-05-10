@@ -1,6 +1,6 @@
 <div
   (click)="routeToSnippetOverview(snippet._id)"
-  class="card m-1 my-2 min-w-48 cursor-pointer rounded-md bg-slate-700 px-2 text-white shadow-sm transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl md:m-4 2xl:m-4 max-w-md group"
+  class="card group m-1 my-2 min-w-48 max-w-md cursor-pointer rounded-md bg-slate-700 px-2 text-white shadow-sm transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl md:m-4 2xl:m-4"
 >
   <div class="text-xl">
     <p>{{ snippet.title | CapitalizeFirstLetterPipe }}</p>
@@ -10,7 +10,7 @@
     <p>{{ snippet.description | CapitalizeFirstLetterPipe }}</p>
   </div>
 
-  <div *ngIf="snippet.picture" class="image-container relative">
+  <div *ngIf="snippet.picture" class="image-container relative flex justify-center">
     <img [src]="snippet.picture" alt="Snippet Image" class="snippet-image" />
   </div>
 
@@ -28,11 +28,7 @@
     *ngIf="!userProfile"
     class="py-2 text-center text-xs underline transition-all duration-300 ease-in-out group-hover:scale-110"
   >
-    <a
-      routerLink="login"
-    >
-      Login to view code
-    </a>
+    <a routerLink="login"> Login to view code </a>
   </div>
 
   <div class="flex justify-end">

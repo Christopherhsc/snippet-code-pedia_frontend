@@ -1,4 +1,3 @@
-// src/app/data.service.ts
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -63,5 +62,16 @@ export class DataService {
 
   getUserProfileImage(userId: string): string {
     return `${this.baseUrl}users/proxy-profile-image?userId=${encodeURIComponent(userId)}`;
+  }
+
+  trackProfileVisit(profileUserId: string): Observable<any> {
+    const visitorUserId = this.getUserIdFromSession();
+    if (!visitorUserId) {
+      throw new Error('User not logged in');
+    }
+
+    return this.http.put(`${this.baseUrl}users/track-visit/${profileUserId}`, {
+      visitorUserId
+    });
   }
 }
