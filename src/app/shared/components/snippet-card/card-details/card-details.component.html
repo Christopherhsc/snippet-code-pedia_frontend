@@ -1,5 +1,7 @@
-<!-- card-details.component.html -->
-<div class="card m-1 my-2 min-w-48 rounded-md bg-slate-900 px-2 text-white md:m-4 2xl:m-4">
+<div
+  (click)="routeToSnippetOverview(snippet._id)"
+  class="card m-1 my-2 min-w-48 cursor-pointer rounded-md bg-slate-700 px-2 text-white shadow-sm transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl md:m-4 2xl:m-4 max-w-md"
+>
   <div class="text-xl">
     <p>{{ snippet.title | CapitalizeFirstLetterPipe }}</p>
   </div>
@@ -10,37 +12,19 @@
 
   <div *ngIf="snippet.picture" class="image-container relative">
     <img [src]="snippet.picture" alt="Snippet Image" class="snippet-image" />
-    <button
-      class="report-button scale-110 text-red-600 hover:text-black"
-      *ngIf="userProfile"
-    >
-      <mat-icon>priority_high</mat-icon>
-    </button>
   </div>
 
   <div *ngIf="userProfile" class="flex flex-row justify-between py-2">
-    <p class="max-w-44 overflow-hidden overflow-ellipsis whitespace-nowrap pt-0.5 text-xs">
+    <p
+      class=" pt-0.5 text-xs"
+    >
       {{ snippet.tags }}
     </p>
-    <button
-      class="text-sm transition-all hover:scale-110"
-      (click)="routeToSnippetOverview(snippet._id)"
-    >
-      Show code ->
-    </button>
   </div>
 
   <div class="flex flex-row justify-between border-t-2" *ngIf="userProfile">
     <div class="flex flex-col py-1 text-slate-400">
       <p class="text-xs">{{ snippet.username }}</p>
-    </div>
-    <div class="flex flex-col justify-center">
-      <p class="flex justify-center text-xs">
-        <mat-icon class="text-xs">thumb_up</mat-icon>
-      </p>
-      <p class="flex justify-center text-xs">
-        <mat-icon class="text-xs">thumb_down</mat-icon>
-      </p>
     </div>
   </div>
 

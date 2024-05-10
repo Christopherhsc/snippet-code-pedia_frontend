@@ -26,32 +26,4 @@
       </ng-container>
     </ng-container>
   </div>
-
-  <!-- Div 3 -->
-  <div class="div-3 m-auto hidden lg:block" *ngIf="snippets">
-    <ng-container *ngFor="let snippet of snippets; let i = index">
-      <ng-container *ngIf="isCardVisible(2, i)">
-        <app-card-details
-          [snippet]="snippet"
-          [showDeleteSnippet]="showDeleteSnippet"
-          [userProfile]="userProfile"
-          (deleteSnippet)="onDeleteSnippet($event)"
-        ></app-card-details>
-      </ng-container>
-    </ng-container>
-  </div>
-
-  <!-- Div 4 -->
-  <div class="div-4 m-auto hidden xl:block" *ngIf="snippets">
-    <ng-container *ngFor="let snippet of snippets; let i = index">
-      <ng-container *ngIf="isCardVisible(3, i)">
-        <app-card-details
-          [snippet]="snippet"
-          [showDeleteSnippet]="showDeleteSnippet"
-          [userProfile]="userProfile"
-          (deleteSnippet)="onDeleteSnippet($event)"
-        ></app-card-details>
-      </ng-container>
-    </ng-container>
-  </div>
 </div>
