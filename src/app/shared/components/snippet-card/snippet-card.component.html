@@ -1,29 +1,25 @@
 <div class="flex flex-col justify-center sm:flex-row 2xl:gap-10" *ngIf="snippets">
   <!-- Div 1 -->
-  <div class="div-1  flex flex-col">
-    <ng-container *ngFor="let snippet of snippets; let i = index">
-      <ng-container *ngIf="isCardVisible(0, i)">
-        <app-card-details
-          [snippet]="snippet"
-          [showDeleteSnippet]="showDeleteSnippet"
-          [userProfile]="userProfile"
-          (deleteSnippet)="onDeleteSnippet($event)"
-        ></app-card-details>
-      </ng-container>
+  <div class="div-1 flex flex-col">
+    <ng-container *ngFor="let snippet of balancedColumns[0]">
+      <app-card-details
+        [snippet]="snippet"
+        [showDeleteSnippet]="showDeleteSnippet"
+        [userProfile]="userProfile"
+        (deleteSnippet)="onDeleteSnippet($event)"
+      ></app-card-details>
     </ng-container>
   </div>
 
   <!-- Div 2 -->
-  <div class="div-2 " *ngIf="snippets">
-    <ng-container *ngFor="let snippet of snippets; let i = index">
-      <ng-container *ngIf="isCardVisible(1, i)">
-        <app-card-details
-          [snippet]="snippet"
-          [showDeleteSnippet]="showDeleteSnippet"
-          [userProfile]="userProfile"
-          (deleteSnippet)="onDeleteSnippet($event)"
-        ></app-card-details>
-      </ng-container>
+  <div class="div-2 flex flex-col">
+    <ng-container *ngFor="let snippet of balancedColumns[1]">
+      <app-card-details
+        [snippet]="snippet"
+        [showDeleteSnippet]="showDeleteSnippet"
+        [userProfile]="userProfile"
+        (deleteSnippet)="onDeleteSnippet($event)"
+      ></app-card-details>
     </ng-container>
   </div>
 </div>

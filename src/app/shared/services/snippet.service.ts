@@ -17,8 +17,8 @@ export class SnippetService {
   }
 
   postSnippet(snippetData: any) {
-    console.log(snippetData)
-    return this.dataService.postSnippet(snippetData)
+    console.log(snippetData);
+    return this.dataService.postSnippet(snippetData);
   }
 
   deleteSnippet(snippetId: string): Observable<any> {

@@ -1,4 +1,3 @@
-// snippet-create.component.ts
 import {
   Component,
   OnInit,
@@ -97,6 +96,8 @@ export class SnippetCreateComponent implements OnInit {
     this.snippetForm = this.formBuilder.group({
       title: ['', Validators.required],
       picture: [''],
+      pictureWidth: [''],
+      pictureHeight: [''],
       description: ['', Validators.required],
       snippetTemplate: ['', Validators.required],
       snippetStyle: [''],
@@ -134,6 +135,12 @@ export class SnippetCreateComponent implements OnInit {
         this.croppedImagePreview = base64data;
         this.uploadAndResize(base64data);
       };
+
+      // Set the cropped image dimensions
+      this.snippetForm.patchValue({
+        pictureWidth: this.croppedImage.width,
+        pictureHeight: this.croppedImage.height,
+      });
     } else {
       console.error('Cropped image or blob is undefined');
     }
@@ -190,7 +197,6 @@ export class SnippetCreateComponent implements OnInit {
 
     this.snippetService.postSnippet(this.snippetForm.value).subscribe(
       (response) => {
-        console.log('Snippet submitted', response);
         this.closeModal();
       },
       (error) => {
