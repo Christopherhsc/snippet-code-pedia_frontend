@@ -1,6 +1,6 @@
-<nav class="m-2 flex w-full justify-around border-b-2">
+<nav class="m-2 flex w-full justify-between md:justify-around ">
   <!-- Logo and Title -->
-  <button class="mb-2 rounded-lg p-2 hover:bg-gray-300">
+  <button class=" rounded-lg hover:bg-gray-300">
     <a (click)="goToHome()" class="row-auto flex">
       <img
         src="/assets/images/LOGO.png"
@@ -18,7 +18,7 @@
   </button>
 
   <!-- Login Button -->
-  <button *ngIf="!authService.isLoggedIn()" class="p-1">
+  <button *ngIf="!userProfile" class="p-1">
     <a
       routerLink="login"
       routerLinkActive="bg-gray-700 text-white"
@@ -29,9 +29,12 @@
   </button>
 
   <!-- User Logged In -->
-  <div class="mb-2 flex items-center justify-center" *ngIf="authService.isLoggedIn()">
+  <div class=" flex items-center justify-center" *ngIf="userProfile">
     <!-- Hidden on small screens, visible on larger screens -->
-    <ul class="hidden items-center gap-4 sm:flex">
+    <ul class="hidden items-center gap-0 md:gap-4 sm:flex">
+      <li *ngIf="isHomePage && userProfile" class="li-button hover:text-black fade-in" (click)="goToFilterModal()">
+        Filter Snippets
+      </li>
       <li
         *ngIf="userSnippets.length <= 4"
         class="li-button hover:text-black"
@@ -47,8 +50,6 @@
         <!-- User Profile Info -->
         <div
           class="flex min-w-52 items-center gap-2"
-          (mouseenter)="onMouseEnter()"
-          (mouseleave)="onMouseLeave()"
         >
           <img
             *ngIf="userProfile?.imageUrl"

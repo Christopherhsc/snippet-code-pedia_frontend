@@ -1,67 +1,81 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core'
-import { Router } from '@angular/router'
-import { AuthenticationService } from '../../services/authentication.service'
-import { Subscription } from 'rxjs/internal/Subscription'
-import { UserService } from '../../services/user.service'
-import { NavigationService } from '../../services/navigation.service'
-import { SnippetService } from '../../services/snippet.service'
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Subscription, filter } from 'rxjs';
+import { AuthenticationService } from '../../services/authentication.service';
+import { UserService } from '../../services/user.service';
+import { NavigationService } from '../../services/navigation.service';
+import { SnippetService } from '../../services/snippet.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  private navVisibilitySubscription: Subscription = new Subscription()
-  private authSubscription?: Subscription
+  private subscriptions: Subscription = new Subscription();
   userSnippets: any[] = [];
-
-  userProfile: any
-  navListVisible = false
-  isHovering: boolean = false
+  userProfile: any;
+  navListVisible: boolean = false;
+  isHomePage: boolean = false;
 
   constructor(
     private router: Router,
-    public authService: AuthenticationService,
-    public UserService: UserService,
+    private authService: AuthenticationService,
+    private userService: UserService,
     private navService: NavigationService,
     private snippetService: SnippetService
   ) {}
 
-  ngOnInit() {
-    this.authSubscription = this.UserService.userProfile$.subscribe((profile) => {
-      this.userProfile = profile
-    })
-    this.navVisibilitySubscription = this.navService.navListVisible$.subscribe(
-      (visible) => {
-        this.navListVisible = visible
-      }
-    )
-    if (this.userProfile) {
-      this.snippetService.getUserSnippets(this.userProfile._id).subscribe((snippets) => {
-        this.userSnippets = snippets
+  ngOnInit(): void {
+    this.subscriptions.add(
+      this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd)
+      ).subscribe(() => {
+        this.checkIfHomePage();
       })
-    }
+    );
+
+    this.subscriptions.add(
+      this.userService.userProfile$.subscribe(profile => {
+        this.userProfile = profile;
+        if (profile && profile._id) {
+          this.loadUserSnippets(profile._id);
+        }
+      })
+    );
+
+    this.subscriptions.add(
+      this.navService.navListVisible$.subscribe(visible => {
+        this.navListVisible = visible;
+      })
+    );
   }
 
-  ngOnDestroy() {
-    if (this.authSubscription) {
-      this.authSubscription.unsubscribe()
-    }
-    this.navVisibilitySubscription.unsubscribe()
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
-  goToHome() {
-    this.router.navigate(['/'])
+  private checkIfHomePage(): void {
+    // Match against the router URL and check for a root path
+    this.isHomePage = this.router.url === '/' || this.router.url.startsWith('/home');
   }
 
-  goToLogin() {
-    this.router.navigate(['login'])
+  private loadUserSnippets(userId: string): void {
+    this.snippetService.getUserSnippets(userId).subscribe(snippets => {
+      this.userSnippets = snippets;
+    });
   }
 
-  goToProfile() {
-    // Navigate using the userProfile ID from the AuthenticationService or UserService
-    const userId = this.authService.getCurrentUserId() 
+  goToHome(): void {
+    this.router.navigate(['/']);
+  }
+
+  goToLogin(): void {
+    this.router.navigate(['login']);
+  }
+
+  goToProfile(): void {
+    const userId = this.authService.getCurrentUserId();
     if (userId) {
       this.router.navigate(['/profile', userId]);
     } else {
@@ -69,24 +83,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  goToSnippet() {
+  goToFilterModal() {
+    this.router.navigate([{ outlets: { modal: ['filter'] } }]);
+  }
+
+  goToSnippet(): void {
     this.router.navigate([{ outlets: { modal: ['create'] } }]);
   }
 
-  logout() {
-    this.authService.logout()
-    this.router.navigate(['/'])
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 
-  onMouseEnter() {
-    this.isHovering = true
-  }
-
-  onMouseLeave() {
-    this.isHovering = false
-  }
-
-  toggleNavList() {
-    this.navService.toggleNavListVisible()
+  toggleNavList(): void {
+    this.navService.toggleNavListVisible();
   }
 }

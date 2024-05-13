@@ -69,9 +69,12 @@ export class SnippetCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const userId = this.authService.getCurrentUserId(); // Get the current user ID from AuthenticationService
+    this.initForm();
+    this.loadFormData();
+  
+    const userId = this.authService.getCurrentUserId();
     if (userId) {
-      this.userService.getUserProfile(userId).subscribe((userProfile) => {
+      this.userService.getUserProfile(userId).subscribe(userProfile => {
         if (userProfile) {
           this.snippetForm.patchValue({
             username: userProfile.username,
@@ -81,12 +84,10 @@ export class SnippetCreateComponent implements OnInit {
         }
       });
     } else {
-      // Handle cases where there is no logged-in user
       console.error('No logged-in user found');
-      this.router.navigate(['/login']); // Redirect to login or appropriate action
+      this.router.navigate(['/login']);
     }
   
-    // Trigger the opening animation
     setTimeout(() => {
       this.isOpen = true;
     });
@@ -115,6 +116,12 @@ export class SnippetCreateComponent implements OnInit {
         this.isSmallScreen = result.matches;
       });
   }
+
+  private loadFormData(): void {
+    const savedFormData = localStorage.getItem('snippetFormData');
+    if (savedFormData) {
+      this.snippetForm.setValue(JSON.parse(savedFormData));
+    }}
 
   fileChangedEvent(event: any): void {
     this.selectedImageFile = event.target.files[0];
@@ -174,6 +181,7 @@ export class SnippetCreateComponent implements OnInit {
         reader.onloadend = () => {
           const base64data = reader.result as string;
           this.snippetForm.patchValue({ picture: base64data });
+          localStorage.removeItem('snippetFormData');
           this.submitForm();
         };
       } else {
@@ -183,27 +191,19 @@ export class SnippetCreateComponent implements OnInit {
   }
 
   private submitForm(): void {
-    const image = this.snippetForm.get('picture')?.value;
-
-    if (image) {
-      const sizeInBytes = this.base64StringLength(image);
-      console.log(`Image size: ${sizeInBytes} bytes`);
-
-      if (sizeInBytes > 10 * 1024 * 1024) {
-        console.error('Image size exceeds 10MB');
-        return;
-      }
-    }
-
-    this.snippetService.postSnippet(this.snippetForm.value).subscribe(
-      (response) => {
+    const formData = this.snippetForm.value;
+    this.snippetService.postSnippet(formData).subscribe(
+      response => {
+        console.log('Snippet created successfully');
+        localStorage.removeItem('snippetFormData');  // Clear the saved state
         this.closeModal();
       },
-      (error) => {
+      error => {
         console.error('Error submitting snippet', error);
       }
     );
   }
+  
 
   private base64StringLength(base64String: string): number {
     const padding = (base64String.match(/(=+)$/g) || []).length;
@@ -212,9 +212,12 @@ export class SnippetCreateComponent implements OnInit {
   }
 
   closeModal(): void {
-    this.isOpen = false; // Trigger the closing animation
+    if (this.snippetForm.dirty) {
+      localStorage.setItem('snippetFormData', JSON.stringify(this.snippetForm.value));
+    }
+    this.isOpen = false;
     setTimeout(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
-    }, 300); // Match the animation duration
+    }, 300);
   }
 }

@@ -1,6 +1,6 @@
 <!-- profile.component.html -->
 <div class="flex flex-col items-center justify-between">
-  <div class="flex flex-row">
+  <div *ngIf="!isOwnProfile" class="flex flex-row">
     <img
       *ngIf="userProfile?.imageUrl"
       [src]="userProfile?.imageUrl"
@@ -16,7 +16,7 @@
 
   <div class="flex w-full justify-center py-4">
     <button
-      *ngIf="userSnippets.length < 5"
+      *ngIf="userSnippets.length < 5 && isOwnProfile"
       [routerLink]="[{ outlets: { modal: ['create'] } }]"
       class="li-button bg-gradient-to-bl from-slate-500 to-stone-900 p-4 text-sky-300 transition-all hover:text-white"
     >
@@ -31,7 +31,7 @@
 
   <app-snippet-card
     [snippets]="userSnippets"
-    [showDeleteSnippet]="true"
+    [showDeleteSnippet]="isOwnProfile"
     (deleteSnippet)="deleteSnippet($event)"
   ></app-snippet-card>
 

@@ -1,0 +1,9 @@
+.fade-in {
+    opacity: 0;  /* Start from invisible */
+    animation: fadeInAnimation 4s forwards;  /* Animation lasts 2 seconds */
+  }
+  
+  @keyframes fadeInAnimation {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }

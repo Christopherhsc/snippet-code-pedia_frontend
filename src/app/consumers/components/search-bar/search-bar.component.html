@@ -1,24 +1,19 @@
-<div class="relative mx-auto flex w-full overflow-hidden rounded-md">
+<div
+  class="relative mx-auto flex w-full overflow-hidden rounded-md border-2 border-gray-700"
+>
   <input
     type="text"
-    placeholder="Search profiles or snippets"
+    placeholder="Search other profiles or snippets"
     [(ngModel)]="searchTerm"
     (input)="onSearchInput()"
-    (focus)="onInputFocus()"
-    class="w-full bg-gradient-to-r from-slate-900 to-slate-700 px-2 py-3 text-sm text-white placeholder-slate-100 outline-none"
+    class="flex w-full items-center justify-center bg-transparent p-2 outline-none"
   />
-  <button
-    (click)="goToFilterModal()"
-    type="button"
-    [ngClass]="{ 'focus-style': buttonFocused }"
-    class="flex items-center justify-center bg-gradient-to-r from-slate-600 to-slate-900 px-2 text-slate-300 hover:text-white"
-  >
-    OR
-    <mat-icon>filter_alt</mat-icon>
-  </button>
+  <mat-icon class="text-gray-500">search</mat-icon>
 </div>
+
+<!-- DROPDOWN CONTAINER -->
 <div
-  class="dropdown-container mx-auto w-full rounded-b-md bg-gradient-to-r from-slate-900 to-slate-400 shadow-lg"
+  class="dropdown-container mx-auto w-full rounded-b-md border-x-2 border-b-2 border-gray-700"
   *ngIf="
     searchTerm.length > 2 &&
     (searchResults.users.length > 0 ||
@@ -26,26 +21,26 @@
       (searchResults.users.length === 0 && searchResults.snippets.length === 0))
   "
 >
-  <p class="px-4 pt-2 font-bold text-white" *ngIf="searchResults.users.length > 0">
+  <p class="px-4 pt-2 font-bold text-black" *ngIf="searchResults.users.length > 0">
     Profiles:
   </p>
   <ul *ngIf="searchResults.users.length > 0">
     <li
       *ngFor="let user of searchResults.users"
-      class="flex flex-row items-center justify-between px-4 pb-2 text-slate-400 hover:cursor-pointer hover:text-white"
+      class="flex flex-row items-center justify-between px-4 pb-2 text-slate-500 hover:cursor-pointer hover:text-black hover:underline"
       (click)="routeToUserProfile(user._id)"
     >
       <div class="text-overflow text-xs">{{ user?.username }}</div>
       <div class="flex">-></div>
     </li>
   </ul>
-  <p class="px-4 pt-2 font-bold text-white" *ngIf="searchResults.snippets.length > 0">
+  <p class="px-4 pt-2 font-bold text-black" *ngIf="searchResults.snippets.length > 0">
     Snippets:
   </p>
   <ul *ngIf="searchResults.snippets.length > 0">
     <li
       *ngFor="let snippet of searchResults.snippets"
-      class="flex flex-row items-center justify-between px-4 pb-2 text-slate-400 hover:cursor-pointer hover:text-white"
+      class="flex flex-row items-center justify-between px-4 pb-2 text-slate-500 hover:cursor-pointer hover:text-black hover:underline"
       (click)="routeToSnippetOverview(snippet._id)"
     >
       <div class="flex w-3/4 flex-col">
@@ -60,6 +55,6 @@
     </li>
   </ul>
   <div *ngIf="searchResults.users.length === 0 && searchResults.snippets.length === 0">
-    <p class="px-4 py-2 font-bold text-white">No Results Found</p>
+    <p class="px-4 py-2 font-bold text-black">No Results Found</p>
   </div>
 </div>

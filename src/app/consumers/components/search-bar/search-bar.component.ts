@@ -14,7 +14,6 @@ export class SearchBarComponent {
   searchTerm = ''
   searchResults: any = { snippets: [], users: [] }
   searchTerms = new Subject<string>()
-  buttonFocused: boolean = false
 
   constructor(
     private searchService: SearchService,
@@ -43,9 +42,6 @@ export class SearchBarComponent {
     this.router.navigate([{ outlets: { modal: ['filter'] } }]);
   }
 
-  onInputFocus(): void {
-    this.buttonFocused = true
-  }
 
   routeToUserProfile(userId: string): void {
     this.router.navigate(['/profile', userId])
