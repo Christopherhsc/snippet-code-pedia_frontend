@@ -14,12 +14,15 @@ import { UserService } from '../../services/user.service'
       <ul class="p-4">
         <li class="py-2"><button (click)="goToHome()">Home</button></li>
         <li class="py-2"><button (click)="goToProfile()">Profile</button></li>
-        <li class="py-2">
+        <li class="p-2">
           <button *ngIf="userSnippets.length <= 4" (click)="goToSnippet()">
             Create Snippet
           </button>
         </li>
-        <li class="py-6 text-red-600"><button (click)="logout()">Logout</button></li>
+        <li class="p-2">
+          <button (click)="goToFilterModal()">Filter Snippets</button>
+        </li>
+        <li class="py-20 text-red-600"><button (click)="logout()">Logout</button></li>
       </ul>
     </div>
   `
@@ -78,6 +81,11 @@ export class NavMobileComponent implements OnDestroy {
   goToCreateSnippet() {
     this.router.navigate(['snippet/create'])
     this.navService.setNavListVisible(false)
+  }
+
+  goToFilterModal() {
+    this.navService.setNavListVisible(false)
+    this.router.navigate([{ outlets: { modal: ['filter'] } }])
   }
 
   logout() {
