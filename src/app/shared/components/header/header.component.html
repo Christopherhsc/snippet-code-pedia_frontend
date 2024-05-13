@@ -1,6 +1,6 @@
 <nav class="m-2 flex w-full justify-around">
   <!-- Logo and Title -->
-  <button class=" rounded-lg hover:bg-gray-300">
+  <button class=" rounded-lg hover:bg-gray-300 px-2">
     <a (click)="goToHome()" class="row-auto flex">
       <img
         src="/assets/images/LOGO.png"
@@ -10,7 +10,7 @@
         class="object-contain"
       />
       <p
-        class="flex flex-row items-center text-xl tracking-wide text-stone-500 max-lg:hidden"
+        class="flex flex-row items-center text-xl  text-stone-500 max-lg:hidden"
       >
         Source Style Hub
       </p>
@@ -29,13 +29,13 @@
   </button>
 
   <!-- User Logged In -->
-  <div class=" flex items-center justify-center" *ngIf="userProfile">
+  <div class=" flex items-center justify-end lg:w-3/4 md:pr-5" *ngIf="userProfile">
     <!-- Hidden on small screens, visible on larger screens -->
     <ul class="hidden items-center gap-0 md:gap-4 sm:flex">
-      <li *ngIf="isHomePage && userProfile" class="li-button hover:text-black fade-in" (click)="goToFilterModal()">
-        Filter Snippets
+      <li *ngIf="isHomePage && userProfile" class="li-button  hover:text-black fade-in flex justify justify-center" (click)="goToFilterModal()">
+        Overview
       </li>
-      <li *ngIf="!isHomePage && userProfile" class="w-32"></li>
+      <li *ngIf="!isHomePage && userProfile" class=""></li>
       <li
         *ngIf="userSnippets.length <= 4"
         class="li-button hover:text-black"

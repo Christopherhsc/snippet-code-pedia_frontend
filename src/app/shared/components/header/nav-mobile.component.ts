@@ -20,7 +20,7 @@ import { UserService } from '../../services/user.service'
           </button>
         </li>
         <li class="p-2">
-          <button (click)="goToFilterModal()">Filter Snippets</button>
+          <button (click)="goToFilterModal()">Overview</button>
         </li>
         <li class="py-20 text-red-600"><button (click)="logout()">Logout</button></li>
       </ul>

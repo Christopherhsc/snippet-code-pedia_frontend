@@ -2,6 +2,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Component, OnInit } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
+import { UserService } from 'src/app/shared/services/user.service'
+import { SnippetService } from 'src/app/shared/services/snippet.service'
 
 @Component({
   selector: 'app-snippet-filter',
@@ -32,7 +34,9 @@ export class SnippetFilterComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private userService: UserService,
+    private snippetService: SnippetService
   ) {}
 
   ngOnInit(): void {
