@@ -37,6 +37,9 @@
             formControlName="title"
             placeholder="Form with glassmorphism"
           />
+          <small *ngIf="snippetForm.get('title')!.touched && snippetForm.get('title')!.invalid" class="text-red-500">
+            Title is required.
+          </small>
         </div>
 
         <!-- DESCRIPTION -->

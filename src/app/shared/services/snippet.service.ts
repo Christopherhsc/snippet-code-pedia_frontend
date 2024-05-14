@@ -8,6 +8,10 @@ import { Observable } from 'rxjs'
 export class SnippetService {
   constructor(private dataService: DataService) {}
 
+  getAllSnippets(): Observable<any[]> {
+    return this.dataService.getAllSnippets()
+  }
+
   getUserSnippets(userId: string): Observable<any[]> {
     return this.dataService.getUserSnippets(userId)
   }
@@ -17,8 +21,8 @@ export class SnippetService {
   }
 
   postSnippet(snippetData: any) {
-    console.log(snippetData);
-    return this.dataService.postSnippet(snippetData);
+    console.log(snippetData)
+    return this.dataService.postSnippet(snippetData)
   }
 
   deleteSnippet(snippetId: string): Observable<any> {

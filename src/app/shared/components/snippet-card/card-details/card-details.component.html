@@ -1,8 +1,8 @@
 <div
   (click)="routeToSnippetOverview(snippet._id)"
-  class="card group m-1 my-2 min-w-48 max-w-md cursor-pointer rounded-md bg-slate-700 px-2 text-white shadow-sm transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl md:m-4 2xl:m-4"
+  class="card group m-1 my-2 min-w-48 max-w-md cursor-pointer rounded-md drop-shadow-2xl px-2 border-2 border-gray-400 text-gray-700  transition-all  duration-300 ease-in-out hover:scale-105  md:m-4 2xl:m-4"
 >
-  <div class="text-xl">
+  <div class="text-xl ">
     <p>{{ snippet.title | CapitalizeFirstLetterPipe }}</p>
   </div>
 
@@ -11,15 +11,15 @@
   </div>
 
   <div *ngIf="snippet.picture" class="image-container relative flex justify-center">
-    <img [src]="snippet.picture" alt="Snippet Image" class="snippet-image" />
+    <img [src]="snippet.picture" alt="Snippet Image" class="snippet-iamge rounded-md border-2 border-slate-300" />
   </div>
 
-  <div *ngIf="userProfile" class="flex flex-row justify-between py-2">
+  <div *ngIf="userProfile" class="flex flex-row justify-between py-2 mt-6">
     <p class="pt-0.5 text-xs">{{ snippet.tags }}</p>
   </div>
 
   <div class="flex flex-row justify-between border-t-2" *ngIf="userProfile">
-    <button class="flex flex-col py-1 text-slate-400 hover:text-white" 
+    <button class="flex flex-col py-1 text-slate-400 hover:text-gray-700" 
             (click)="routeToUserProfile(snippet.userId)">
       <p class="text-xs">{{ snippet.username }}</p>
     </button>

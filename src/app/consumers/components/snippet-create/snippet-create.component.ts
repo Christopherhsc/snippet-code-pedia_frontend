@@ -96,7 +96,7 @@ export class SnippetCreateComponent implements OnInit {
   private initForm(): void {
     this.snippetForm = this.formBuilder.group({
       title: ['', Validators.required],
-      picture: [''],
+      picture: ['', Validators.required],
       pictureWidth: [''],
       pictureHeight: [''],
       description: ['', Validators.required],
@@ -181,7 +181,6 @@ export class SnippetCreateComponent implements OnInit {
         reader.onloadend = () => {
           const base64data = reader.result as string;
           this.snippetForm.patchValue({ picture: base64data });
-          localStorage.removeItem('snippetFormData');
           this.submitForm();
         };
       } else {
@@ -189,19 +188,29 @@ export class SnippetCreateComponent implements OnInit {
       }
     }
   }
-
+  
   private submitForm(): void {
     const formData = this.snippetForm.value;
     this.snippetService.postSnippet(formData).subscribe(
       response => {
         console.log('Snippet created successfully');
-        localStorage.removeItem('snippetFormData');  // Clear the saved state
+        localStorage.removeItem('snippetFormData');  // Make sure this line is reached
+        this.goToProfile();
         this.closeModal();
       },
       error => {
         console.error('Error submitting snippet', error);
       }
     );
+  }
+
+  goToProfile(): void {
+    const userId = this.authService.getCurrentUserId();
+    if (userId) {
+      this.router.navigate(['/profile', userId]);
+    } else {
+      console.error('User ID is not available');
+    }
   }
   
 

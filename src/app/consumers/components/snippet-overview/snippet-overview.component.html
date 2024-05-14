@@ -1,41 +1,33 @@
-<div class="relative m-auto w-full lg:w-1/2 rounded-md bg-slate-900 px-4 py-1 text-white">
+<div class="relative m-auto w-11/12 rounded-md px-4 py-1 text-black">
+  <nav class="flex justify-around bg-gray-800 p-4" *ngIf="snippet?.snippetStyle">
+    <button
+      class="w-1/2 "
+      [ngClass]="showHTML ? 'bg-slate-800 text-white rounded-sm' : 'text-gray-400'"
+      (click)="showHTMLContent()"
+    >
+      HTML
+    </button>
+    <button
+      class="w-1/2 "
+      [ngClass]="!showHTML ? 'bg-slate-800 text-white rounded-sm' : 'text-gray-400'"
+      (click)="showCSSContent()"
+    >
+      CSS
+    </button>
+  </nav>
   <div class="text-3xl">
     <p class="my-4">{{ snippet?.title | CapitalizeFirstLetterPipe }}</p>
   </div>
-  <button class="absolute right-1 top-2 scale-110 text-red-600 hover:text-white">
-    <mat-icon>priority_high</mat-icon>
-  </button>
 
   <div class="text-md mb-2">
     <p class="my-4">{{ snippet?.description | CapitalizeFirstLetterPipe }}</p>
   </div>
 
   <div *ngIf="snippet?.picture" class="my-6">
-    <img [src]="snippet.picture" alt="Snippet Image" class="m-auto" />
+    <img [src]="snippet.picture" alt="Snippet Image" class="w-full" />
   </div>
 
-  <div class="flex flex-row text-center" *ngIf="snippet?.snippetStyle">
-    <div class="w-1/2 bg-gray-300">
-      <button
-        class="w-full hover:bg-gray-400"
-        [ngClass]="showHTML ? 'bg-stone-500 text-white' : ''"
-        (click)="showHTMLContent()"
-      >
-        HTML
-      </button>
-    </div>
-    <div class="w-1/2 bg-gray-300">
-      <button
-        class="w-full hover:bg-gray-400"
-        [ngClass]="!showHTML ? 'bg-stone-500 text-white' : ''"
-        (click)="showCSSContent()"
-      >
-        CSS
-      </button>
-    </div>
-  </div>
-
-  <div class="mt-4 max-h-96 overflow-y-auto rounded-md border p-4">
+  <div class="mt-4 max-h-52 overflow-y-auto rounded-md border p-4 border-gray-800">
     <div *ngIf="showHTML; else showCSS" [innerHTML]="snippet?.formattedTemplate"></div>
     <ng-template #showCSS>
       <div [innerHTML]="snippet?.formattedStyle"></div>
@@ -46,19 +38,5 @@
     <p class="text-md overflow-hidden overflow-ellipsis whitespace-nowrap pt-0.5">
       {{ snippet?.tags }}
     </p>
-  </div>
-
-  <div class="flex flex-row justify-between border-t-2">
-    <div class="flex flex-col py-2 text-slate-400">
-      <p class="text-xs">{{ snippet?.username }}</p>
-    </div>
-    <div class="flex flex-col justify-center">
-      <p class="flex justify-center text-xs">
-        <mat-icon class="text-xs">thumb_up</mat-icon>
-      </p>
-      <p class="flex justify-center text-xs">
-        <mat-icon class="text-xs">thumb_down</mat-icon>
-      </p>
-    </div>
   </div>
 </div>

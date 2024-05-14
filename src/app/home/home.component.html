@@ -1,20 +1,22 @@
-<div class="relative flex w-full flex-col items-center">
-  <h1
-    class="gradient-orange mb-2 text-center text-5xl font-extrabold leading-[1.15] sm:text-6xl"
-  >
-    Discover & Explore Powerful snippets
-  </h1>
-  <div
-    *ngIf="userProfile"
-    class="my-5 flex w-4/5 flex-col justify-center sm:w-3/4 md:w-2/4 xl:w-1/3"
-  >
-    <app-search-bar></app-search-bar>
+<div class="relative mt-16">
+  <div class="flex w-full flex-col items-center dynamic-background ">
+    <h1
+      class="gradient-orange text-center text-5xl font-extrabold leading-[1.15] sm:text-6xl"
+    >
+      Discover & Explore Powerful snippets
+    </h1>
+    <div
+      *ngIf="userProfile"
+      class="my-5 flex w-4/5 flex-col justify-center sm:w-3/4 md:w-2/4 xl:w-1/3"
+    >
+      <app-search-bar></app-search-bar>
+    </div>
+    <p class="mb-16 max-w-2xl text-center text-lg text-stone-600 sm:text-xl">
+      Source Style Hub is an open-source combination of HTML CSS and Tailwind to create new
+      and aesthetic frontend
+    </p>
   </div>
 
-  <p class="max-w-2xl text-center text-lg text-stone-600 sm:text-xl">
-    Source Style Hub is an open-source combination of HTML CSS and Tailwind to create new
-    and aesthetic frontend
-  </p>
 
   <app-snippet-card [snippets]="randomSnippet"></app-snippet-card>
 </div>

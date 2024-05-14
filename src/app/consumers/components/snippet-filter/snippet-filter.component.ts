@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
 import { UserService } from 'src/app/shared/services/user.service'
 import { SnippetService } from 'src/app/shared/services/snippet.service'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-snippet-filter',
@@ -30,7 +31,10 @@ import { SnippetService } from 'src/app/shared/services/snippet.service'
 export class SnippetFilterComponent implements OnInit {
   isOpen = false
   isSmallScreen = false
-
+  private subscription?: Subscription;
+  snippets: any[] = [];
+  users: any[] = [];
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -39,12 +43,37 @@ export class SnippetFilterComponent implements OnInit {
     private snippetService: SnippetService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.observeScreenSize()
+    this.snippetService.getAllSnippets().subscribe()
 
     setTimeout(() => {
       this.isOpen = true
     })
+  }
+
+  getAllSnippets() {
+    this.subscription = this.snippetService.getAllSnippets().subscribe({
+      next: (snippets) => {
+        console.log('Received snippets:', snippets);
+        this.snippets = snippets;
+      },
+      error: (err) => {
+        console.error('Error fetching snippets:', err);
+      }
+    });
+  }
+
+  getAllUsers() {
+    this.subscription = this.snippetService.getAllSnippets().subscribe({
+      next: (users) => {
+        console.log('Received users:', users);
+        this.users = users;
+      },
+      error: (err) => {
+        console.error('Error fetching users:', err);
+      }
+    });
   }
 
   observeScreenSize(): void {
@@ -60,5 +89,9 @@ export class SnippetFilterComponent implements OnInit {
     setTimeout(() => {
       this.router.navigate(['../'], { relativeTo: this.route })
     }, 300)
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 }
