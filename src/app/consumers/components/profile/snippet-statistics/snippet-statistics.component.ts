@@ -41,9 +41,7 @@ export class SnippetStatisticsComponent implements OnInit, OnDestroy {
     if (changes['userRole']) {
       this.updateMaxSnippets()
     }
-    if (changes['totalVisitors'] && !changes['totalVisitors'].firstChange) {
-      console.log('Updated total visitors:', this.totalVisitors);
-    }
+
   }
 
   trackProfileVisit(): void {
@@ -53,10 +51,8 @@ export class SnippetStatisticsComponent implements OnInit, OnDestroy {
           if (response && typeof response.totalVisitors === 'number') {
             this.totalVisitors = response.totalVisitors;
           } else if (response && response.newVisitorsCount) {
-            // Fallback if the expected property is different
             this.totalVisitors = response.newVisitorsCount;
           }
-          console.log('Total visitors updated to:', this.totalVisitors);
         },
         error: (error) => console.error('Error tracking visit:', error)
       });
