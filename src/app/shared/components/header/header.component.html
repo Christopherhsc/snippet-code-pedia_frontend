@@ -36,11 +36,7 @@
         Overview
       </li>
       <li *ngIf="!isHomePage && userProfile" class=""></li>
-      <li
-        *ngIf="userSnippets.length <= 4"
-        class="li-button hover:text-black"
-        (click)="goToSnippet()"
-      >
+      <li *ngIf="canCreateSnippet()" class="li-button hover:text-black" (click)="goToSnippet()">
         Create Snippet
       </li>
       <li class="li-button hover:text-red-600" (click)="logout()" #profileButton>

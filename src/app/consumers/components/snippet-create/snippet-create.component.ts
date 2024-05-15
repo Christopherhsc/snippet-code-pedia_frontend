@@ -175,39 +175,17 @@ export class SnippetCreateComponent implements OnInit {
 
   onSubmit(): void {
     if (this.snippetForm.valid) {
-      if (this.croppedImage && this.croppedImage.blob) {
-        const reader = new FileReader();
-        reader.readAsDataURL(this.croppedImage.blob);
-        reader.onloadend = () => {
-          const base64data = reader.result as string;
-          this.snippetForm.patchValue({ picture: base64data });
-          this.submitForm();
-        };
-      } else {
-        this.submitForm();
-      }
+      const formData = this.snippetForm.value;
+      this.snippetService.addSnippet(formData); 
+      this.goToProfile();
     }
-  }
-  
-  private submitForm(): void {
-    const formData = this.snippetForm.value;
-    this.snippetService.postSnippet(formData).subscribe(
-      response => {
-        console.log('Snippet created successfully');
-        localStorage.removeItem('snippetFormData');  // Make sure this line is reached
-        this.goToProfile();
-        this.closeModal();
-      },
-      error => {
-        console.error('Error submitting snippet', error);
-      }
-    );
   }
 
   goToProfile(): void {
     const userId = this.authService.getCurrentUserId();
     if (userId) {
       this.router.navigate(['/profile', userId]);
+      this.closeModal();
     } else {
       console.error('User ID is not available');
     }

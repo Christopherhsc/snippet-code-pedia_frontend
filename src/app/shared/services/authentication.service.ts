@@ -19,12 +19,12 @@ export class AuthenticationService {
   }
 
   getCurrentUserId(): string | null {
-    const user = sessionStorage.getItem('loggedInUser');
+    const user = sessionStorage.getItem('loggedInUser')
     if (user) {
-      const userData = JSON.parse(user);
-      return userData._id; 
+      const userData = JSON.parse(user)
+      return userData._id
     }
-    return null;
+    return null
   }
 
   createUser(userInfo: any): Observable<any> {
@@ -59,10 +59,6 @@ export class AuthenticationService {
         return throwError(() => new Error(errorMessage))
       })
     )
-  }
-
-  register(userData: any): Observable<any> {
-    return this.dataService.saveUserData(userData)
   }
 
   loginSCP(email: string, password: string): Observable<any> {

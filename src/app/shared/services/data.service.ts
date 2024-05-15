@@ -60,10 +60,6 @@ export class DataService {
     return this.http.get<any>(`${this.baseUrl}users/${userId}`);
   }
 
-  getUserProfileImage(userId: string): string {
-    return `${this.baseUrl}users/proxy-profile-image?userId=${encodeURIComponent(userId)}`;
-  }
-
   trackProfileVisit(profileUserId: string): Observable<any> {
     const visitorUserId = this.getUserIdFromSession();
     if (!visitorUserId) {

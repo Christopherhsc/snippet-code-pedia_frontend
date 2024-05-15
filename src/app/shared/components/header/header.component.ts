@@ -87,6 +87,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate([{ outlets: { modal: ['filter'] } }]);
   }
 
+  canCreateSnippet(): boolean {
+    if (!this.userProfile) return false; // Ensure there is a user profile
+    const maxSnippets = this.getMaxSnippets();
+    return this.userSnippets.length < maxSnippets;
+  }
+  
+  getMaxSnippets(): number {
+    if (!this.userProfile) return 5; // Default limit
+    switch (this.userProfile.role) {
+      case 1: return 5;
+      case 2: return 15;
+      default: return Infinity; // Admin or roles that can create unlimited snippets
+    }
+  }
+
   goToSnippet(): void {
     this.router.navigate([{ outlets: { modal: ['create'] } }]);
   }

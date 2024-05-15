@@ -34,7 +34,8 @@ export class CardDetailsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/profile', userId])
   }
 
-  onDeleteSnippet() {
+  onDeleteSnippet(event: Event) {
+    event.stopPropagation();
     this.deleteSnippet.emit(String(this.snippet._id));
   }
 

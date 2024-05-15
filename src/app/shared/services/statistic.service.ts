@@ -1,18 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { UserService } from './user.service';
+import { Injectable } from '@angular/core'
+import { Observable } from 'rxjs'
+import { DataService } from './data.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatisticService {
-  constructor(private userService: UserService) {}
+  constructor(private dataService: DataService) {}
 
   trackProfileVisit(userId: string): Observable<any> {
-    return this.userService.trackProfileVisit(userId);
-  }
-
-  getUserProfile(userId: string): Observable<any> {
-    return this.userService.getUserProfile(userId);
+    return this.dataService.trackProfileVisit(userId)
   }
 }
