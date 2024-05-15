@@ -22,8 +22,4 @@ export class UserService {
   getUserProfile(userId: string): Observable<any> {
     return this.dataService.getUserById(userId);
   }
-
-  trackProfileVisit(userId: string): Observable<any> {
-    return this.dataService.trackProfileVisit(userId);
-  }
 }

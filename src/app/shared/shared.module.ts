@@ -19,7 +19,7 @@ import { MatIconModule } from '@angular/material/icon'
     SnippetCardComponent,
     CardDetailsComponent,
     NavMobileComponent,
-    capitalizeFirst
+    capitalizeFirst,
   ],
   imports: [CommonModule, RouterModule, HttpClientModule, MatIconModule],
   exports: [

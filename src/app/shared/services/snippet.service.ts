@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { DataService } from './data.service'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject, Observable, tap } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,9 @@ export class SnippetService {
   private snippets = new BehaviorSubject<any[]>([])
 
   snippetCount$ = this.snippetCount.asObservable()
+
+  private snippetCreated = new BehaviorSubject<any>(null);
+  snippetCreated$ = this.snippetCreated.asObservable();
 
   constructor(private dataService: DataService) {
     this.loadInitialSnippets()
@@ -22,13 +25,14 @@ export class SnippetService {
     })
   }
 
-  addSnippet(newSnippet: any) {
-    this.dataService.postSnippet(newSnippet).subscribe((snippet) => {
-      const updatedSnippets = [...this.snippets.value, snippet]
-      this.snippets.next(updatedSnippets)
-      this.snippetCount.next(updatedSnippets.length)
-    })
+  addSnippet(newSnippet: any): Observable<any> {
+    return this.dataService.postSnippet(newSnippet).pipe(
+      tap(snippet => {
+        this.snippetCreated.next(snippet);
+      })
+    );
   }
+  
 
   public getMaxSnippets(userRole: number): number {
     switch (userRole) {

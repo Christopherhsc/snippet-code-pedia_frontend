@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { SnippetService } from 'src/app/shared/services/snippet.service';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core'
+import { Subscription } from 'rxjs'
+import { SnippetService } from 'src/app/shared/services/snippet.service'
 
 @Component({
   selector: 'app-snippet-statistics',
@@ -8,31 +8,27 @@ import { SnippetService } from 'src/app/shared/services/snippet.service';
   styleUrls: ['./snippet-statistics.component.scss']
 })
 export class SnippetStatisticsComponent implements OnInit, OnDestroy {
-  @Input() snippets: any[] = [];
-  @Input() totalVisitors: number = 0;
-  @Input() userRole: number = 1;
+  @Input() snippets: any[] = []
+  @Input() totalVisitors: number = 0
+  @Input() userRole: number = 1
 
-  maxSnippets: number = Infinity;
-  private subscriptions = new Subscription();
-Infinity: any;
+  maxSnippets: number = Infinity
+  private subscriptions = new Subscription()
+  Infinity: any
 
   constructor(public snippetService: SnippetService) {}
 
   ngOnInit() {
-    this.updateMaxSnippets();
+    this.updateMaxSnippets()
 
-    this.subscriptions.add(this.snippetService.snippetCount$.subscribe(count => {
-      console.log(`Updated snippet count: ${count}`);
-    }));
-
-    console.log(`Max snippets allowed: ${this.maxSnippets}`);
+    this.subscriptions.add(this.snippetService.snippetCount$.subscribe((count) => {}))
   }
 
   updateMaxSnippets() {
-    this.maxSnippets = this.snippetService.getMaxSnippets(this.userRole);
+    this.maxSnippets = this.snippetService.getMaxSnippets(this.userRole)
   }
 
   ngOnDestroy() {
-    this.subscriptions.unsubscribe();
+    this.subscriptions.unsubscribe()
   }
 }

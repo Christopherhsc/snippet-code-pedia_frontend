@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { Subscription } from 'rxjs'
 import { UserService } from 'src/app/shared/services/user.service'
 import { SnippetService } from 'src/app/shared/services/snippet.service'
 import { AuthenticationService } from 'src/app/shared/services/authentication.service'
@@ -20,7 +19,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   isOwnProfile: boolean = false
   userRole: number = 1
   private destroy$ = new Subject<void>()
-  private snippetSubscription?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,36 +30,35 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.pipe(takeUntil(this.destroy$)).subscribe(params => {
-      const userId = params['userId'];
+    this.route.params.pipe(takeUntil(this.destroy$)).subscribe((params) => {
+      const userId = params['userId']
       if (userId) {
         this.statisticService.trackProfileVisit(userId).subscribe({
           next: () => {
-            this.loadUserProfileAndSnippets(userId); // Existing method to load user profile
-            this.fetchUserSnippets(userId); // Additional method to fetch user snippets
+            this.loadUserProfileAndSnippets(userId)
           },
           error: (error) => {
-            console.error('Failed to track profile visit:', error);
-            this.loadUserProfileAndSnippets(userId); // Fallback to load profile if tracking fails
-            this.fetchUserSnippets(userId); // Fallback to load snippets if tracking fails
+            console.error('Failed to track profile visit:', error)
+            this.loadUserProfileAndSnippets(userId)
           }
-        });
+        })
       } else {
-        console.error('No userId provided in the route parameters');
-        this.router.navigate(['/']);
+        console.error('No userId provided in the route parameters')
+        this.router.navigate(['/'])
       }
-    });
-  }
-  
-  private fetchUserSnippets(userId: string): void {
-    this.snippetService.getUserSnippets(userId).subscribe({
-      next: snippets => {
-        this.userSnippets = snippets;
-      },
-      error: error => {
-        console.error('Failed to fetch snippets for user:', error);
-      }
-    });
+    })
+
+    // Subscribe to the snippet creation observable
+    this.snippetService.snippetCreated$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((snippet) => {
+        if (snippet) {
+          const userId = this.route.snapshot.params['userId']
+          if (userId) {
+            this.loadUserSnippets(userId)
+          }
+        }
+      })
   }
 
   loadUserProfileAndSnippets(userId: string): void {
@@ -114,19 +111,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   canCreateSnippet(): boolean {
-    const maxSnippets = this.getMaxSnippets(this.userRole)
+    const maxSnippets = this.snippetService.getMaxSnippets(this.userRole)
     return this.userSnippets.length < maxSnippets
-  }
-
-  getMaxSnippets(role: number): number {
-    switch (role) {
-      case 1:
-        return 5
-      case 2:
-        return 15
-      default:
-        return Infinity
-    }
   }
 
   getTotalVisitors(): number {
