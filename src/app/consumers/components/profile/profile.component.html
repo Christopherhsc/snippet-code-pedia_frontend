@@ -1,3 +1,4 @@
+<!-- profile.component.html -->
 <div class="flex flex-col items-center justify-between">
   <div *ngIf="!isOwnProfile" class="flex flex-row">
     <img
@@ -8,38 +9,15 @@
       width="50"
       class="rounded-full border border-gray-700"
     />
-    <p class="flex items-center px-2 text-lg text-sky-300">
-      {{ userProfile?.username }}
-    </p>
-  </div>
-
-  <div class="flex w-full justify-center py-4">
-    <button
-      *ngIf="canCreateSnippet() && isOwnProfile"
-      [routerLink]="[{ outlets: { modal: ['create'] } }]"
-      class="li-button bg-gradient-to-bl from-slate-500 to-stone-900 p-4 text-sky-300 transition-all hover:text-white"
-    >
-      Create a new Snippet +
-    </button>
+    <p class="flex items-center px-2 text-lg text-sky-300">{{ userProfile?.username }}</p>
   </div>
 
   <app-snippet-statistics
-    *ngIf="!loadingSnippets"
-    [snippets]="userSnippets"
-    [totalVisitors]="getTotalVisitors()"
+    [userId]="userId"
+    [isOwnProfile]="isOwnProfile"
     [userRole]="userRole"
   ></app-snippet-statistics>
 
-  <div *ngIf="loadingSnippets" class="mt-4 text-center">
-    <p>Loading Profile...</p>
-  </div>
-
-  <app-snippet-card
-    *ngIf="!loadingSnippets"
-    [snippets]="userSnippets"
-    [showDeleteSnippet]="isOwnProfile"
-    (deleteSnippet)="deleteSnippet($event)"
-  ></app-snippet-card>
-
+  <router-outlet></router-outlet>
   <router-outlet name="modal"></router-outlet>
 </div>

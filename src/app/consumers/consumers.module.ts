@@ -7,8 +7,16 @@ import { NgxImageCompressService } from 'ngx-image-compress'
 
 //cust components
 import { ProfileComponent } from './components/profile/profile.component'
+// child for ProfileComponent
+import { SnippetStatisticsComponent } from './components/profile/snippet-statistics/snippet-statistics.component'
+// childs for SnippetStatisticsComponent
+import { TotalCommentsComponent } from './components/profile/snippet-statistics/components/total-comments/total-comments.component'
+import { TotalFollowersComponent } from './components/profile/snippet-statistics/components/total-followers/total-followers.component'
+import { TotalPositivesComponent } from './components/profile/snippet-statistics/components/total-positives/total-positives.component'
+import { TotalSnippetsComponent } from './components/profile/snippet-statistics/components/total-snippets/total-snippets.component'
+import { TotalVisitorsComponent } from './components/profile/snippet-statistics/components/total-visitors/total-visitors.component'
+
 import { SnippetCreateComponent } from './components/snippet-create/snippet-create.component'
-import { SnippetStatisticsComponent } from './components/snippet-statistics/snippet-statistics.component'
 import { SnippetOverviewComponent } from './components/snippet-overview/snippet-overview.component'
 import { SearchBarComponent } from './components/search-bar/search-bar.component'
 import { SnippetFilterComponent } from './components/snippet-filter/snippet-filter.component'
@@ -21,8 +29,14 @@ import { MatIconModule } from '@angular/material/icon'
 @NgModule({
   declarations: [
     ProfileComponent,
-    SnippetCreateComponent,
     SnippetStatisticsComponent,
+    SnippetCreateComponent,
+    TotalCommentsComponent,
+    TotalFollowersComponent,
+    TotalPositivesComponent,
+    TotalSnippetsComponent,
+    TotalVisitorsComponent,
+
     SnippetOverviewComponent,
     SearchBarComponent,
     SnippetFilterComponent
@@ -39,7 +53,14 @@ import { MatIconModule } from '@angular/material/icon'
   providers: [NgxImageCompressService],
   exports: [
     ProfileComponent,
+    SnippetStatisticsComponent,
     SnippetCreateComponent,
+    TotalCommentsComponent,
+    TotalFollowersComponent,
+    TotalPositivesComponent,
+    TotalSnippetsComponent,
+    TotalVisitorsComponent,
+
     SnippetStatisticsComponent,
     SnippetOverviewComponent,
     SearchBarComponent,

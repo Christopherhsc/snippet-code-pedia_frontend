@@ -1,0 +1,63 @@
+<div class="flex w-full justify-center py-4">
+  <button
+    *ngIf="snippets.length < maxSnippets"
+    [routerLink]="[{ outlets: { modal: ['create'] } }]"
+    class="li-button bg-gradient-to-bl from-slate-500 to-stone-900 p-4 text-sky-300 transition-all hover:text-white"
+  >
+    Create a new Snippet +
+  </button>
+</div>
+<div class="flex flex-wrap justify-center gap-2 md:flex-row lg:flex-nowrap lg:gap-4">
+  <div class="dashboard-overview">
+    <p>Total Snippets</p>
+    <mat-icon class="my-2">text_snippet</mat-icon>
+    <ng-container *ngIf="isOwnProfile; else otherProfile">
+      <p *ngIf="snippets.length < maxSnippets">
+        {{ snippets.length || 0 }}/{{ maxSnippets }}
+      </p>
+      <div class="flex flex-col justify-center" *ngIf="snippets.length >= maxSnippets">
+        <p class="text-center text-red-700">
+          {{ snippets.length || 0 }}/{{ maxSnippets }}
+        </p>
+        <p class="text-balance text-center text-xs" *ngIf="maxSnippets !== Infinity">
+          You need to subscribe in order to make more snippets
+        </p>
+      </div>
+    </ng-container>
+    <ng-template #otherProfile>{{ snippets.length || 0 }} </ng-template>
+  </div>
+
+  <div class="dashboard-overview">
+    <p>Total Visitors</p>
+    <mat-icon class="my-2">visibility</mat-icon>
+    <p>{{ totalVisitors || 0 }}</p>
+  </div>
+
+  <div class="dashboard-overview">
+    <p>Total Followers</p>
+    <mat-icon class="my-2">group</mat-icon>
+    <p>Development feature</p>
+  </div>
+
+  <div class="dashboard-overview">
+    <p>Total Positives</p>
+    <mat-icon class="my-2">favorites</mat-icon>
+    <p>Development feature</p>
+  </div>
+
+  <div class="dashboard-overview">
+    <p>Total Comments</p>
+    <mat-icon class="my-2">notes</mat-icon>
+    <p>Development feature</p>
+  </div>
+</div>
+
+<app-total-snippets
+  [userId]="userId"
+  (snippetsUpdated)="onSnippetsUpdated($event)"
+  *ngIf="activatedDashboardOverview === 1"
+></app-total-snippets>
+<app-total-visitors *ngIf="activatedDashboardOverview === 2"></app-total-visitors>
+<app-total-followers></app-total-followers>
+<app-total-positives></app-total-positives>
+<app-total-comments></app-total-comments>

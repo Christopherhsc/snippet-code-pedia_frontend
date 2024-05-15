@@ -9,6 +9,8 @@ import { AuthenticatedGuard } from './shared/guards/authenticated.guard'
 import { UnauthenticatedGuard } from './shared/guards/unauthenticated-guard.guard'
 import { AuthContainerComponent } from './auth/auth-container.component'
 import { SnippetFilterComponent } from './consumers/components/snippet-filter/snippet-filter.component'
+import { TotalSnippetsComponent } from './consumers/components/profile/snippet-statistics/components/total-snippets/total-snippets.component'
+import { TotalVisitorsComponent } from './consumers/components/profile/snippet-statistics/components/total-visitors/total-visitors.component'
 
 // app-routing.module.ts
 const routes: Routes = [

@@ -30,7 +30,6 @@ export class CardDetailsComponent implements OnInit, OnDestroy {
   }
 
   routeToUserProfile(userId: string): void {
-    console.log(userId)
     this.router.navigate(['/profile', userId])
   }
 
