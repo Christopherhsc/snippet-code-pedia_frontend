@@ -1,23 +1,9 @@
-import {
-  trigger,
-  transition,
-  query,
-  style,
-  stagger,
-  animate,
-  state
-} from '@angular/animations'
-import {
-  Component,
-  Input,
-  OnInit,
-  OnDestroy,
-  SimpleChanges,
-  ChangeDetectorRef
-} from '@angular/core'
-import { Subscription } from 'rxjs'
-import { SnippetService } from 'src/app/shared/services/snippet.service'
-import { StatisticService } from 'src/app/shared/services/statistic.service'
+import { Component, Input, OnInit, OnDestroy, SimpleChanges, ChangeDetectorRef, OnChanges } from '@angular/core';
+import { Subscription, Subject } from 'rxjs';
+import { SnippetService } from 'src/app/shared/services/snippet.service';
+import { StatisticService } from 'src/app/shared/services/statistic.service';
+import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-snippet-statistics',
@@ -36,18 +22,17 @@ import { StatisticService } from 'src/app/shared/services/statistic.service'
     ])
   ]
 })
-export class SnippetStatisticsComponent implements OnInit, OnDestroy {
-  @Input() userId?: any
-  @Input() snippets: any[] = []
-  @Input() userRole: number = 1
-  @Input() isOwnProfile: boolean = false
+export class SnippetStatisticsComponent implements OnInit, OnChanges, OnDestroy {
+  @Input() userId?: any;
+  @Input() snippets: any[] = [];
+  @Input() userRole: number = 1;
+  @Input() isOwnProfile: boolean = false;
+  @Input() userProfile: any;
 
-  activatedDashboardOverview: number = 1
-  totalVisitors: number = 0
-
-  maxSnippets: number = Infinity
-  private subscriptions = new Subscription()
-Infinity: any
+  activatedDashboardOverview: number = 1;
+  totalVisitors: number = 0;
+  maxSnippets: number = Infinity;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private snippetService: SnippetService,
@@ -56,21 +41,25 @@ Infinity: any
   ) {}
 
   ngOnInit() {
-    this.fetchSnippets()
-    this.trackProfileVisit()
-
-    this.updateMaxSnippets()
-  }
-
-  changeActiveDashboard(index: number): void {
-    this.activatedDashboardOverview = index
-    this.cdr.detectChanges()
+    this.trackProfileVisit();
+    this.updateMaxSnippets();
+    this.subscribeToSnippetCreation();
+    this.fetchSnippets(); // Ensure snippets are fetched on initialization
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['userRole']) {
-      this.updateMaxSnippets()
+    if (changes['userProfile'] && changes['userProfile'].currentValue) {
+      console.log('User profile changed:', this.userProfile);
+      this.fetchSnippets();
     }
+    if (changes['userRole']) {
+      this.updateMaxSnippets();
+    }
+  }
+
+  changeActiveDashboard(index: number): void {
+    this.activatedDashboardOverview = index;
+    this.cdr.detectChanges();
   }
 
   trackProfileVisit(): void {
@@ -78,23 +67,25 @@ Infinity: any
       this.statisticService.trackProfileVisit(this.userId).subscribe({
         next: (response) => {
           if (response && typeof response.totalVisitors === 'number') {
-            this.totalVisitors = response.totalVisitors
+            this.totalVisitors = response.totalVisitors;
           } else if (response && response.newVisitorsCount) {
-            this.totalVisitors = response.newVisitorsCount
+            this.totalVisitors = response.newVisitorsCount;
           }
         },
         error: (error) => console.error('Error tracking visit:', error)
-      })
+      });
     }
   }
 
-  onSnippetsUpdated(count: number) {
-    this.snippets.length = count
-  }
-
-  fetchSnippets() {
+  fetchSnippets(): void {
     if (this.userId) {
-
+      this.snippetService.getUserSnippets(this.userId).pipe(takeUntil(this.destroy$)).subscribe({
+        next: (snippets) => {
+          this.snippets = snippets;
+          this.cdr.detectChanges(); // Ensure UI updates if necessary
+        },
+        error: (error) => console.error('Failed to fetch snippets:', error)
+      });
     }
   }
 
@@ -104,10 +95,26 @@ Infinity: any
   }
 
   updateMaxSnippets() {
-    this.maxSnippets = this.snippetService.getMaxSnippets(this.userRole)
+    this.maxSnippets = this.snippetService.getMaxSnippets(this.userRole);
+  }
+
+  onSnippetCreated(): void {
+    this.fetchSnippets(); // Refetch snippets when a new snippet is created
+  }
+
+  subscribeToSnippetCreation() {
+    this.snippetService.snippetCreated$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (snippet) => {
+        if (snippet) {
+          this.fetchSnippets(); // Refetch snippets when a new snippet is created
+        }
+      },
+      error: (error) => console.error('Error fetching created snippet:', error)
+    });
   }
 
   ngOnDestroy() {
-    this.subscriptions.unsubscribe()
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

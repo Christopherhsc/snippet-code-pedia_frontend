@@ -1,9 +1,7 @@
-// profile.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/shared/services/user.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { StatisticService } from 'src/app/shared/services/statistic.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -48,8 +46,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       error: () => this.router.navigate(['/'])
     });
   }
-
-
 
   ngOnDestroy(): void {
     this.destroy$.next();

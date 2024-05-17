@@ -9,7 +9,6 @@ export class SnippetService {
   private snippetCount = new BehaviorSubject<number>(0)
   private snippets = new BehaviorSubject<any[]>([])
 
-  snippetCount$ = this.snippetCount.asObservable()
 
   private snippetCreated = new BehaviorSubject<any>(null);
   snippetCreated$ = this.snippetCreated.asObservable();

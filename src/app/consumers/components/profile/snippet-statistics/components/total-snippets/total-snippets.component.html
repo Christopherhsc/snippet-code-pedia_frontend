@@ -1,6 +1,6 @@
 <app-snippet-card
-*ngIf="!loadingSnippets"
-[snippets]="userSnippets"
-[showDeleteSnippet]="isOwnProfile"
-(deleteSnippet)="deleteSnippet($event)"
+  *ngIf="!loadingSnippets"
+  [snippets]="userSnippets"
+  [showDeleteSnippet]="isOwnProfile"
+  (deleteSnippet)="deleteSnippet($event)"
 ></app-snippet-card>
