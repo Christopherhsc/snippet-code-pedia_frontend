@@ -47,6 +47,7 @@ export class SnippetStatisticsComponent implements OnInit, OnDestroy {
 
   maxSnippets: number = Infinity
   private subscriptions = new Subscription()
+Infinity: any
 
   constructor(
     private snippetService: SnippetService,
@@ -57,11 +58,7 @@ export class SnippetStatisticsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fetchSnippets()
     this.trackProfileVisit()
-    this.subscriptions.add(
-      this.snippetService.snippetCount$.subscribe((count) => {
-        this.snippets.length = count
-      })
-    )
+
     this.updateMaxSnippets()
   }
 
@@ -97,10 +94,13 @@ export class SnippetStatisticsComponent implements OnInit, OnDestroy {
 
   fetchSnippets() {
     if (this.userId) {
-      this.snippetService.getUserSnippets(this.userId).subscribe((snippets) => {
-        this.snippets = snippets
-      })
+
     }
+  }
+
+  handleSnippets(snippetCount: number): void {
+    this.snippets.length = snippetCount;
+    this.cdr.detectChanges();  // Ensure UI updates if necessary
   }
 
   updateMaxSnippets() {

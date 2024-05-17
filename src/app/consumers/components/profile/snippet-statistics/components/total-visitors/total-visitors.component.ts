@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core'
 })
 export class TotalVisitorsComponent implements OnInit {
   ngOnInit(): void {
-    console.log("hey")
   }
   
 }

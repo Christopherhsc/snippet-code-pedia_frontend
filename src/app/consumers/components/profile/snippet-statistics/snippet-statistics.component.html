@@ -78,10 +78,24 @@
 
 <app-total-snippets
   [userId]="userId"
-  (snippetsUpdated)="onSnippetsUpdated($event)"
-  *ngIf="activatedDashboardOverview === 1"
+  [userRole]="userRole"
+  [isOwnProfile]="isOwnProfile"
+  (snippetsUpdated)="handleSnippets($event)"
+  [class.hidden]="activatedDashboardOverview !== 1"
 ></app-total-snippets>
-<app-total-visitors *ngIf="activatedDashboardOverview === 2"></app-total-visitors>
-<app-total-followers *ngIf="activatedDashboardOverview === 3"></app-total-followers>
-<app-total-positives *ngIf="activatedDashboardOverview === 4"></app-total-positives>
-<app-total-comments *ngIf="activatedDashboardOverview === 5"></app-total-comments>
+
+<app-total-visitors
+  [class.hidden]="activatedDashboardOverview !== 2"
+></app-total-visitors>
+
+<app-total-followers
+  [class.hidden]="activatedDashboardOverview !== 3"
+></app-total-followers>
+
+<app-total-positives
+  [class.hidden]="activatedDashboardOverview !== 4"
+></app-total-positives>
+
+<app-total-comments
+  [class.hidden]="activatedDashboardOverview !== 5"
+></app-total-comments>

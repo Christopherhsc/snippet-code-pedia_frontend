@@ -16,11 +16,11 @@ export class TotalSnippetsComponent implements OnInit {
   @Output() snippetsUpdated = new EventEmitter<number>()
 
   userProfile: any
-  userRole: number = 1
+  @Input() userRole: number = 1
 
   loadingSnippets: boolean = true
   userSnippets: any[] = []
-  isOwnProfile: boolean = false
+  @Input() isOwnProfile: boolean = false
   private destroy$ = new Subject<void>()
 
   constructor(
@@ -56,6 +56,8 @@ export class TotalSnippetsComponent implements OnInit {
         }
       })
   }
+
+  
 
   loadUserProfileAndSnippets(userId: string): void {
     this.userService
