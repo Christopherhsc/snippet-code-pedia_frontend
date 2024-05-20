@@ -1,0 +1,14 @@
+.table-auto {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table-auto th, .table-auto td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .table-auto th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }

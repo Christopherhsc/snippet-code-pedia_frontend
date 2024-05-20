@@ -16,7 +16,7 @@ export interface DashboardOverview {
       index: 2,
       label: 'Total Visitors',
       icon: 'visibility',
-      value: 'totalVisitors || 0',
+      value: 'totalVisitors',
     },
     {
       index: 3,

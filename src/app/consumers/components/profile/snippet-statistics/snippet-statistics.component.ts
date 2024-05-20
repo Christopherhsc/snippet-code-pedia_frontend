@@ -57,7 +57,7 @@ export class SnippetStatisticsComponent implements OnInit, OnChanges, OnDestroy 
   ) {}
 
   ngOnInit() {
-    this.trackProfileVisit()
+    
     this.updateMaxSnippets()
     this.subscribeToSnippetCreation()
     this.fetchSnippets()
@@ -66,6 +66,7 @@ export class SnippetStatisticsComponent implements OnInit, OnChanges, OnDestroy 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['userProfile'] && changes['userProfile'].currentValue) {
       this.fetchSnippets()
+      this.trackProfileVisit()
     }
   }
 

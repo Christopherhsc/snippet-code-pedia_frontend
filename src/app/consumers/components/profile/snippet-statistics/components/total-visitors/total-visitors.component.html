@@ -1,1 +1,22 @@
-<p>total-visitors works!</p>
+<div *ngIf="userProfile?.visitors?.length; else noVisitors">
+    <table class="table-auto w-full mt-8">
+      <thead>
+        <tr>
+          <th class="px-4 py-2">Visitor</th>
+          <th class="px-4 py-2">Last Visit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let visitor of userProfile.visitors">
+          <td class="border px-4 py-2 flex items-center">
+            <img [src]="visitor.imageUrl" alt="Visitor Image" class="h-10 w-10 rounded-full mr-2">
+            <span>{{ visitor.username }}</span>
+          </td>
+          <td class="border px-4 py-2">{{ visitor.lastVisit | date: 'short' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noVisitors class="mt-8">
+    <p>No visitors found.</p>
+  </ng-template>
