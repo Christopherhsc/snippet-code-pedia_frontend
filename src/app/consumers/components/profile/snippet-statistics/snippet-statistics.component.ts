@@ -47,6 +47,7 @@ export class SnippetStatisticsComponent implements OnInit, OnChanges, OnDestroy 
   maxSnippets: number = Infinity
   snippets: any[] = []
   private destroy$ = new Subject<void>()
+  dashboardOverviews: DashboardOverview[] = DASHBOARD_OVERVIEWS;
   Infinity: any
 
   constructor(

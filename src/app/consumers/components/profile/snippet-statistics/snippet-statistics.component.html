@@ -13,13 +13,14 @@
   [@fade]
 >
   <div
+    *ngFor="let overview of dashboardOverviews"
     class="dashboard-overview"
-    [class.active]="activatedDashboardOverview === 1"
-    (click)="changeActiveDashboard(1)"
+    [class.active]="activatedDashboardOverview === overview.index"
+    (click)="changeActiveDashboard(overview.index)"
   >
-    <p>Total Snippets</p>
-    <mat-icon class="my-2">text_snippet</mat-icon>
-    <ng-container *ngIf="isOwnProfile; else otherProfile">
+    <p>{{ overview.label }}</p>
+    <mat-icon class="my-2">{{ overview.icon }}</mat-icon>
+    <ng-container *ngIf="isOwnProfile && overview.index === 1; else otherProfile">
       <p *ngIf="snippets.length < maxSnippets">
         {{ snippets.length || 0 }}/{{ maxSnippets }}
       </p>
@@ -32,47 +33,9 @@
         </p>
       </div>
     </ng-container>
-    <ng-template #otherProfile>{{ snippets.length || 0 }} </ng-template>
-  </div>
-
-  <div
-    class="dashboard-overview"
-    [class.active]="activatedDashboardOverview === 2"
-    (click)="changeActiveDashboard(2)"
-  >
-    <p>Total Visitors</p>
-    <mat-icon class="my-2">visibility</mat-icon>
-    <p>{{ totalVisitors || 0 }}</p>
-  </div>
-
-  <div
-    class="dashboard-overview"
-    [class.active]="activatedDashboardOverview === 3"
-    (click)="changeActiveDashboard(3)"
-  >
-    <p>Total Followers</p>
-    <mat-icon class="my-2">group</mat-icon>
-    <p>Development</p>
-  </div>
-
-  <div
-    class="dashboard-overview"
-    [class.active]="activatedDashboardOverview === 4"
-    (click)="changeActiveDashboard(4)"
-  >
-    <p>Total Positives</p>
-    <mat-icon class="my-2">favorites</mat-icon>
-    <p>Development</p>
-  </div>
-
-  <div
-    class="dashboard-overview"
-    [class.active]="activatedDashboardOverview === 5"
-    (click)="changeActiveDashboard(5)"
-  >
-    <p>Total Comments</p>
-    <mat-icon class="my-2">notes</mat-icon>
-    <p>Development</p>
+    <ng-template #otherProfile>{{
+      overview.index === 1 ? snippets.length || 0 : overview.value
+    }}</ng-template>
   </div>
 </div>
 
