@@ -47,7 +47,6 @@ export class SnippetStatisticsComponent implements OnInit, OnChanges, OnDestroy 
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['userProfile'] && changes['userProfile'].currentValue) {
-      console.log('User profile changed:', this.userProfile);
       this.fetchSnippets();
     }
   }

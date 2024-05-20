@@ -27,6 +27,8 @@ export class AuthenticationService {
     return null
   }
 
+  
+
   createUser(userInfo: any): Observable<any> {
     const userData = {
       email: userInfo.email,

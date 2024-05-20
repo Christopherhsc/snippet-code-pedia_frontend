@@ -17,44 +17,45 @@ import { SnippetService } from 'src/app/shared/services/snippet.service'
   styleUrls: ['./total-snippets.component.scss']
 })
 export class TotalSnippetsComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() userProfile: any;
-  @Input() isOwnProfile: boolean = false;
-  @Output() snippetsUpdated = new EventEmitter<number>();
+  @Input() userProfile: any
+  @Input() isOwnProfile: boolean = false
+  @Output() snippetsUpdated = new EventEmitter<number>()
 
-  loadingSnippets: boolean = true;
-  userSnippets: any[] = [];
-  private destroy$ = new Subject<void>();
+  loadingSnippets: boolean = true
+  userSnippets: any[] = []
+  private destroy$ = new Subject<void>()
 
   constructor(private snippetService: SnippetService) {}
 
-  ngOnInit(): void {
-    console.log('Component initialized');
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['userProfile'] && changes['userProfile'].currentValue) {
-      this.loadUserSnippets();
+      this.loadUserSnippets()
     }
   }
 
   loadUserSnippets(): void {
-    const userId = this.userProfile?._id;
+    const userId = this.userProfile?._id
     if (!userId) {
-      console.error('No userId provided for loading snippets');
-      return;
+      console.error('No userId provided for loading snippets')
+      return
     }
 
-    this.snippetService.getUserSnippets(userId).pipe(takeUntil(this.destroy$)).subscribe({
-      next: (snippets) => {
-        this.userSnippets = snippets;
-        this.loadingSnippets = false;
-        this.snippetsUpdated.emit(this.userSnippets.length);
-      },
-      error: (error) => {
-        console.error('Failed to fetch snippets for user:', error);
-        this.loadingSnippets = false;
-      }
-    });
+    this.snippetService
+      .getUserSnippets(userId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (snippets) => {
+          this.userSnippets = snippets
+          this.loadingSnippets = false
+          this.snippetsUpdated.emit(this.userSnippets.length)
+        },
+        error: (error) => {
+          console.error('Failed to fetch snippets for user:', error)
+          this.loadingSnippets = false
+        }
+      })
   }
 
   deleteSnippet(snippetId: string): void {
@@ -62,15 +63,15 @@ export class TotalSnippetsComponent implements OnInit, OnChanges, OnDestroy {
       next: () => {
         this.userSnippets = this.userSnippets.filter(
           (snippet) => snippet._id !== snippetId
-        );
-        this.snippetsUpdated.emit(this.userSnippets.length);
+        )
+        this.snippetsUpdated.emit(this.userSnippets.length)
       },
       error: (error) => console.error('Error deleting snippet', error)
-    });
+    })
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 }

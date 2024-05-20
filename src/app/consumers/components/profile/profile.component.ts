@@ -28,8 +28,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
       const userId = params['userId'];
       if (userId) {
         this.userId = userId;
-        this.loadUserProfile(userId);
         this.isOwnProfile = userId === this.authService.getCurrentUserId();
+        if (this.isOwnProfile) {
+          this.userProfile = JSON.parse(sessionStorage.getItem('loggedInUser') || '{}');
+        } else {
+          this.loadUserProfile(userId);
+        }
       } else {
         this.router.navigate(['/']);
       }
@@ -40,7 +44,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userService.getUserProfile(userId).pipe(takeUntil(this.destroy$)).subscribe({
       next: userProfile => {
         this.userProfile = userProfile;
-        console.log(userProfile)
+        console.log(userProfile);
       },
       error: () => this.router.navigate(['/'])
     });
