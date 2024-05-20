@@ -47,7 +47,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (userProfile) => {
           this.userProfile = userProfile
-          console.log(userProfile)
         },
         error: () => this.router.navigate(['/'])
       })

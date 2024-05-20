@@ -33,9 +33,7 @@
         </p>
       </div>
     </ng-container>
-    <ng-template #otherProfile>{{
-      overview.index === 1 ? snippets.length || 0 : overview.value
-    }}</ng-template>
+    <ng-template #otherProfile>{{ overview.value }}</ng-template>
   </div>
 </div>
 
@@ -48,8 +46,7 @@
 ></app-total-snippets>
 
 <app-total-visitors
-[userProfile]="userProfile"
-
+  [userProfile]="userProfile"
   [class.hidden]="activatedDashboardOverview !== 2"
 ></app-total-visitors>
 

@@ -1,8 +1,8 @@
-<div *ngIf="userProfile?.visitors?.length; else noVisitors">
-    <table class="table-auto w-full mt-8">
+<div class="px-8 flex justify-center" *ngIf="userProfile?.visitors?.length; else noVisitors">
+    <table class="table-auto w-full m-8">
       <thead>
         <tr>
-          <th class="px-4 py-2">Visitor</th>
+          <th class="px-4 py-2">Visitors</th>
           <th class="px-4 py-2">Last Visit</th>
         </tr>
       </thead>

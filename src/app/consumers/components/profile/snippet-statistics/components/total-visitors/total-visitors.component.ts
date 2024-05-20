@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 
 @Component({
   selector: 'app-total-visitors',
@@ -6,13 +6,13 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
   styleUrls: ['./total-visitors.component.scss']
 })
 export class TotalVisitorsComponent implements OnInit, OnChanges {
-  @Input() userProfile: any;
+  @Input() userProfile: any
 
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['userProfile'] && changes['userProfile'].currentValue) {
-      this.fetchVisitors();
+      this.fetchVisitors()
     }
   }
 
