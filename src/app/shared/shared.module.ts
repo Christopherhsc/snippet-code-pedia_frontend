@@ -27,7 +27,7 @@ import { MatIconModule } from '@angular/material/icon'
     SnippetCardComponent,
     CardDetailsComponent,
     NavMobileComponent,
-    capitalizeFirst
+    capitalizeFirst,
   ]
 })
 export class SharedModule {}

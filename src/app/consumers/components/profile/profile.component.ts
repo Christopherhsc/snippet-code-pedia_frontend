@@ -13,7 +13,6 @@ import { Subject } from 'rxjs';
 export class ProfileComponent implements OnInit, OnDestroy {
   userProfile: any;
   isOwnProfile: boolean = false;
-  userRole: number = 1;
   private destroy$ = new Subject<void>();
   userId: string | null = null;
 
@@ -41,7 +40,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userService.getUserProfile(userId).pipe(takeUntil(this.destroy$)).subscribe({
       next: userProfile => {
         this.userProfile = userProfile;
-        this.userRole = userProfile.role;
+        console.log(userProfile)
       },
       error: () => this.router.navigate(['/'])
     });

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, SimpleChanges, ChangeDetectorRef, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { Subscription, Subject } from 'rxjs';
 import { SnippetService } from 'src/app/shared/services/snippet.service';
 import { StatisticService } from 'src/app/shared/services/statistic.service';
@@ -23,15 +23,13 @@ import { takeUntil } from 'rxjs/operators';
   ]
 })
 export class SnippetStatisticsComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() userId?: any;
-  @Input() snippets: any[] = [];
-  @Input() userRole: number = 1;
-  @Input() isOwnProfile: boolean = false;
   @Input() userProfile: any;
+  @Input() isOwnProfile: boolean = false;
 
   activatedDashboardOverview: number = 1;
   totalVisitors: number = 0;
   maxSnippets: number = Infinity;
+  snippets: any[] = [];
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -52,9 +50,6 @@ export class SnippetStatisticsComponent implements OnInit, OnChanges, OnDestroy 
       console.log('User profile changed:', this.userProfile);
       this.fetchSnippets();
     }
-    if (changes['userRole']) {
-      this.updateMaxSnippets();
-    }
   }
 
   changeActiveDashboard(index: number): void {
@@ -63,8 +58,8 @@ export class SnippetStatisticsComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   trackProfileVisit(): void {
-    if (this.userId) {
-      this.statisticService.trackProfileVisit(this.userId).subscribe({
+    if (this.userProfile?._id) {
+      this.statisticService.trackProfileVisit(this.userProfile._id).subscribe({
         next: (response) => {
           if (response && typeof response.totalVisitors === 'number') {
             this.totalVisitors = response.totalVisitors;
@@ -78,8 +73,8 @@ export class SnippetStatisticsComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   fetchSnippets(): void {
-    if (this.userId) {
-      this.snippetService.getUserSnippets(this.userId).pipe(takeUntil(this.destroy$)).subscribe({
+    if (this.userProfile?._id) {
+      this.snippetService.getUserSnippets(this.userProfile._id).pipe(takeUntil(this.destroy$)).subscribe({
         next: (snippets) => {
           this.snippets = snippets;
           this.cdr.detectChanges(); // Ensure UI updates if necessary
@@ -95,11 +90,7 @@ export class SnippetStatisticsComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   updateMaxSnippets() {
-    this.maxSnippets = this.snippetService.getMaxSnippets(this.userRole);
-  }
-
-  onSnippetCreated(): void {
-    this.fetchSnippets(); // Refetch snippets when a new snippet is created
+    this.maxSnippets = this.snippetService.getMaxSnippets(this.userProfile?.role);
   }
 
   subscribeToSnippetCreation() {

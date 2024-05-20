@@ -187,12 +187,6 @@ export class SnippetCreateComponent implements OnInit {
     }
   }
 
-  private base64StringLength(base64String: string): number {
-    const padding = (base64String.match(/(=+)$/g) || []).length
-    const size = (base64String.length * 3) / 4 - padding
-    return size
-  }
-
   closeModal(): void {
     if (this.snippetForm.dirty) {
       localStorage.setItem('snippetFormData', JSON.stringify(this.snippetForm.value))
@@ -200,6 +194,7 @@ export class SnippetCreateComponent implements OnInit {
     this.isOpen = false
     setTimeout(() => {
       this.router.navigate(['../'], { relativeTo: this.route })
+      
     }, 300)
   }
 }

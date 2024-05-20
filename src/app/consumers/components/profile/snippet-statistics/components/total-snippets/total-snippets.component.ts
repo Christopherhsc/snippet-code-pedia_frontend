@@ -1,6 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, OnDestroy, OnChanges, SimpleChanges, Output } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
-import { SnippetService } from 'src/app/shared/services/snippet.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  OnDestroy,
+  OnChanges,
+  SimpleChanges,
+  Output
+} from '@angular/core'
+import { Subject, takeUntil } from 'rxjs'
+import { SnippetService } from 'src/app/shared/services/snippet.service'
 
 @Component({
   selector: 'app-total-snippets',
@@ -8,36 +17,28 @@ import { SnippetService } from 'src/app/shared/services/snippet.service';
   styleUrls: ['./total-snippets.component.scss']
 })
 export class TotalSnippetsComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() userId?: string | null | undefined;
-  @Input() userRole: number = 1;
   @Input() userProfile: any;
   @Input() isOwnProfile: boolean = false;
-  @Input() snippets: any[] = [];
   @Output() snippetsUpdated = new EventEmitter<number>();
 
   loadingSnippets: boolean = true;
   userSnippets: any[] = [];
   private destroy$ = new Subject<void>();
 
-  constructor(
-    private snippetService: SnippetService
-  ) {}
+  constructor(private snippetService: SnippetService) {}
 
   ngOnInit(): void {
-    // Initial setup if needed
+    console.log('Component initialized');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['userProfile'] && changes['userProfile'].currentValue) {
-      this.loadUserSnippets(this.userId);
-    }
-    if (changes['snippets'] && changes['snippets'].currentValue) {
-      this.userSnippets = changes['snippets'].currentValue;
-      this.loadingSnippets = false;
+      this.loadUserSnippets();
     }
   }
 
-  loadUserSnippets(userId: string | null | undefined): void {
+  loadUserSnippets(): void {
+    const userId = this.userProfile?._id;
     if (!userId) {
       console.error('No userId provided for loading snippets');
       return;

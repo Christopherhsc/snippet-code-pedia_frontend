@@ -13,11 +13,9 @@
   </div>
 
   <app-snippet-statistics
-  [userId]="userId"
-  [isOwnProfile]="isOwnProfile"
-  [userRole]="userRole"
-  [userProfile]="userProfile"
-></app-snippet-statistics>
+    [userProfile]="userProfile"
+    [isOwnProfile]="isOwnProfile"
+  ></app-snippet-statistics>
 
   <router-outlet></router-outlet>
   <router-outlet name="modal"></router-outlet>
