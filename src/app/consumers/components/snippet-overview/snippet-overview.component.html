@@ -1,42 +1,40 @@
-<div class="relative m-auto w-11/12 rounded-md px-4 py-1 text-black">
-  <nav class="flex justify-around bg-gray-800 p-4" *ngIf="snippet?.snippetStyle">
-    <button
-      class="w-1/2 "
-      [ngClass]="showHTML ? 'bg-slate-800 text-white rounded-sm' : 'text-gray-400'"
-      (click)="showHTMLContent()"
-    >
-      HTML
-    </button>
-    <button
-      class="w-1/2 "
-      [ngClass]="!showHTML ? 'bg-slate-800 text-white rounded-sm' : 'text-gray-400'"
-      (click)="showCSSContent()"
-    >
-      CSS
-    </button>
-  </nav>
-  <div class="text-3xl">
-    <p class="my-4">{{ snippet?.title | CapitalizeFirstLetterPipe }}</p>
-  </div>
-
-  <div class="text-md mb-2">
-    <p class="my-4">{{ snippet?.description | CapitalizeFirstLetterPipe }}</p>
-  </div>
-
-  <div *ngIf="snippet?.picture" class="my-6">
-    <img [src]="snippet.picture" alt="Snippet Image" class="w-full" />
-  </div>
-
-  <div class="mt-4 max-h-52 overflow-y-auto rounded-md border p-4 border-gray-800">
-    <div *ngIf="showHTML; else showCSS" [innerHTML]="snippet?.formattedTemplate"></div>
-    <ng-template #showCSS>
-      <div [innerHTML]="snippet?.formattedStyle"></div>
-    </ng-template>
-  </div>
-
-  <div class="my-6 flex flex-row justify-between">
-    <p class="text-md overflow-hidden overflow-ellipsis whitespace-nowrap pt-0.5">
-      {{ snippet?.tags }}
-    </p>
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 " (click)="closeModal()">
+  <div class="bg-white rounded-md p-4 w-11/12 max-w-2xl relative" (click)="$event.stopPropagation()">
+    <nav class="flex justify-around bg-gray-800 p-4 rounded-md">
+      <button
+        class="w-1/2"
+        [ngClass]="showHTML ? 'bg-slate-800 text-white rounded-sm' : 'text-gray-400'"
+        (click)="showHTMLContent()"
+      >
+        HTML
+      </button>
+      <button
+        class="w-1/2"
+        [ngClass]="!showHTML ? 'bg-slate-800 text-white rounded-sm' : 'text-gray-400'"
+        (click)="showCSSContent()"
+      >
+        CSS
+      </button>
+    </nav>
+    <div class="text-3xl my-4">
+      <p>{{ snippet?.title | CapitalizeFirstLetterPipe }}</p>
+    </div>
+    <div class="text-md mb-2">
+      <p>{{ snippet?.description | CapitalizeFirstLetterPipe }}</p>
+    </div>
+    <div *ngIf="snippet?.picture" class="my-6">
+      <img [src]="snippet.picture" alt="Snippet Image" class="w-full rounded-md" />
+    </div>
+    <div class="mt-4 max-h-52 overflow-y-auto rounded-md border p-4 border-gray-800">
+      <div *ngIf="showHTML; else showCSS" [innerHTML]="snippet?.formattedTemplate"></div>
+      <ng-template #showCSS>
+        <div [innerHTML]="snippet?.formattedStyle"></div>
+      </ng-template>
+    </div>
+    <div class="my-6 flex flex-row justify-between">
+      <p class="text-md overflow-hidden overflow-ellipsis whitespace-nowrap pt-0.5">
+        {{ snippet?.tags }}
+      </p>
+    </div>
   </div>
 </div>

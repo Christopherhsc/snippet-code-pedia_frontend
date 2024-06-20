@@ -1,4 +1,3 @@
-// app-routing.module.ts
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { HomeComponent } from './home/home.component'
@@ -10,7 +9,6 @@ import { UnauthenticatedGuard } from './shared/guards/unauthenticated-guard.guar
 import { AuthContainerComponent } from './auth/auth-container.component'
 import { SnippetFilterComponent } from './consumers/components/snippet-filter/snippet-filter.component'
 
-// app-routing.module.ts
 const routes: Routes = [
   {
     path: '',
@@ -20,6 +18,12 @@ const routes: Routes = [
         path: 'filter',
         component: SnippetFilterComponent,
         outlet: 'modal'
+      },
+      {
+        path: 'snippet/:_id',
+        component: SnippetOverviewComponent,
+        outlet: 'modal',
+        canActivate: [AuthenticatedGuard]
       }
     ]
   },
@@ -44,11 +48,6 @@ const routes: Routes = [
     path: 'create',
     outlet: 'modal',
     component: SnippetCreateComponent,
-    canActivate: [AuthenticatedGuard]
-  },
-  {
-    path: 'snippet/:_id',
-    component: SnippetOverviewComponent,
     canActivate: [AuthenticatedGuard]
   },
   {

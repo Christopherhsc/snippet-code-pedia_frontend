@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SnippetService } from 'src/app/shared/services/snippet.service';
 
 @Component({
   selector: 'app-snippet-overview',
   templateUrl: './snippet-overview.component.html',
-  styleUrl: './snippet-overview.component.scss'
+  styleUrls: ['./snippet-overview.component.scss']
 })
 export class SnippetOverviewComponent {
   snippet: any;
@@ -14,6 +14,7 @@ export class SnippetOverviewComponent {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private snippetService: SnippetService,
     private domSanitizer: DomSanitizer
   ) {}
@@ -64,5 +65,9 @@ export class SnippetOverviewComponent {
 
   showCSSContent() {
     this.showHTML = false;
+  }
+
+  closeModal() {
+    this.router.navigate([{ outlets: { modal: null } }]);
   }
 }
